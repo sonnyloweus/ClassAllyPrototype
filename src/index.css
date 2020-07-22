@@ -12,3 +12,70 @@ body{
 .startAPI{
   display: none;
 }
+
+.mainBody{
+  display: none;
+}
+
+.titlebar{
+  background-color: white;
+  height: 4vw;
+}
+
+#navbar{
+  display: block;
+  position: fixed;
+  top: 4vh;
+  left: 0;
+  width: 100%;
+  box-shadow: 0px 5px 5px rgb(167, 164, 164);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: 1s;
+}
+
+.navbar-end{
+  position: absolute;
+  right: 40px;
+}
+
+.navbar a{
+  margin-left: 10px;
+}
+
+.popupBox{
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 350px;
+  height: 250px;
+  transition: 1s;
+}
+
+.popupBox > .is-parent > .is-child{
+  box-shadow: 0 0 5px 5px rgb(187, 183, 183);
+}
+
+.closePopups{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#modal-signup{
+  display: none;
+}
+
+#modal-login{
+  display: none;
+}
+
+#modal-account{
+  display: none;
+}
+
+.mainBody{
+  margin-top: 10vh;
+}

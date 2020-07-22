@@ -17,7 +17,7 @@ function runAPI(){
         "port": null,
         "path": "/oauth/token?grant_type=authorization_code&code=" + authCode + "&redirect_uri=https://marketplace.zoom.us/docs/oauth/callback/success/api/v2/zoom/complete-oauth",
         "headers": {
-            "authorization": "Basic MzZUeTh6MVMzRzFqaE5ibmxoc1l3OlVWVkZON0Ixa0wyOHFzeWkwMHk0dFpNVEFYaGxKNlYy"
+            "authorization": "Basic " + process.env.BASE_ENCODE
         }
     };
 
@@ -34,7 +34,7 @@ function runAPI(){
             body = JSON.parse(body)
             console.log(body.access_token);
             access_token = body.access_token;
-            refresh_token = body.refresh_token;a
+            refresh_token = body.refresh_token;
 
             //  /v2/users/sonny.lowe23@bcp.org/meetings?page_number=1&page_size=30&type=live
 
@@ -81,6 +81,7 @@ function runAPI(){
 
 
 let authURL = "https://zoom.us/oauth/authorize?response_type=code&client_id=36Ty8z1S3G1jhNbnlhsYw&redirect_uri=https://marketplace.zoom.us/docs/oauth/callback/success/api/v2/zoom/complete-oauth"
+
 let authorizeButton = document.getElementById("authorize");
 authorizeButton.onclick = function(){
     let popup = window.open(

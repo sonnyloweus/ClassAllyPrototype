@@ -1,3 +1,4 @@
+//npm i custom-electron-titlebar
 const customTitlebar = require('custom-electron-titlebar');
 const {Menu} = require('electron').remote;
 
