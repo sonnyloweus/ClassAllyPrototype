@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>API Tester</title>
-    <link rel="stylesheet" href="index.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"/>
-    <script defer src="api.js"></script>
-  </head>
-  <body style="text-align:center; margin-top: 100px;">
-    <p>Welcome to your API tester</p>
+<html">
+
+<head>
+  <meta charset="UTF-8">
+  <title>API Tester</title>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" /> -->
+  <link rel="stylesheet" href="index.css">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script defer src="js/api.js"></script>
+  <script defer src="js/render.js"></script>
+
+</head >
+
+
+<body style="text-align:center; background-color: green;">
+
+  <div style="position:fixed; bottom: 0; height: 93vh; width:100vw; border-radius: 20px !important; background-color: white;">
+
+    <h3 class="title">Welcome to your API tester</h3>
+    <br>
+    <p>Please authorize the API by clicking the button below and logging in.</p>
     <button class="button is-primary" id="authorize">Authorize App</button>
-  </body>
+    <p>A button will appear once you have logged in and authorization is successful</p>
+    
+    <div class="startAPI">
+      <button class="button is-info" id="begin">Start API</button>    
+    </div>
+
+  </div>
+
+</body>
+
+
 </html>
