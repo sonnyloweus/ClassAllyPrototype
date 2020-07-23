@@ -44,7 +44,6 @@ let accountDetails = document.getElementById("account-details");
 function setupInfo(user){
     if(user){
         // account info
-        
         db.collection('users').doc(user.uid).get().then(doc => {
             const info = `
                 <h3> Email: ${user.email} </h3>

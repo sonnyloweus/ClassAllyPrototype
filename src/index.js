@@ -11,7 +11,7 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 680,
-    transparent: true,
+    // transparent: true,
     frame: false,
 
     webPreferences:{

@@ -1,13 +1,15 @@
 // listen for Auth status
 auth.onAuthStateChanged(user => {
     if(user){
-        $('.mainBody').css('display', 'block')
-        $('.navbar-end').css('display', 'block')
+        $('.mainBody').css('display', 'block');
+        $('.navbar-end').css('display', 'block');
         closePops();
         setupInfo(user);
+        userId = user.uid;
     }else{
-        $('.mainBody').css('display', 'none')
-        $('.navbar-end').css('display', 'none')
+        $('.mainBody').css('display', 'none');
+        $('.navbar-end').css('display', 'none');
+        userId = 0;
     }
 })
 
@@ -23,12 +25,14 @@ signupForm.addEventListener('submit', (e) => {
     //sign up the user, might take some time to complete, returns user credential
     auth.createUserWithEmailAndPassword(email, password).then(cred => {
         return db.collection('users').doc(cred.user.uid).set({
-            school: signupForm['signup-school'].value
+            school: signupForm['signup-school'].value,
+            refreshTok: 0
         });
     }).then(() => {
         // console.log(cred.user);
-        console.log("User signed up/in")
+        console.log("User signed up/in");
         //after sign up
+        $('.authorizeSection').css('display', 'block');
         signupForm.reset();
     });
 
@@ -54,6 +58,13 @@ loginForm.addEventListener('submit', (e) => {
 
     //sign up the user, might take some time to complete, returns user credential
     auth.signInWithEmailAndPassword(email, password).then(cred => {
+        return db.collection('users').doc(cred.user.uid).get().then(doc => {
+            let refreshToken = `${doc.data().refreshTok}`
+            if(refreshToken == 0){
+                $('.authorizeSection').css('display', 'block');
+            }
+        });
+    }).then(() => {
         // console.log(cred.user);
         console.log("User signed in")
         //after sign up

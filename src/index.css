@@ -79,3 +79,7 @@ body{
 .mainBody{
   margin-top: 10vh;
 }
+
+.authorizeSection{
+  display: none;
+}
