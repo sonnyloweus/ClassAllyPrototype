@@ -4,7 +4,8 @@
 auth.onAuthStateChanged(user => {
     if(user){
         $('.mainBody').css('display', 'block');
-        $('.navbar-end').css('display', 'block');
+        $('.loggedInButtons').css('display', 'block');
+        $('.loggedOutButtons').css('display', 'none');
         closePops();
         setupInfo(user);
         userId = user.uid;
@@ -18,10 +19,10 @@ auth.onAuthStateChanged(user => {
             }
         });
 
-        
     }else{
         $('.mainBody').css('display', 'none');
-        $('.navbar-end').css('display', 'none');
+        $('.loggedInButtons').css('display', 'none');
+        $('.loggedOutButtons').css('display', 'block');
         userId = 0;
     }
 })

@@ -1,0 +1,31 @@
+#navbarRight {
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 20vw;
+    height: 100vh;
+    background-color: white;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    transition: 1s;
+}
+
+#navbarRight ul li{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#navbarRight ul li a{
+    width: 15vw;
+}
+
+.loggedInButtons, .loggedOutButtons{
+    position: absolute;
+    top: 5vh;
+    left: 50%;
+    transform: translate(-50%);
+}
+

@@ -38,4 +38,7 @@ new customTitlebar.Titlebar({
 });
 
 let titleBarTitle = document.querySelector('.window-title');
-titleBarTitle.innerHTML = "Welcome to your API Tester";
+titleBarTitle.innerHTML = "";
+
+// <img style='margin-top: 50px' width='150px' src='assets/largeLogo.png'>
+// titlebar.updateIcon('../assets/largeLogo.png');

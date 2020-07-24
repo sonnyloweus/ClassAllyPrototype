@@ -6,16 +6,17 @@ let slider = document.getElementById("slider");
 let currentSlide = 1;
 let maxSlide = 6;
 let participants = document.getElementById("participants");
-
+let weekdays = ["Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"];
 
 //#################################################################################
 //###############################  Html Func ######################################
 //#################################################################################
 function slide(e) {
-    if (e.innerText != ">" && e.innerText != "<") {
+    // console.log(e.innerHTML);
+    if (e.innerHTML != '<span class="icon"><i class="fas fa-arrow-left" aria-hidden="true"></i></span>' && e.innerHTML != '<span class="icon"><i class="fas fa-arrow-right" aria-hidden="true"></i></span>') {
         currentSlide = parseInt(e.innerText);
 
-    } else if (e.innerText == ">") {
+    } else if (e.innerHTML == '<span class="icon"><i class="fas fa-arrow-right" aria-hidden="true"></i></span>') {
         let idNum = 0;
         if (currentSlide == maxSlide) {
             idNum = 1;
@@ -26,10 +27,10 @@ function slide(e) {
         let idName = "slide-" + idNum;
         // console.log(idName);
         document.getElementById(idName).scrollIntoView();
-    } else if (e.innerText == "<") {
+    } else if (e.innerHTML == '<span class="icon"><i class="fas fa-arrow-left" aria-hidden="true"></i></span>') {
         let idNum = 0;
         if (currentSlide == 1) {
-            idNum =  parseInt(maxSlide);
+            idNum = parseInt(maxSlide);
         } else {
             idNum = currentSlide - 1;
         }
@@ -77,7 +78,7 @@ let listParticipants = {
 //##################################  Onclicks ####################################
 //#################################################################################
 
-participants.onclick = function(){
+participants.onclick = function () {
     listParticipants["headers"]["authorization"] = "Bearer " + access_token;
     callAPI(listParticipants, "listParticipants");
 }
@@ -100,13 +101,62 @@ function callAPI(options, type) {
 
             if (type == "getMeetings") {
                 meetingsFunc(body);
-            }else if (type == "listParticipants"){
+            } else if (type == "listParticipants") {
                 console.log(body);
             }
         });
     });
 
     api.end();
+}
+
+function copyText(id) {
+    /* Get the text field */
+    let temp = document.createElement("textarea");
+    document.body.appendChild(temp);
+    temp.value = id;
+    console.log(id)
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+}
+
+function tConvert(time) {
+    // Check correct time format and split into components
+    let offset = (new Date().getTimezoneOffset())/60;
+    time = time.toString().match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+    // let hours = parseInt(time[0].substring(0,2));
+    // hours = ('0' + (hours - offset)).slice(-2)
+    // time[0] = hours + time[0].substring(2);
+
+    if (time.length > 1) { // If time format correct
+        time = time.slice(1); // Remove full string match value
+        time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+    }
+    time[0] = ('0' + (parseInt(time[0]) - offset)).slice(-2);
+    return time.join(''); // return adjusted time or original string
+}
+
+function showInfo(idName){
+    let tempIdNum = idName.id.substring(idName.id.length-1);
+    let typeButton = idName.id.substring(1, idName.id.length-1);
+    if(typeButton == "meetingLink"){
+        $("#meetingLink" + tempIdNum).toggle();
+        $("#tempId" + tempIdNum).css('display', 'none');
+        $(".meetingDate" + tempIdNum).css('display', 'none');
+    }else if(typeButton == "tempId"){
+        $("#meetingLink" + tempIdNum).css('display', 'none');
+        $("#tempId" + tempIdNum).toggle();
+        $(".meetingDate" + tempIdNum).css('display', 'none');
+    }else{
+        $("#meetingLink" + tempIdNum).css('display', 'none');
+        $("#tempId" + tempIdNum).css('display', 'none');
+        $(".meetingDate" + tempIdNum).toggle();
+    }
+    
+    // $(".slider").find("> div").animate({height:"30vh"},500);
 }
 
 function meetingsFunc(body) {
@@ -120,23 +170,51 @@ function meetingsFunc(body) {
         let tempJoin = meetObj["join_url"];
         let tempStart = meetObj["start_time"];
         // yyyy-mm-ddThh:mm:ssZ
-        let tempDate = tempStart.substring(0, 9);
-        let tempTime = tempStart.substring(11, 18);
+        let tempDate = tempStart.substring(0, 10);
+        //yyyy-mm-dd
+        let tempDateDate = new Date(tempDate.substring(0,4), tempDate.substring(5,7), tempDate.substring(8)).getDay();
+        let tempWeekday = weekdays[tempDateDate];
+        tempDate = tempDate.substring(5,7) + "/" + tempDate.substring(8) + "/" + tempDate.substring(0,4);
+        if (tempDate.substring(0,1) == "0"){
+            tempDate = tempDate.substring(1);
+        }
+        let tempTime = tConvert( tempStart.substring(11, 19));
+        if (tempTime.substring(0,1) == "0"){
+            tempTime = tempTime.substring(1);
+        }
+        if (tempTime.substring(tempTime.length - 4, tempTime.length - 2,) == "00"){
+            tempTime = tempTime.substring(0,tempTime.length -5) +  tempTime.substring(tempTime.length -2);
+        }
         // console.log(tempDate)
         // console.log(tempTime)
+
         let tempTopic = meetObj["topic"];
 
-        AddSlides.innerHTML = AddSlides.innerHTML + '<div id="slide-' + i + '">' +
-            '<p>' + i + '</p>' +
+        AddSlides.innerHTML = AddSlides.innerHTML + 
+        '<div id="slide-' + i + '">' +
             '<div id="meetingSlide' + i + '" class="meetingSlide">' +
-            '<p class="is-size-4">' + tempTopic + '</p>' +
-            '<p class="is-size-6">Time: ' + tempTime + ' on ' + tempDate + '</p>' +
-            '<p class="is-size-6">Meeting Id: ' + tempId + '</p>' +
-            '<p class="is-size-6">Duration: ' + tempDuration + '</p>' +
-            '<a class="is-size-6">' + tempJoin + '</a>' +
+                '<p style="margin-top: -5px;" class="meetingTopic is-size-5" >' + tempTopic + '</p>' +
+                '<div class="buttons is-centered" style="margin-top: 12px;">' +
+                    '<a id="BmeetingDate' + i + '" onclick="showInfo(this)" role="button" class="meetingButtons button is-info " data-target="" id=""><span class="icon"><i class="far fa-calendar-alt fa-xs"></i></span></a>' +
+                    '<a id="BmeetingLink' + i + '" onclick="showInfo(this)" role="button" class="meetingButtons button is-info " data-target="" id=""><span class="icon"><i class="fas fa-link fa-xs"></i></span></a>' +
+                    '<a id="BtempId' + i + '" onclick="showInfo(this)" role="button" class="meetingButtons button is-info" data-target="" id=""><span class="icon"><i class="fas fa-fingerprint fa-xs"></i></span></a>' +
+                '</div>' +
+            
+                '<p id="meetingDate' + i + '" style="display:none" class="meetingDate' + i + ' is-size-6" >' + tempWeekday + ", " + tempDate + '</p>' +
+                '<p id="meetingDate' + i + '" style="display:none" class="meetingDate' + i + ' is-size-6" >' + tempTime + '</p>' +
+                '<p id="tempId' + i + '" style="display:none" class="is-size-6" >Meeting Id: ' + tempId + '</p>' +
+                '<p id="meetingDate' + i + '" style="display:none" class="meetingDate' + i + ' is-size-7" >Duration: ' + tempDuration + ' mins</p>' +
+
+                '<div id="meetingLink' + i + '" style="display:none">' +
+                    '<p class="is-size-7" >Copy Url <br/> (paste in browser):</p>' +
+                    '<a class="meetingURL" id="meetingURL' + i + '" target="_blank" href="' + tempJoin + '" ><span class="icon"><i class="fas fa-external-link-alt"></i></span></a>' +
+                    '<a onclick="copyText(meetingURL' + i + ')"><span class="icon"><i class="far fa-copy fa-lg"></i></span></a>' +
+                '</div>' +
             '</div>' +
-            '</div>';
-        slider.innerHTML = slider.innerHTML + "<a href=#slide-" + i + " onclick='slide(this)'>" + i + "</a>";
+        '</div>';
+
+        console.log(document.getElementById("BmeetingDate1"));
+        // slider.innerHTML = slider.innerHTML + "<a href=#slide-" + i + " onclick='slide(this)'>" + i + "</a>";
         AddSlides = document.getElementById("AddSlides");
         slider = document.getElementById("slider");
     }

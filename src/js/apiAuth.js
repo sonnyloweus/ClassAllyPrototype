@@ -102,13 +102,13 @@ function getToken() {
                 refreshTok: body.refresh_token
             }).then(() => {
                 authCode = null;
+                console.log("end of getting access token")
+
+                access_tokenHtml.innerText = "Authorization code: Valid";
+                refreshToken();
             });
 
         });
-        console.log("end of getting access token")
-
-        access_tokenHtml.innerText = "Authorization code: Valid";
-        refreshToken();
     });
 
     acc.end();
