@@ -4,8 +4,9 @@
   <head>
     <meta charset="UTF-8">
     <title>API Tester</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script>
       window.$ = window.jQuery = require('./js/jquery.js');
     </script>
@@ -14,21 +15,15 @@
 
   <body style="text-align:center; background-color: white !important;">
 
-    <div style="position:fixed; bottom: 0; height: 96vh; width:100vw; border-radius: 20px !important; background-color: white;">
-      
+    <div class="bodyDiv">
+
       <div id="navBarTemplate"></div>
       <div id="modalTemplate"></div>
 
       <div class="mainBody">
-        
-        <h1 class="status">Logged In</h1>
-        <h3 class="title">Welcome to your API tester</h3>
-        <br>
 
-        <div class="authorizeSection">
-          <p>Please authorize the API by clicking the button below and logging in to zoom. You only need to do this once.</p>
-          <button class="button is-primary" id="authorize">Authorize App</button>
-        </div>
+        <div id="statusTemplate"></div>
+        <div id="gadgetsTemplate"></div>
 
       </div>
 
@@ -40,6 +35,8 @@
     <script>
       $("#navBarTemplate").load("templates/nav.html");
       $("#modalTemplate").load("templates/modals.html");
+      $("#statusTemplate").load("templates/status.html");
+      $("#gadgetsTemplate").load("templates/gadgets.html");
     </script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -73,8 +70,10 @@
     <script src="js/modals.js"></script>
     <script src="js/apiAuth.js"></script>
     <script src="js/firebaseAuth.js"></script>
+    <script src="js/apiGadgets.js"></script>
     <script src="js/render.js"></script>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/slideshow.css" />
 
   </body>
 

@@ -1,4 +1,6 @@
-// listen for Auth status
+//#################################################################################
+//#############3#######  Listen for Auth Status Change  ###########################
+//#################################################################################
 auth.onAuthStateChanged(user => {
     if(user){
         $('.mainBody').css('display', 'block');
@@ -6,6 +8,17 @@ auth.onAuthStateChanged(user => {
         closePops();
         setupInfo(user);
         userId = user.uid;
+        db.collection('users').doc(user.uid).get().then(doc => {
+            let refreshTok = `${doc.data().refreshTok}`;
+
+            if(refreshTok == 0){
+                $('.authorizeSection').css('display', 'block');
+            }else{
+                refreshToken();
+            }
+        });
+
+        
     }else{
         $('.mainBody').css('display', 'none');
         $('.navbar-end').css('display', 'none');
@@ -13,7 +26,9 @@ auth.onAuthStateChanged(user => {
     }
 })
 
-//signup
+//#################################################################################
+//################################  Sign Up  ######################################
+//#################################################################################
 const signupForm = document.getElementById("signup-form");
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -38,7 +53,9 @@ signupForm.addEventListener('submit', (e) => {
 
 });
 
-//logout
+//#################################################################################
+//################################  Log Out  ######################################
+//#################################################################################
 logoutButton.addEventListener('click', (e) => {
     e.preventDefault();
     auth.signOut().then(() => {
@@ -47,7 +64,9 @@ logoutButton.addEventListener('click', (e) => {
     });
 })
 
-//logIn
+//#################################################################################
+//################################  Log In  #######################################
+//#################################################################################
 const loginForm = document.getElementById("login-form");
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -72,4 +91,5 @@ loginForm.addEventListener('submit', (e) => {
     });
 
 });
+
 

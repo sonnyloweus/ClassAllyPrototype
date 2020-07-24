@@ -1,3 +1,6 @@
+//#################################################################################
+//#######################@####  Custom TitleBar  ############@#####################
+//#################################################################################
 //npm i custom-electron-titlebar
 const customTitlebar = require('custom-electron-titlebar');
 const {Menu} = require('electron').remote;
@@ -35,4 +38,4 @@ new customTitlebar.Titlebar({
 });
 
 let titleBarTitle = document.querySelector('.window-title');
-titleBarTitle.innerHTML = "";
+titleBarTitle.innerHTML = "Welcome to your API Tester";
