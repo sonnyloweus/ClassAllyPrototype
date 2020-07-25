@@ -8,6 +8,9 @@ let maxSlide = 6;
 let participants = document.getElementById("participants");
 let weekdays = ["Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"];
 
+//npm install --save open
+const open = require('open');
+
 //#################################################################################
 //###############################  Html Func ######################################
 //#################################################################################
@@ -78,10 +81,10 @@ let listParticipants = {
 //##################################  Onclicks ####################################
 //#################################################################################
 
-participants.onclick = function () {
-    listParticipants["headers"]["authorization"] = "Bearer " + access_token;
-    callAPI(listParticipants, "listParticipants");
-}
+// participants.onclick = function () {
+//     listParticipants["headers"]["authorization"] = "Bearer " + access_token;
+//     callAPI(listParticipants, "listParticipants");
+// }
 
 //#################################################################################
 //#################################  Functions ####################################
@@ -114,8 +117,8 @@ function copyText(id) {
     /* Get the text field */
     let temp = document.createElement("textarea");
     document.body.appendChild(temp);
-    temp.value = id;
-    console.log(id)
+    console.log(id);
+    temp.value = id.title;
     temp.select();
     document.execCommand("copy");
     document.body.removeChild(temp);
@@ -157,6 +160,10 @@ function showInfo(idName){
     }
     
     // $(".slider").find("> div").animate({height:"30vh"},500);
+}
+
+function openURL(id){
+    open(id.title);
 }
 
 function meetingsFunc(body) {
@@ -206,14 +213,14 @@ function meetingsFunc(body) {
                 '<p id="meetingDate' + i + '" style="display:none" class="meetingDate' + i + ' is-size-7" >Duration: ' + tempDuration + ' mins</p>' +
 
                 '<div id="meetingLink' + i + '" style="display:none">' +
-                    '<p class="is-size-7" >Copy Url <br/> (paste in browser):</p>' +
-                    '<a class="meetingURL" id="meetingURL' + i + '" target="_blank" href="' + tempJoin + '" ><span class="icon"><i class="fas fa-external-link-alt"></i></span></a>' +
+                    '<p class="is-size-7" >Register / Open <br/> (paste in browser):</p>' +
+                    '<a onclick="openURL(this)" class="meetingURL" id="meetingURL' + i + '" target="_blank" title="' + tempJoin + '"" ><span class="icon"><i class="fas fa-external-link-alt"></i></span></a>' +
                     '<a onclick="copyText(meetingURL' + i + ')"><span class="icon"><i class="far fa-copy fa-lg"></i></span></a>' +
                 '</div>' +
             '</div>' +
         '</div>';
 
-        console.log(document.getElementById("BmeetingDate1"));
+        // console.log(document.getElementById("BmeetingDate1"));
         // slider.innerHTML = slider.innerHTML + "<a href=#slide-" + i + " onclick='slide(this)'>" + i + "</a>";
         AddSlides = document.getElementById("AddSlides");
         slider = document.getElementById("slider");

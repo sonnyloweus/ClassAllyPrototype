@@ -7,6 +7,7 @@
     height: 100vh;
     background-color: white;
     transition: 1s;
+    z-index: 2;
 }
 
 #navbarLeft ul li{
@@ -34,6 +35,10 @@
 
 #navbarLeft:hover .triangle-right{
     left: 19.5vw;
+}
+
+#navbarLeft ul li span{
+    transition: 0.3s;
 }
 
 #navbarLeft ul li a{

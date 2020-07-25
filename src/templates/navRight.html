@@ -10,15 +10,16 @@
       </li>
     </div>
     <div class="loggedInButtons">
-      <h1 class="status">Logged In</h1>
-
+      <br>
+      <h1 class="status" id="emailStatus"></h1>
+      <br>
+      <p id="access_token">Zoom Connection:<span class="icon"><i class="fas fa-times-circle"></i></span></p>
+      <!-- fas fa-check-square -->
       <div class="authorizeSection">
-        <p>Please authorize the API by clicking the button below and logging in to zoom. You only need to do this once.
+        <p>One Time Zoom Authorization Needed
         </p>
         <button class="button is-primary" id="authorize">Authorize App</button>
       </div>
-
-      <p id="access_token">Authorization code: </p>
       
       <li><a role="button" class="button is-info is-outlined" data-target="modal-logout" id="logoutButton">Log Out</a>
       </li>

@@ -1,93 +1,149 @@
 <!-- SIGN UP MODAL -->
 <div id="modal-signup" class="popupBox tile is-ancestor">
-    <div class="tile is-parent">
-      <div class="tile is-child box">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
 
-        <button id="closeLog" class="button is-danger fa fa-times fa-lg closePopups"></button>
-        <h4>Sign up</h4><br />
+      <button id="closeLog" class="button is-danger fa fa-times fa-lg closePopups"></button>
+      <h4>Sign up</h4><br />
 
-        <form id="signup-form">
-          <div class="field">
-            <label for="signup-email">Email address</label>
-            <p class="control has-icons-left has-icons-right">
-              <input class="input" type="email" id="signup-email" placeholder="Email" required/>
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-            </p>
-          </div>
-          <div class="field">
-            <label for="signup-password">Your password</label>
-            <p class="control has-icons-left">
-              <input class="input" type="password" id="signup-password" placeholder="Password" required/>
-              <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
-              </span>
-            </p>
-          </div>
-          <div class="field">
-            <label for="signup-school">Choose School</label>
-            <div class="control has-icons-left">
-              <div class="select">
-                <select id="signup-school" >
-                  <option selected disabled value="">Select Your School</option>
-                  <option value="Bellarmine">Bellarmine</option>  
-                </select>
-              </div>
-              <div class="icon is-small is-left">
-                <i class="fas fa-school"></i>
-              </div>
+      <form id="signup-form">
+        <div class="field">
+          <label for="signup-email">Email address</label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" id="signup-email" placeholder="Email" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <label for="signup-password">Your password</label>
+          <p class="control has-icons-left">
+            <input class="input" type="password" id="signup-password" placeholder="Password" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <label for="signup-school">Choose School</label>
+          <div class="control has-icons-left is-expanded">
+            <div class="select is-fullwidth">
+              <select id="signup-school">
+                <option selected disabled value="">Select Your School</option>
+                <option value="Bellarmine">Bellarmine</option>
+              </select>
+            </div>
+            <div class="icon is-small is-left">
+              <i class="fas fa-school"></i>
             </div>
           </div>
-          <button class="btn yellow darken-2 z-depth-0">Sign Up</button>
-        </form>
+        </div>
+        <button class="button is-link">Sign Up</button>
+      </form>
+
+      <h3 id="singUpError"></h3>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="modal-login" class="popupBox tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
+      <button id="closeSign" class="button is-danger fa fa-times fa-lg closePopups"></button>
+      <h4>Login</h4><br />
+
+      <form id="login-form">
+        <div class="field">
+          <label for="login-email">Email address</label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" id="login-email" placeholder="Email" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <label for="login-password">Your password</label>
+          <p class="control has-icons-left">
+            <input class="input" type="password" id="login-password" placeholder="Password" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+        <button class="button is-link">Login</button>
+      </form>
+
+      <h3 id="loginError"></h3>
+    </div>
+  </div>
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div id="modal-account" class="popupBox tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
+      <button id="closeAccount" class="button is-danger fa fa-times fa-lg closePopups"></button>
+      <h4>Account details</h4><br />
+      <div id="account-details">
 
       </div>
     </div>
   </div>
+</div>
 
-  <!-- LOGIN MODAL -->
-  <div id="modal-login" class="popupBox tile is-ancestor">
-    <div class="tile is-parent">
-      <div class="tile is-child box">
-        <button id="closeSign" class="button is-danger fa fa-times fa-lg closePopups"></button>
-        <h4>Login</h4><br />
 
-        <form id="login-form">
+<!-- Add Classroom MODAL -->
+<div id="modal-classroom" class="popupBox tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
+      <button id="closeRooms" class="button is-danger fa fa-times fa-lg closePopups"></button>
+      <h4>Add Classroom</h4><br />
+
+      <form id="addClassroomForm">
+        <div class="field">
+          <label for="class-name">Class Name</label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" id="class-name" placeholder="Class Name" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-chalkboard"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field is-grouped">
           <div class="field">
-            <label for="login-email">Email address</label>
-            <p class="control has-icons-left has-icons-right">
-              <input class="input" type="email" id="login-email" placeholder="Email" required/>
-              <span class="icon is-small is-left">
-                <i class="fas fa-envelope"></i>
-              </span>
-            </p>
-          </div>
-          <div class="field">
-            <label for="login-password">Your password</label>
+            <label style="float: left;" for="class-num">Period Num</label>
             <p class="control has-icons-left">
-              <input class="input" type="password" id="login-password" placeholder="Password" required/>
+              <input style="float: left; width: 50%;" class="input" type="number" id="class-num" placeholder="Per"
+                required />
               <span class="icon is-small is-left">
-                <i class="fas fa-lock"></i>
+                <i class="fas fa-sort-numeric-up-alt"></i>
               </span>
             </p>
           </div>
-          <button class="btn yellow darken-2 z-depth-0">Login</button>
-        </form>
-
-      </div>
-    </div>
-  </div>
-
-  <!-- ACCOUNT MODAL -->
-  <div id="modal-account" class="popupBox tile is-ancestor">
-    <div class="tile is-parent">
-      <div class="tile is-child box">
-        <button id="closeAccount" class="button is-danger fa fa-times fa-lg closePopups"></button>
-        <h4>Account details</h4><br />
-        <div id="account-details">
+          <div class="field">
+            <label for="class-students">Students</label>
+            <datalist id="class-students">
+              <!-- <option value="Internet Explorer"> -->
+            </datalist>
+            <p style="margin-left: -45%; width:145%" class="control has-icons-left">
+              <input class="input" type="text" placeholder="Search Students" list="class-students">
+              <span class="icon is-small is-left">
+                <i class="fas fa-school"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div id="addedStudents">
 
         </div>
-      </div>
+        <br>
+        <button class="button is-link">Add</button>
+      </form>
+
+      <!-- <h3 id="classroomError"></h3> -->
     </div>
   </div>
+</div>

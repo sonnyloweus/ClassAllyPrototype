@@ -69,6 +69,47 @@ body{
   display: none;
 }
 
+.mainBody {
+  margin-top: 7vh;
+}
+
 .displayBlock {
   display: block !important;
+}
+
+.activePageButton span{
+  width: 32px !important;
+  height: 32px !important;
+  margin-left: -12px !important;
+  border-radius: 7px;
+  background-color: #2F80ED;
+  color: white !important;
+}
+
+.pageTitle{
+  width: 60vw;
+  background-color: #FF7A51;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 5%;
+  left: 48%;
+  transform: translate(-52%);
+  color: white;
+}
+
+.addButton{
+  background-color: #EB5757;
+  height: 80% !important;
+  color: white;
+  border: none;
+  float: right;
+  padding-right: 20px;
+  padding-left: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+#currentPage{
+  transition: 0.5s;
 }

@@ -1,36 +1,45 @@
-.popupBox{
-    position: absolute;
-    z-index: 3;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
-    height: 250px;
-    transition: 1s;
-  }
-  
-  .popupBox > .is-parent > .is-child{
-    box-shadow: 0 0 5px 5px rgb(187, 183, 183);
-  }
-  
-  .closePopups{
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-  
-  #modal-signup{
-    display: none;
-  }
-  
-  #modal-login{
-    display: none;
-  }
-  
-  #modal-account{
-    display: none;
-  }
-  
-  .mainBody{
-    margin-top: 7vh;
-  }
+.popupBox {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35vw;
+  /* height: 250px; */
+  transition: 1s;
+}
+
+.popupBox>.is-parent>.is-child {
+  box-shadow: 0 0 5px 5px rgb(187, 183, 183);
+}
+
+.closePopups {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#modal-signup {
+  display: none;
+}
+
+#modal-login {
+  display: none;
+}
+
+#modal-account {
+  display: none;
+}
+
+#modal-classroom {
+  width: 45vw;
+  display: none;
+}
+
+#addedStudents{
+  width: 100%;
+  border: 0.5px solid rgb(180, 176, 176);
+  border-radius: 10px;
+  overflow: auto;
+  height: 10vh;
+}

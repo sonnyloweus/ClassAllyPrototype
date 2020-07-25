@@ -1,0 +1,44 @@
+<div class="pageTitle">Classrooms
+    <a role="button" class="addButton button" data-target="" id="addClassroom">
+        <span class="icon">
+            <i class="fas fa-plus"></i>
+        </span>
+        <p>Add</p>
+    </a>
+</div>
+
+<script>
+    let addClassroom = document.getElementById("addClassroom");
+    let currentRooms = "";
+    let studentsList = "";
+    addClassroom.onclick = function () {
+        closePops();
+        classroomModal.style.display = "block";
+        studentsList = "";
+    }
+
+    const addClassroomForm = document.getElementById("addClassroomForm");
+    addClassroomForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        //get User info
+        const name = addClassroomForm['class-name'].value;
+        const periodNum = addClassroomForm['class-nu '].value;
+
+        db.collection('users').doc(userId).get().then(doc => {
+            currentRooms = `${doc.data().classrooms}`;
+            if (currentRooms == 'undefined') currentRooms = "";
+            let newRoom = {
+                "name": name,
+                "period": periodNum,
+                "students": studentsList
+            }
+            console.log(currentRooms);
+            db.collection('users').doc(userId).update({
+                classrooms: currentRooms + newRoom
+            }).then(() => {
+                console.log("clicked");
+            });
+        });
+    });
+
+</script>

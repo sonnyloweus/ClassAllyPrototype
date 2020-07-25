@@ -4,9 +4,11 @@
 let signupModal = document.getElementById("modal-signup");
 let loginModal = document.getElementById("modal-login");
 let accountModal = document.getElementById("modal-account");
+let classroomModal = document.getElementById("modal-classroom");
 
 let loginButton = document.getElementById("loginButton");
 let signupButton = document.getElementById("signupButton"); 
+let addClassroom = document.getElementById("addClassroom"); 
 
 let logoutButton = document.getElementById("logoutButton");
 let accountInfoButton = document.getElementById("accountInfoButton");
@@ -16,32 +18,31 @@ let accountDetails = document.getElementById("account-details");
 let closeLog = document.getElementById("closeLog");
 let closeSign = document.getElementById("closeSign");
 let closeAccount = document.getElementById("closeAccount");
+let closeRooms = document.getElementById("closeRooms");
 
 //#################################################################################
 //###########################  Onclick Functions  #################################
 //#################################################################################
 
 loginButton.onclick = function(){
+    closePops();
     loginModal.style.display = "block";
-    signupModal.style.display = "none";
-    accountModal.style.display = "none";
 }
 
 signupButton.onclick = function(){
-    loginModal.style.display = "none";
+    closePops();
     signupModal.style.display = "block";
-    accountModal.style.display = "none";
 }
 
 accountInfoButton.onclick = function(){
+    closePops();
     accountModal.style.display = "block";
-    loginModal.style.display = "none";
-    signupModal.style.display = "none";
 }
 
 closeLog.onclick = function(){closePops()};
 closeSign.onclick = function(){closePops()};
 closeAccount.onclick = function(){closePops()};
+closeRooms.onclick = function(){closePops()};
 
 //#################################################################################
 //###########################  Utility Functions  #################################
@@ -50,6 +51,7 @@ function closePops(){
     loginModal.style.display = "none";
     signupModal.style.display = "none";
     accountModal.style.display = "none";
+    classroomModal.style.display = "none";
 }
 
 function setupInfo(user){
