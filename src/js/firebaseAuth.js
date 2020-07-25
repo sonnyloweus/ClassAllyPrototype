@@ -61,6 +61,7 @@ logoutButton.addEventListener('click', (e) => {
     e.preventDefault();
     auth.signOut().then(() => {
         console.log("User signed out");
+        location.reload();
         //front end stuff
     });
 })

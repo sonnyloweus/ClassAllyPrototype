@@ -7,22 +7,39 @@
         <h4>Sign up</h4><br />
 
         <form id="signup-form">
-          <div class="input-field">
-            <input type="email" id="signup-email" required />
+          <div class="field">
             <label for="signup-email">Email address</label>
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" id="signup-email" placeholder="Email" required/>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </p>
           </div>
-          <div class="input-field">
-            <input type="password" id="signup-password" required />
-            <label for="signup-password">Choose password</label>
+          <div class="field">
+            <label for="signup-password">Your password</label>
+            <p class="control has-icons-left">
+              <input class="input" type="password" id="signup-password" placeholder="Password" required/>
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
           </div>
-          <div class="input-field">
-            <select id="signup-school" name="School" aria-placeholder="Select School">
-              <option selected disabled value="">Select Your School</option>
-              <option value="Bellarmine">Bellarmine</option>   
-            </select>
+          <div class="field">
             <label for="signup-school">Choose School</label>
+            <div class="control has-icons-left">
+              <div class="select">
+                <select id="signup-school" >
+                  <option selected disabled value="">Select Your School</option>
+                  <option value="Bellarmine">Bellarmine</option>  
+                </select>
+              </div>
+              <div class="icon is-small is-left">
+                <i class="fas fa-school"></i>
+              </div>
+            </div>
           </div>
-          <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+          <button class="btn yellow darken-2 z-depth-0">Sign Up</button>
         </form>
 
       </div>
@@ -35,17 +52,29 @@
       <div class="tile is-child box">
         <button id="closeSign" class="button is-danger fa fa-times fa-lg closePopups"></button>
         <h4>Login</h4><br />
+
         <form id="login-form">
-          <div class="input-field">
-            <input type="email" id="login-email" required />
+          <div class="field">
             <label for="login-email">Email address</label>
+            <p class="control has-icons-left has-icons-right">
+              <input class="input" type="email" id="login-email" placeholder="Email" required/>
+              <span class="icon is-small is-left">
+                <i class="fas fa-envelope"></i>
+              </span>
+            </p>
           </div>
-          <div class="input-field">
-            <input type="password" id="login-password" required />
+          <div class="field">
             <label for="login-password">Your password</label>
+            <p class="control has-icons-left">
+              <input class="input" type="password" id="login-password" placeholder="Password" required/>
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </p>
           </div>
           <button class="btn yellow darken-2 z-depth-0">Login</button>
         </form>
+
       </div>
     </div>
   </div>

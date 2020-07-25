@@ -10,13 +10,22 @@
       </li>
     </div>
     <div class="loggedInButtons">
+      <h1 class="status">Logged In</h1>
+
+      <div class="authorizeSection">
+        <p>Please authorize the API by clicking the button below and logging in to zoom. You only need to do this once.
+        </p>
+        <button class="button is-primary" id="authorize">Authorize App</button>
+      </div>
+
+      <p id="access_token">Authorization code: </p>
+      
       <li><a role="button" class="button is-info is-outlined" data-target="modal-logout" id="logoutButton">Log Out</a>
       </li>
       <li><a role="button" class="button is-info is-outlined" data-target="modal-accountInfo" id="accountInfoButton">My
           Account</a></li>
     </div>
   </ul>
-
 
   <div class="meetings">
     <h1 id="meetingsTitle">Schedule</h1>

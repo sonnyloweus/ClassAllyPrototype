@@ -13,10 +13,33 @@
     margin-top: 20px;
 }
 
+#navbarLeft ul{
+    position: absolute;
+    top: 8vh;
+    left: 3vw;
+    width: 5vw;
+    overflow: hidden;
+    transition: 1s;
+}
+
+#navbarLeft:hover{
+    width:20vw;
+}
+
+#navbarLeft:hover ul{
+    left: 1vw;
+    width:20vw;
+}
+
+
+#navbarLeft:hover .triangle-right{
+    left: 19.5vw;
+}
+
 #navbarLeft ul li a{
     border-radius: 15px !important;
     color: #aaa8a8;
-    background-color: white;
+    background-color: transparent;
     border: none !important;
 }
 
@@ -25,10 +48,16 @@
     left: 9.5vw;
     top: 10vh;
     border-radius: 15px;
-
     width: 0;
     height: 0;
     border-top: 2.5vw solid transparent;
     border-left: 3vw solid white;
     border-bottom: 2.5vw solid transparent;
+    transition: 1s;
+}
+
+.menuText{
+    color: #2F80ED;
+    font-size: 1.4vw;
+    text-shadow: -4px 4px 10px rgba(0, 0, 0, 0.4);
 }
