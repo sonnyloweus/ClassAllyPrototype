@@ -5,10 +5,12 @@ let signupModal = document.getElementById("modal-signup");
 let loginModal = document.getElementById("modal-login");
 let accountModal = document.getElementById("modal-account");
 let classroomModal = document.getElementById("modal-classroom");
+let studentModal = document.getElementById("modal-students");
 
 let loginButton = document.getElementById("loginButton");
 let signupButton = document.getElementById("signupButton"); 
 let addClassroom = document.getElementById("addClassroom"); 
+let addStudents = document.getElementById("addStudents"); 
 
 let logoutButton = document.getElementById("logoutButton");
 let accountInfoButton = document.getElementById("accountInfoButton");
@@ -19,6 +21,7 @@ let closeLog = document.getElementById("closeLog");
 let closeSign = document.getElementById("closeSign");
 let closeAccount = document.getElementById("closeAccount");
 let closeRooms = document.getElementById("closeRooms");
+let closeStudents = document.getElementById("closeStudents");
 
 //#################################################################################
 //###########################  Onclick Functions  #################################
@@ -43,6 +46,7 @@ closeLog.onclick = function(){closePops()};
 closeSign.onclick = function(){closePops()};
 closeAccount.onclick = function(){closePops()};
 closeRooms.onclick = function(){closePops()};
+closeStudents.onclick = function(){closePops()};
 
 //#################################################################################
 //###########################  Utility Functions  #################################
@@ -52,6 +56,7 @@ function closePops(){
     signupModal.style.display = "none";
     accountModal.style.display = "none";
     classroomModal.style.display = "none";
+    studentModal.style.display = "none";
 }
 
 function setupInfo(user){

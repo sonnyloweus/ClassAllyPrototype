@@ -5,4 +5,90 @@
         </span>
         <p>Add</p>
     </a>
+
+    <div id="studentsList">
+
+
+    </div>
 </div>
+
+<script>
+    let colors = ["#F2C94C"];
+    // , "#6FCF97", "#56CCF2", "#F2994A", "#EA8A8A", "#DAABEC"
+
+    let addStudents = document.getElementById("addStudents"); 
+    addStudents.onclick = function () {
+        closePops();
+        studentModal.style.display = "block";
+    }
+
+    const studentsForm = document.getElementById("students-form");
+    studentsForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        //get User info
+        const name = studentsForm['student-name'].value;
+        const email = studentsForm['student-email'].value;
+        db.collection('users').doc(userId).get().then(doc => {
+            currentStudents = doc.data().students;
+            if (currentStudents.length == 0) currentStudents = [];
+            let newStudents = {
+                "name": name,
+                "email": email,
+            }
+            console.log(doc.data().students);
+            currentStudents.push(newStudents);
+            db.collection('users').doc(userId).update({
+                students: currentStudents
+            }).then(() => {
+                // console.log("clicked");
+                studentsForm.reset();
+                closePops();
+                drawStudents();
+            });
+        });
+    });
+
+    let studentsListHTML = document.getElementById("studentsList");
+    function drawStudents(){
+        db.collection('users').doc(userId).get().then(doc => {
+            currentStudents = doc.data().students;
+            let numStudents = currentStudents.length;
+            studentsListHTML.innerHTML = "";
+            for(let i = (numStudents-1); i >= 0; i--){
+                //9 character limit for one line
+                let tempName = currentStudents[i]["name"];
+                let tempEmail = currentStudents[i]["email"];
+                let splitName = tempName.split(" ");
+                let tempString = "";
+                let tempStringSum = "";
+                for(let i = 0; i < splitName.length; i++){
+                    tempString = splitName[i];
+                    if (splitName[i].length > 9 ) {
+                        tempString = splitName[i].substring(0, 9) + "..";
+                    }
+                    if(i <= 1){
+                        tempStringSum += tempString + " ";
+                    }
+                }
+                tempName = tempStringSum;
+                let tempIndex = i % colors.length;
+                studentsListHTML.innerHTML = studentsListHTML.innerHTML + `
+                    <div class="studentDiv">
+                        <div style="background-color: ` + colors[tempIndex] + `" class="studentDivSide"></div>
+                        <div class="studentDivMain">
+                            <span class="icon">
+                                <i style="color: rgb(219, 212, 212); font-size: 60px;" class="fas fa-user-alt"></i>
+                            </span>
+                            <div style="font-size: 15px;"><p id="name`+ i +`">` + tempName + `</p></div>
+                        </div>
+                    </div>
+                `;
+                let tempId = "name" + i;
+            }
+        });
+    }
+
+    if(typeof(userId) !== 'undefined' && userId != 0){
+        drawStudents();
+    }
+</script>

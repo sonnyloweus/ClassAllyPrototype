@@ -8,10 +8,11 @@
     background-color: white;
     transition: 1s;
     z-index: 2;
+    box-shadow: -4px 0px 20px gray;
 }
 
 #navbarLeft ul li{
-    margin-top: 20px;
+    margin-top: 3vh;
 }
 
 #navbarLeft ul{
@@ -25,20 +26,32 @@
 
 #navbarLeft:hover{
     width:20vw;
+    transition-delay:0.3s;
 }
 
 #navbarLeft:hover ul{
     left: 1vw;
     width:20vw;
+    transition-delay:0.3s;
 }
 
 
 #navbarLeft:hover .triangle-right{
     left: 19.5vw;
+    transition-delay:0.3s;
 }
+
+#navbarLeft:hover .menuText{
+    visibility: visible;
+    opacity: 1;
+}
+
 
 #navbarLeft ul li span{
     transition: 0.3s;
+    width: 4vw;
+    height: 4vw;
+    font-size: 1.4vw;
 }
 
 #navbarLeft ul li a{
@@ -59,10 +72,14 @@
     border-left: 3vw solid white;
     border-bottom: 2.5vw solid transparent;
     transition: 1s;
+    /* box-shadow: -4px 0px 20px gray; */
 }
 
 .menuText{
     color: #2F80ED;
     font-size: 1.4vw;
     text-shadow: -4px 4px 10px rgba(0, 0, 0, 0.4);
+    transition: visibility 1s, opacity 1s linear;
+    visibility: hidden;
+    opacity: 0;
 }

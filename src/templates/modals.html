@@ -116,24 +116,33 @@
           <div class="field">
             <label style="float: left;" for="class-num">Period Num</label>
             <p class="control has-icons-left">
-              <input style="float: left; width: 50%;" class="input" type="number" id="class-num" placeholder="Per"
+              <input style="float: left; width: 70%;" class="input" type="number" id="class-num" placeholder="Per"
                 required />
               <span class="icon is-small is-left">
                 <i class="fas fa-sort-numeric-up-alt"></i>
               </span>
             </p>
           </div>
-          <div class="field">
-            <label for="class-students">Students</label>
+          <div class="field has-addons">
             <datalist id="class-students">
-              <!-- <option value="Internet Explorer"> -->
+              <!-- <option value="1234567890123456789012345"> -->
             </datalist>
-            <p style="margin-left: -45%; width:145%" class="control has-icons-left">
-              <input class="input" type="text" placeholder="Search Students" list="class-students">
-              <span class="icon is-small is-left">
-                <i class="fas fa-school"></i>
-              </span>
-            </p>
+
+            <div class="field has-addons">
+              <label for="classStudentsInput">Students</label>
+              <div style="margin-top: 24px; margin-left:-35%; margin-right: 0px; width:135%; float: right; "  class="control has-icons-left">
+                <input id="classStudentsInput" class="input" type="text" placeholder="Search" list="class-students">
+                <span class="icon is-small is-left">
+                  <i class="fas fa-school"></i>
+                </span>
+              </div>
+              <div style="margin-top: 24px; " class="control">
+                <a class="button is-info" id="addStudentClass">
+                  Add
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
         <div id="addedStudents">
@@ -143,7 +152,41 @@
         <button class="button is-link">Add</button>
       </form>
 
-      <!-- <h3 id="classroomError"></h3> -->
+      <h3 style="margin-top: 10px;" class="is-size-7" id="classroomMessage"></h3>
+    </div>
+  </div>
+</div>
+
+<!-- ADD STUDENTS MODAL -->
+<div id="modal-students" class="popupBox tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
+      <button id="closeStudents" class="button is-danger fa fa-times fa-lg closePopups"></button>
+      <h4>Students</h4><br />
+
+      <form id="students-form">
+        <div class="field">
+          <label for="student-name">Student Name</label>
+          <p class="control has-icons-left">
+            <input class="input" type="text" id="student-name" placeholder="Name" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-user-alt"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <label for="student-email">Zoom Email</label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" id="student-email" placeholder="Email" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+        <button class="button is-link">Add</button>
+      </form>
+
+      <h3 id="studentMessage"></h3>
     </div>
   </div>
 </div>

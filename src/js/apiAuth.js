@@ -123,16 +123,17 @@ let authURL = "https://zoom.us/oauth/authorize?response_type=code&client_id=" + 
 
 let authorizeButton = document.getElementById("authorize");
 authorizeButton.onclick = function () {
+    // opn(authURL);
     let popup = window.open(
         authURL, "Zoom Authentication",
         "height=600,width=800,modal=yes,alwaysRaised=yes,frame=true");
-    console.log(authURL);
+    // console.log();
 
     let checkCode = setInterval(function () {
         var url = popup.location.href;
         let params = (new URL(url)).searchParams;
         authCode = params.get('code')
-
+        console.log(url);
         if (authCode != null) {
             popup.close();
             clearInterval(checkCode);

@@ -5,16 +5,75 @@
         </span>
         <p>Add</p>
     </a>
+
+    <div id="classroomsList">
+        
+    </div>
+
 </div>
 
 <script>
     let addClassroom = document.getElementById("addClassroom");
     let currentRooms = "";
-    let studentsList = "";
+    let studentsList = [];
+    let classStudents = document.getElementById("class-students");
+    let classroomMessage = document.getElementById("classroomMessage");
+    let addStudentClass = document.getElementById("addStudentClass");
+    let addedStudentsHTML = document.getElementById("addedStudents");
+    let allStudentOptions = [];
+    let colors = ["#F2C94C", "#6FCF97", "#56CCF2", "#F2994A", "#EA8A8A", "#DAABEC"];
+
     addClassroom.onclick = function () {
         closePops();
         classroomModal.style.display = "block";
-        studentsList = "";
+        studentsList = [];
+
+        loadStudents();
+    }
+
+    function removeStudent(e){
+        let tempName = e.innerText;
+        let tempIndex = studentsList.indexOf(tempName);
+        studentsList.splice(tempIndex, 1);
+        $(e).remove();
+        console.log(studentsList);
+    }
+
+    addStudentClass.onclick = function(){
+        let tempValue = addClassroomForm["classStudentsInput"].value;
+        // console.log(tempValue);
+        if(studentsList.includes(tempValue)){
+            classroomMessage.innerText = "Student is already added to list.";
+        }else if(allStudentOptions.includes(tempValue)){
+            studentsList.push(tempValue);
+            classroomMessage.innerText = "";
+            addedStudentsHTML.innerHTML = addedStudentsHTML.innerHTML + "<p onclick='removeStudent(this)'>" + tempValue  + ",</p> ";
+            addClassroomForm["classStudentsInput"].value = "";
+        }else{
+            classroomMessage.innerText = "Cannot find Student Selected. Please search and click on corrosponding student in the dropdown. You can add students in the students section. You can always add students later.";
+        }
+    }
+
+    function loadStudents(){
+        addedStudentsHTML.innerHTML = "";
+        db.collection('users').doc(userId).get().then(doc => {
+            currentStudents = doc.data().students;
+            let numStudents = currentStudents.length;
+            classStudents.innerHTML = "";
+            allStudentOptions = [];
+            for(let i = (numStudents-1); i >= 0; i--){
+                //9 character limit for one line
+                let tempName = currentStudents[i]["name"];
+                if(tempName.length > 20){
+                    tempName = tempName.substring(0, 20) + "..";
+                }
+                allStudentOptions.push(tempName);
+
+                classStudents.innerHTML = classStudents.innerHTML + `
+                    <option value="`+ tempName +`">
+                `;
+            }
+        });
     }
 
     const addClassroomForm = document.getElementById("addClassroomForm");
@@ -22,23 +81,58 @@
         e.preventDefault();
         //get User info
         const name = addClassroomForm['class-name'].value;
-        const periodNum = addClassroomForm['class-nu '].value;
-
+        const periodNum = addClassroomForm['class-num'].value;
         db.collection('users').doc(userId).get().then(doc => {
-            currentRooms = `${doc.data().classrooms}`;
-            if (currentRooms == 'undefined') currentRooms = "";
+            currentRooms = doc.data().classrooms;
+            if (currentRooms.length == 0) currentRooms = [];
             let newRoom = {
                 "name": name,
                 "period": periodNum,
                 "students": studentsList
             }
-            console.log(currentRooms);
+            console.log(doc.data().classrooms);
+            currentRooms.push(newRoom);
             db.collection('users').doc(userId).update({
-                classrooms: currentRooms + newRoom
+                classrooms: currentRooms
             }).then(() => {
-                console.log("clicked");
+                // console.log("clicked");
+                addClassroomForm.reset();
+                closePops();
+                drawClassrooms();
             });
         });
     });
 
+
+    
+    let classroomsList = document.getElementById("classroomsList");
+
+    function drawClassrooms(){
+        db.collection('users').doc(userId).get().then(doc => {
+            currentClassrooms = doc.data().classrooms;
+            let numClasses = currentClassrooms.length;
+            classroomsList.innerHTML = "";
+            for(let i = (numClasses-1); i >= 0; i--){
+                //9 character limit for one line
+                let tempTitle = currentClassrooms[i]["name"];
+                let tempPeriod = currentClassrooms[i]["period"];
+                let tempStudents = currentClassrooms[i]["students"];
+                let tempIndex = i % colors.length;
+                classroomsList.innerHTML = classroomsList.innerHTML + `
+                    <div class="classroomDiv">
+                        <div style="background-color: ` + colors[tempIndex] + `;" class="classroomDivSide"></div>
+                        <div class="classroomDivMain">
+                            <div style="font-weight: bold; font-size: 20px;"><p id="title">` + tempTitle + `</p></div>
+                            <div><p class="period" id="period"> Period: ` + tempPeriod + `</p></div>
+                            <div><p style="margin-left: 20px; text-align: left; font-size: 15px;" id="studentCount">` + tempStudents.length + ` Students </p></div>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+    }
+
+    if(typeof(userId) !== 'undefined' && userId != 0){
+        drawClassrooms();
+    }
 </script>

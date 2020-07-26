@@ -36,10 +36,29 @@
   display: none;
 }
 
+#modal-students {
+  display: none;
+}
+
 #addedStudents{
   width: 100%;
   border: 0.5px solid rgb(180, 176, 176);
   border-radius: 10px;
   overflow: auto;
-  height: 10vh;
+  height: 15vh;
+}
+
+#addedStudents p{
+  display: inline-block;
+  font-size: 15px;
+}
+
+#addedStudents p:hover{
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+#classStudentsInput{
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }

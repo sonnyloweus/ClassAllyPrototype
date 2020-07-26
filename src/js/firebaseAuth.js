@@ -32,6 +32,9 @@ auth.onAuthStateChanged(user => {
                 // console.log("auto refresh detect");
                 refreshToken();
             }
+            if ($("#classroomButton").hasClass('activePageButton')){
+                drawClassrooms();
+            }
 
         });
 
@@ -61,7 +64,8 @@ signupForm.addEventListener('submit', (e) => {
         return db.collection('users').doc(cred.user.uid).set({
             school: signupForm['signup-school'].value,
             refreshTok: 0,
-            classrooms: []
+            classrooms: [],
+            students: []
         });
     }).then(() => {
         // console.log(cred.user);
@@ -115,6 +119,8 @@ loginForm.addEventListener('submit', (e) => {
             let refToken = `${doc.data().refreshTok}`
             if(refToken == 0){
                 $('.authorizeSection').css('display', 'block');
+            }else{
+                $('.authorizeSection').css('display', 'none');
             }
         });
     }).then(() => {
@@ -136,5 +142,4 @@ loginForm.addEventListener('submit', (e) => {
         loginError.innerHTML = "<br>" + errorMessage;
     });
 });
-
 

@@ -1,0 +1,57 @@
+#studentsList {
+    position: fixed;
+    top: calc(6vh + 1.5rem);
+    left: 50%;
+    transform: translate(-50%);
+    /* border: 2px solid #FF7A51; */
+    height: calc(80vh - 1.5rem);
+    width: 67vw;
+    /* border-radius: 50px; */
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.studentDiv {
+    display: inline-block;
+    width: 125px;
+    height: 125px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.studentDivSide {
+    float: left;
+    width: 10px;
+    border-radius: 5px;
+    background-color: #F2C94C;
+    height: 100%;
+}
+
+.studentDivMain {
+    margin-top: 20px;
+    color: black;
+    float: right;
+    /* background-color: lightgray; */
+    width: calc(100% - 15px);
+    height: 100%;
+}
+
+#studentsList::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#studentsList::-webkit-scrollbar-thumb {
+    background: orange;
+    border-radius: 10px;
+}
+
+#studentsList::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}

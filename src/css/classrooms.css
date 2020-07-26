@@ -1,0 +1,60 @@
+#classroomsList {
+    position: fixed;
+    top: calc(6vh + 1.5rem);
+    left: 50%;
+    transform: translate(-50%);
+    /* border: 2px solid #FF7A51; */
+    height: calc(80vh - 1.5rem);
+    width: 67vw;
+    /* border-radius: 50px; */
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.classroomDiv {
+    display: inline-block;
+    width: 275px;
+    height: 175px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+.classroomDivSide {
+    float: left;
+    width: 20px;
+    border-radius: 10px;
+    background-color: #F2C94C;
+    height: 100%;
+}
+
+.classroomDivMain {
+    color: black;
+    float: right;
+    /* background-color: lightgray; */
+    width: calc(100% - 25px);
+    height: 100%;
+}
+
+.period{
+    font-size: 15px;
+}
+
+#classroomsList::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#classroomsList::-webkit-scrollbar-thumb {
+    background: orange;
+    border-radius: 10px;
+}
+
+#classroomsList::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}

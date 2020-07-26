@@ -9,7 +9,7 @@ let participants = document.getElementById("participants");
 let weekdays = ["Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"];
 
 //npm install --save open
-const open = require('open');
+const opn = require('opn');
 
 //#################################################################################
 //###############################  Html Func ######################################
@@ -163,7 +163,7 @@ function showInfo(idName){
 }
 
 function openURL(id){
-    open(id.title);
+    opn(id.title);
 }
 
 function meetingsFunc(body) {

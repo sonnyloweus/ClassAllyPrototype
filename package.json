@@ -48,6 +48,7 @@
     "express": "^4.17.1",
     "http": "0.0.1-security",
     "open": "^7.1.0",
+    "opn": "^6.0.0",
     "require": "^2.4.20"
   },
   "devDependencies": {
