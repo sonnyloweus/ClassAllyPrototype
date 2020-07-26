@@ -31,12 +31,17 @@
         loadStudents();
     }
 
+    //has an error with this *fixed!
     function removeStudent(e){
-        let tempName = e.innerText;
-        let tempIndex = studentsList.indexOf(tempName);
-        studentsList.splice(tempIndex, 1);
+        let tempName = e.innerText.substring(0, e.innerText.length - 1);
         $(e).remove();
-        console.log(studentsList);
+
+        let tempIndex = studentsList.indexOf(tempName);
+        console.log(e.innerText);
+        console.log(tempIndex);
+        studentsList.splice(tempIndex, 1);
+
+        console.log(studentsList)
     }
 
     addStudentClass.onclick = function(){
@@ -90,7 +95,7 @@
                 "period": periodNum,
                 "students": studentsList
             }
-            console.log(doc.data().classrooms);
+            // console.log(doc.data().classrooms);
             currentRooms.push(newRoom);
             db.collection('users').doc(userId).update({
                 classrooms: currentRooms
