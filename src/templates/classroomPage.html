@@ -37,8 +37,8 @@
         $(e).remove();
 
         let tempIndex = studentsList.indexOf(tempName);
-        console.log(e.innerText);
-        console.log(tempIndex);
+        // console.log(e.innerText);
+        // console.log(tempIndex);
         studentsList.splice(tempIndex, 1);
 
         console.log(studentsList)
@@ -122,6 +122,7 @@
                 let tempTitle = currentClassrooms[i]["name"];
                 let tempPeriod = currentClassrooms[i]["period"];
                 let tempStudents = currentClassrooms[i]["students"];
+                console.log(tempStudents);
                 let tempIndex = i % colors.length;
                 classroomsList.innerHTML = classroomsList.innerHTML + `
                     <div class="classroomDiv">
