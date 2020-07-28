@@ -127,7 +127,7 @@
 
     function enterClass(el){
         let parentDiv = el.parentNode.parentNode;
-        if (!$(parentDiv).hasClass('selectedStudent')) {
+        if (!$(parentDiv).hasClass('selectedClass')) {
             el.parentNode.innerHTML = `
                 <form id="editClassroomForm">
                     <div style="float: left; margin-left: 10px; width: 40%" class="formSides">
@@ -184,12 +184,12 @@
                     
                 </form>
 
-                <a title="Close without saving" style="background-color: red !important; bottom:-4px; right: 70px;" role="button" onclick="enterStudent(this)" class="enterClass button is-info" id="">
+                <a title="Close without saving" style="background-color: red !important; bottom:-4px; right: 70px;" role="button" onclick="enterClass(this)" class="enterClass button is-info" id="">
                 <span class="icon">
                         <i class="fas fa-times"></i>
                     </span>
                 </a>
-                <a title="delete student" style="background-color: red !important; bottom:-4px; right: 35px;" role="button" onclick="deleteStudent(this)" class="enterClass button is-info" id="">
+                <a title="delete student" style="background-color: red !important; bottom:-4px; right: 35px;" role="button" onclick="deleteClassroom(this)" class="enterClass button is-info" id="">
                     <span class="icon">
                         <i class="fas fa-trash-alt"></i>
                     </span>
@@ -199,6 +199,7 @@
             // const saveForm = document.getElementById("sav-students-form" + el.id + "");
             // saveForm.addEventListener('submit', (e) => {e.preventDefault(); saveStudent(saveForm, el.id)});
         } else {
+            // console.log("hi")
             drawClassrooms();
         }
         parentDiv.classList.toggle("selectedClass");
@@ -209,6 +210,7 @@
             currentClassrooms = doc.data().classrooms;
             let numClasses = currentClassrooms.length;
             classroomsList.innerHTML = "";
+
             for (let i = (numClasses - 1); i >= 0; i--) {
                 //9 character limit for one line
                 let tempTitle = currentClassrooms[i]["name"];
