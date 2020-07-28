@@ -106,6 +106,7 @@ function getToken() {
                 console.log("end of getting access token")
 
                 access_tokenHtml.innerHTML = 'Zoom Connection:<span class="icon"><i class="fas fa-check-square"></i></span>';
+                $(".meetings").css('display', 'block');
                 refreshToken();
             });
 

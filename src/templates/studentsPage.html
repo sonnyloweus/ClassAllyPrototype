@@ -16,7 +16,7 @@
     let colors = ["#F2C94C"];
     // , "#6FCF97", "#56CCF2", "#F2994A", "#EA8A8A", "#DAABEC"
 
-    let addStudents = document.getElementById("addStudents"); 
+    let addStudents = document.getElementById("addStudents");
     addStudents.onclick = function () {
         closePops();
         studentModal.style.display = "block";
@@ -25,70 +25,154 @@
     const studentsForm = document.getElementById("students-form");
     studentsForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        //get User info
         const name = studentsForm['student-name'].value;
         const email = studentsForm['student-email'].value;
-        db.collection('users').doc(userId).get().then(doc => {
-            currentStudents = doc.data().students;
-            if (currentStudents.length == 0) currentStudents = [];
-            let newStudents = {
-                "name": name,
-                "email": email,
-            }
-            console.log(doc.data().students);
-            currentStudents.push(newStudents);
-            db.collection('users').doc(userId).update({
-                students: currentStudents
+
+        let subCollect = db
+            .collection("users").doc(userId).collection("students").add({
+                name: name,
+                email: email
             }).then(() => {
-                // console.log("clicked");
                 studentsForm.reset();
                 closePops();
                 drawStudents();
             });
-        });
     });
 
     let studentsListHTML = document.getElementById("studentsList");
-    function drawStudents(){
-        db.collection('users').doc(userId).get().then(doc => {
-            currentStudents = doc.data().students;
-            let numStudents = currentStudents.length;
+
+    function enterStudent(el) {
+        let parentDiv = el.parentNode.parentNode;
+        let tempName = $(parentDiv).find('#tempStudentName').text();
+        let tempEmail = $(parentDiv).find('#tempStudentEmail').text();
+        if (!$(parentDiv).hasClass('selectedStudent')) {
+            parentDiv.innerHTML = `
+                <div class="studentDivSide"></div>
+                <div class="studentDivMain">  
+
+                    <form id="sav-students-form`+ el.id +`">
+                        <div class="field">
+                        <label for="student-name">Edit Student</label>
+                        <p class="control has-icons-left">
+                            <input class="input is-small" type="text" id="student-name" value="` + tempName + `" required />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-user-alt"></i>
+                            </span>
+                        </p>
+                        </div>
+                        <div class="field">
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input is-small" type="email" id="student-email" value="` + tempEmail +
+                `" required />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-envelope"></i>
+                            </span>
+                        </p>
+                        </div>
+                        <button title="save changes" style="bottom:-10px; right: -10px;" role="button" class="enterStudent button is-info" id="` + el.id +
+                `">
+                            <span class="icon">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </button>
+                    </form>
+
+                    <a title="Close without saving" style="background-color: red !important; bottom:-10px; right: 40px;" role="button" onclick="enterStudent(this)" class="enterStudent button is-info" id="` +
+                    el.id +
+                `">
+                        <span class="icon">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </a>
+                    <a title="delete student" style="background-color: red !important; bottom:-10px; right: 15px;" role="button" onclick="deleteStudent(this)" class="enterStudent button is-info" id="`+ el.id + `">
+                        <span class="icon">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
+                    </a>
+                    
+                </div>
+            `;
+
+            const saveForm = document.getElementById("sav-students-form" + el.id + "");
+            saveForm.addEventListener('submit', (e) => {e.preventDefault(); saveStudent(saveForm, el.id)});
+        } else {
+            drawStudents();
+        }
+
+        parentDiv.classList.toggle("selectedStudent");
+    }
+
+    function deleteStudent(el){
+        let Id = el.id;
+        db.collection('users').doc(userId).collection("students").doc(Id).delete().then(function() {
+            drawStudents();
+            // console.log("Student successfully deleted.");
+        }).catch(function(error) {
+            // console.error("Error removing document: ", error);
+        });
+    }
+
+    function saveStudent(e, id){
+        // console.log(id);
+        //get User info
+        const name = e['student-name'].value;
+        const email = e['student-email'].value;
+        db.collection('users').doc(userId).collection('students').doc(id).update({
+            name: name,
+            email: email
+        }).then(() => {
+            drawStudents();
+        });
+    }
+
+    function drawStudents() {
+        db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
             studentsListHTML.innerHTML = "";
-            for(let i = (numStudents-1); i >= 0; i--){
+
+            snapshot.docs.forEach(function (doc, i) {
+                // console.log(doc.data().name);          
                 //9 character limit for one line
-                let tempName = currentStudents[i]["name"];
-                let tempEmail = currentStudents[i]["email"];
+                let tempName = doc.data().name;
+                let tempEmail = doc.data().email;
                 let splitName = tempName.split(" ");
                 let tempString = "";
                 let tempStringSum = "";
-                for(let i = 0; i < splitName.length; i++){
+
+                for (let i = 0; i < splitName.length; i++) {
                     tempString = splitName[i];
-                    if (splitName[i].length > 9 ) {
+                    if (splitName[i].length > 9) {
                         tempString = splitName[i].substring(0, 9) + "..";
                     }
-                    if(i <= 1){
+                    if (i <= 1) {
                         tempStringSum += tempString + " ";
                     }
                 }
                 tempName = tempStringSum;
-                let tempIndex = i % colors.length;
                 studentsListHTML.innerHTML = studentsListHTML.innerHTML + `
-                    <div class="studentDiv">
-                        <div style="background-color: ` + colors[tempIndex] + `" class="studentDivSide"></div>
-                        <div class="studentDivMain">
+                <div class="studentDiv">
+                    <div class="studentDivSide"></div>
+                    <div class="studentDivMain">
+                        <span class="icon">
+                            <i style="color: rgb(219, 212, 212); font-size: 60px;" class="fas fa-user-alt"></i>
+                        </span>
+                        <div id="tempStudentName" style="font-size: 15px;"><p>` + tempName + `</p></div>
+                        <div id="tempStudentEmail" style="display: none"><p>` + tempEmail + `</p></div>
+                        <a role="button" onclick="enterStudent(this)" class="enterStudent button is-info" id="` + doc
+                    .id + `">
                             <span class="icon">
-                                <i style="color: rgb(219, 212, 212); font-size: 60px;" class="fas fa-user-alt"></i>
+                            <i class="fas fa-arrow-right"></i>
                             </span>
-                            <div style="font-size: 15px;"><p id="name`+ i +`">` + tempName + `</p></div>
-                        </div>
+                        </a>
                     </div>
+                </div>
                 `;
-                let tempId = "name" + i;
-            }
+
+            });
+
         });
     }
 
-    if(typeof(userId) !== 'undefined' && userId != 0){
+    if (typeof (userId) !== 'undefined' && userId != 0) {
         drawStudents();
     }
 </script>

@@ -26,14 +26,32 @@ auth.onAuthStateChanged(user => {
             emailStatus.innerHTML = email[0] + "<br> @" + email[1];
 
             if(refToken == 0){
+                $(".meetings").css('display', 'none');
                 $('.authorizeSection').css('display', 'block');
             }else{
                 // console.log(refToken);
                 // console.log("auto refresh detect");
+                $(".meetings").css('display', 'block');
+                document.getElementById("meetings").innerHTML = `
+                    <h1 id="meetingsTitle">Schedule</h1>
+
+                    <div id="slider" class="slider">
+                
+                    <div id="AddSlides" class="slides">
+                
+                    </div>
+                        <a href="#slide" onclick='slide(this)'><span class="icon"><i class="fas fa-arrow-left"></i></span></a>
+                        <!-- <a href="#slide-1" onclick='slide(this)'>1</a> -->
+                        <!-- <a href="#slide-2" onclick='slide(this)'>2</a> -->
+                        <a href="#slide" onclick='slide(this)'><span class="icon"><i class="fas fa-arrow-right"></i></span></a>
+                    </div>
+                `;
                 refreshToken();
             }
             if ($("#classroomButton").hasClass('activePageButton')){
                 drawClassrooms();
+            }else if($("#studentButton").hasClass('activePageButton')){
+                drawStudents();
             }
 
         });
@@ -72,12 +90,13 @@ signupForm.addEventListener('submit', (e) => {
         console.log("User signed up/in");
         //after sign up
         $('.authorizeSection').css('display', 'block');
-        singUpError.innerText = "";
+        singUpError.innerHTML = "";
         signupForm.reset();
     });
 
     let errorMessage = 0;
     promise.catch(e => {errorMessage = e.message}).then(() => {
+        // console.log(errorMessage);
         singUpError.innerHTML = "<br>";
         if(errorMessage == "The email address is badly formatted."){
             errorMessage = "The email address is badly formatted"
@@ -85,8 +104,12 @@ signupForm.addEventListener('submit', (e) => {
             errorMessage = "Password should be at least 6 characters"
         }else if(errorMessage == "The email address is already in use by another account."){
             errorMessage = "The email address is already in use by another account."
+        } 
+        if(errorMessage == 0){
+            singUpError.innerHTML = "";
+        }else{
+            singUpError.innerHTML = "<br>" + errorMessage;
         }
-        singUpError.innerHTML = "<br>" + errorMessage;
     });
 });
 
@@ -127,7 +150,7 @@ loginForm.addEventListener('submit', (e) => {
         // console.log(cred.user);
         console.log("User signed in")
         //after sign up
-        loginError.innerText = "";
+        loginError.innerHTML = "";
         loginForm.reset();
     });
 
@@ -139,7 +162,12 @@ loginForm.addEventListener('submit', (e) => {
         }else if(errorMessage == "The password is invalid or the user does not have a password."){
             errorMessage = "Password is incorrect"
         }
-        loginError.innerHTML = "<br>" + errorMessage;
+
+        if(errorMessage == 0){
+            loginError.innerText = "";
+        }else{
+            loginError.innerHTML = "<br>" + errorMessage;
+        }
     });
 });
 

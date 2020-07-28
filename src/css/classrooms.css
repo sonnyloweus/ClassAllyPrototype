@@ -22,6 +22,7 @@
     background-color: white;
     border-radius: 20px;
     padding: 10px;
+    transition: 1s;
 }
 
 .classroomDivSide {
@@ -33,6 +34,7 @@
 }
 
 .classroomDivMain {
+    position:relative;
     color: black;
     float: right;
     /* background-color: lightgray; */
@@ -55,6 +57,63 @@
 }
 
 #classroomsList::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 10px;
+}
+
+.enterClass{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 28px;
+    /* background-color: #2F80ED !important; */
+    color: white !important;
+}
+
+.selectedClass{
+    width: calc(100% - 10px);
+}
+
+.selectedClass input{
+    margin-bottom: -15px;
+}
+
+.selectedClass .classroomDivMain {
+    margin-top: 0px;
+    font-size: 12px;
+}
+
+@media (max-width:750px) { 
+    .selectedClass{
+        width: calc(100% - 10px);
+        height: 200px;
+    }
+}
+
+.formSides{
+    display: inline-block;
+}
+
+.currentRoster{
+    width: 55%; 
+    border-radius: 10px;
+    height: 125px; 
+    border: 0.5px solid rgb(177, 171, 171);
+}
+
+.currentRoster::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.currentRoster::-webkit-scrollbar-thumb {
+    background: orange;
+    border-radius: 10px;
+}
+
+.currentRoster::-webkit-scrollbar-track {
     background: white;
     border-radius: 10px;
 }

@@ -168,8 +168,11 @@ function openURL(id){
 
 function meetingsFunc(body) {
     maxSlide = body.meetings.length;
+    let AddSlides = document.getElementById("AddSlides");
+    let slider = document.getElementById("slider");
+    console.log(maxSlide)
     for (let i = 1; i <= maxSlide; i++) {
-
+        console.log("creating")
         let meetObj = body.meetings[i - 1]
         // duration, id, join_url, start_time, topic
         let tempDuration = meetObj["duration"];

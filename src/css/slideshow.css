@@ -9,7 +9,8 @@
     transform:translate(-50%);
     width: 17vw;
     text-align: center;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .slides {
@@ -38,6 +39,20 @@
     background: transparent;
 }
 
+.slides>div::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.slides>div::-webkit-scrollbar-thumb {
+    background: orange;
+    border-radius: 10px;
+}
+
+.slides>div::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 .slides>div {
     scroll-snap-align: start;
     flex-shrink: 0;
@@ -58,10 +73,12 @@
     padding-top: 3px;
     transition: 1s;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .meetings:hover .slides>div {
     height:30vh;
+    overflow-y: auto;
 }
 .meetings:hover #meetingsTitle {
     bottom:40vh;

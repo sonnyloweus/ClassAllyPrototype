@@ -9,6 +9,7 @@
     border-top-left-radius: 40px;
     border-bottom-left-radius: 40px;
     transition: 1s;
+    box-shadow: 4px 0px 20px gray;
 }
 
 #navbarRight ul li{

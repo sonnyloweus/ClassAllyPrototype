@@ -7,7 +7,7 @@
     </a>
 
     <div id="classroomsList">
-        
+
     </div>
 
 </div>
@@ -16,11 +16,14 @@
     let addClassroom = document.getElementById("addClassroom");
     let currentRooms = "";
     let studentsList = [];
+
     let classStudents = document.getElementById("class-students");
     let classroomMessage = document.getElementById("classroomMessage");
     let addStudentClass = document.getElementById("addStudentClass");
     let addedStudentsHTML = document.getElementById("addedStudents");
+
     let allStudentOptions = [];
+    let allStudentOptionsID = [];
     let colors = ["#F2C94C", "#6FCF97", "#56CCF2", "#F2994A", "#EA8A8A", "#DAABEC"];
 
     addClassroom.onclick = function () {
@@ -32,7 +35,7 @@
     }
 
     //has an error with this *fixed!
-    function removeStudent(e){
+    function removeStudent(e) {
         let tempName = e.innerText.substring(0, e.innerText.length - 1);
         $(e).remove();
 
@@ -41,43 +44,49 @@
         // console.log(tempIndex);
         studentsList.splice(tempIndex, 1);
 
-        console.log(studentsList)
+        // console.log(studentsList)
     }
 
-    addStudentClass.onclick = function(){
+    addStudentClass.onclick = function () {
         let tempValue = addClassroomForm["classStudentsInput"].value;
         // console.log(tempValue);
-        if(studentsList.includes(tempValue)){
+        if (studentsList.includes(tempValue)) {
             classroomMessage.innerText = "Student is already added to list.";
-        }else if(allStudentOptions.includes(tempValue)){
+        } else if (allStudentOptions.includes(tempValue)) {
+
             studentsList.push(tempValue);
             classroomMessage.innerText = "";
-            addedStudentsHTML.innerHTML = addedStudentsHTML.innerHTML + "<p onclick='removeStudent(this)'>" + tempValue  + ",</p> ";
+            addedStudentsHTML.innerHTML = addedStudentsHTML.innerHTML + "<p onclick='removeStudent(this)'>" +
+                tempValue + ",</p> ";
             addClassroomForm["classStudentsInput"].value = "";
-        }else{
-            classroomMessage.innerText = "Cannot find Student Selected. Please search and click on corrosponding student in the dropdown. You can add students in the students section. You can always add students later.";
+
+        } else {
+            classroomMessage.innerText =
+                "Cannot find Student Selected. Please search and click on corrosponding student in the dropdown. You can add students in the students section. You can always add students later.";
         }
     }
 
-    function loadStudents(){
+    function loadStudents() {
         addedStudentsHTML.innerHTML = "";
-        db.collection('users').doc(userId).get().then(doc => {
-            currentStudents = doc.data().students;
-            let numStudents = currentStudents.length;
+        db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
             classStudents.innerHTML = "";
             allStudentOptions = [];
-            for(let i = (numStudents-1); i >= 0; i--){
+            allStudentOptionsID = [];
+            let tempList = snapshot.docs;
+            tempList.reverse();
+            tempList.forEach(doc => {
                 //9 character limit for one line
-                let tempName = currentStudents[i]["name"];
-                if(tempName.length > 20){
+                let tempName = doc.data().name;
+                if (tempName.length > 20) {
                     tempName = tempName.substring(0, 20) + "..";
                 }
                 allStudentOptions.push(tempName);
-
+                allStudentOptionsID.push(doc.id);
                 classStudents.innerHTML = classStudents.innerHTML + `
-                    <option value="`+ tempName +`">
+                <option value="` + tempName + `">
                 `;
-            }
+            });
+            // console.log(allStudentOptionsID)
         });
     }
 
@@ -90,6 +99,12 @@
         db.collection('users').doc(userId).get().then(doc => {
             currentRooms = doc.data().classrooms;
             if (currentRooms.length == 0) currentRooms = [];
+
+            for(let i = 0; i < studentsList.length; i++){
+                let tempIndex = allStudentOptions.indexOf(studentsList[i]);
+                studentsList[i] = allStudentOptionsID[tempIndex];
+            }
+            // console.log(studentsList);
             let newRoom = {
                 "name": name,
                 "period": periodNum,
@@ -103,26 +118,103 @@
                 // console.log("clicked");
                 addClassroomForm.reset();
                 closePops();
+                $("#currentPage").load("templates/classroomPage.html");
                 drawClassrooms();
             });
         });
     });
-
-
-    
     let classroomsList = document.getElementById("classroomsList");
 
-    function drawClassrooms(){
+    function enterClass(el){
+        let parentDiv = el.parentNode.parentNode;
+        if (!$(parentDiv).hasClass('selectedStudent')) {
+            el.parentNode.innerHTML = `
+                <form id="editClassroomForm">
+                    <div style="float: left; margin-left: 10px; width: 40%" class="formSides">
+                        <div class="field">
+                        <label for="class-name">Class Name</label>
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input is-small" type="text" id="class-name" placeholder="Class Name" required />
+                            <span class="icon is-small is-left">
+                            <i class="fas fa-chalkboard"></i>
+                            </span>
+                        </p>
+                        </div>
+
+                        <div class="field">
+                            <label style="" for="class-num">Period Num</label>
+                            <p class="control has-icons-left">
+                            <input style="" class="input is-small" type="number" id="class-num" placeholder="Per"
+                                required />
+                            <span class="icon is-small is-left">
+                                <i class="fas fa-sort-numeric-up-alt"></i>
+                            </span>
+                            </p>
+                        </div>
+                        
+                        <label for="classStudentsInput">Students</label>
+                        <div class="field has-addons">
+
+                            <!-- <label for="classStudentsInput">Students</label> -->
+                            <div style=""  class="control has-icons-left is-expanded">
+                                <input id="classStudentsInput" class="input is-small" type="text" placeholder="Search" list="class-students">
+                                <span class="icon is-small is-left">
+                                <i class="fas fa-school"></i>
+                                </span>
+                            </div>
+                            
+                            <div style="" class="control">
+                                <a class="button is-small is-info" id="">
+                                Add
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="currentStudents" class="formSides currentRoster">
+
+                    </div>
+                    <br>
+
+                    <button title="save changes" style="bottom:-4px; right: 0px;" role="button" class="enterClass button is-info" id="">
+                        <span class="icon">
+                            <i class="fas fa-check"></i>
+                        </span>
+                    </button>
+                    
+                </form>
+
+                <a title="Close without saving" style="background-color: red !important; bottom:-4px; right: 70px;" role="button" onclick="enterStudent(this)" class="enterClass button is-info" id="">
+                <span class="icon">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </a>
+                <a title="delete student" style="background-color: red !important; bottom:-4px; right: 35px;" role="button" onclick="deleteStudent(this)" class="enterClass button is-info" id="">
+                    <span class="icon">
+                        <i class="fas fa-trash-alt"></i>
+                    </span>
+                </a>
+            `;
+
+            // const saveForm = document.getElementById("sav-students-form" + el.id + "");
+            // saveForm.addEventListener('submit', (e) => {e.preventDefault(); saveStudent(saveForm, el.id)});
+        } else {
+            drawClassrooms();
+        }
+        parentDiv.classList.toggle("selectedClass");
+    } 
+
+    function drawClassrooms() {
         db.collection('users').doc(userId).get().then(doc => {
             currentClassrooms = doc.data().classrooms;
             let numClasses = currentClassrooms.length;
             classroomsList.innerHTML = "";
-            for(let i = (numClasses-1); i >= 0; i--){
+            for (let i = (numClasses - 1); i >= 0; i--) {
                 //9 character limit for one line
                 let tempTitle = currentClassrooms[i]["name"];
                 let tempPeriod = currentClassrooms[i]["period"];
                 let tempStudents = currentClassrooms[i]["students"];
-                console.log(tempStudents);
+                // console.log(tempStudents);
                 let tempIndex = i % colors.length;
                 classroomsList.innerHTML = classroomsList.innerHTML + `
                     <div class="classroomDiv">
@@ -130,7 +222,14 @@
                         <div class="classroomDivMain">
                             <div style="font-weight: bold; font-size: 20px;"><p id="title">` + tempTitle + `</p></div>
                             <div><p class="period" id="period"> Period: ` + tempPeriod + `</p></div>
-                            <div><p style="margin-left: 20px; text-align: left; font-size: 15px;" id="studentCount">` + tempStudents.length + ` Students </p></div>
+                            <div><p style="margin-left: 20px; text-align: left; font-size: 15px;" id="studentCount">` +
+                    tempStudents.length + ` Students </p></div>
+
+                            <a role="button" onclick="enterClass(this)" class="enterClass button is-info" id="">
+                                <span class="icon">
+                                <i class="fas fa-arrow-right"></i>
+                                </span>
+                            </a>
                         </div>
                     </div>
                 `;
@@ -138,7 +237,7 @@
         });
     }
 
-    if(typeof(userId) !== 'undefined' && userId != 0){
+    if (typeof (userId) !== 'undefined' && userId != 0) {
         drawClassrooms();
     }
 </script>
