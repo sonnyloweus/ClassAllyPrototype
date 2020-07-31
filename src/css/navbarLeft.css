@@ -18,6 +18,7 @@
 #navbarLeft ul{
     position: absolute;
     top: 8vh;
+    height: 84vh;
     left: 3vw;
     width: 5vw;
     overflow: hidden;

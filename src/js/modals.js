@@ -6,11 +6,14 @@ let loginModal = document.getElementById("modal-login");
 let accountModal = document.getElementById("modal-account");
 let classroomModal = document.getElementById("modal-classroom");
 let studentModal = document.getElementById("modal-students");
+let helpModal = document.getElementById("modal-tutorial");
+let createMeetingModal = document.getElementById("modal-createMeeting");
 
 let loginButton = document.getElementById("loginButton");
 let signupButton = document.getElementById("signupButton"); 
 let addClassroom = document.getElementById("addClassroom"); 
 let addStudents = document.getElementById("addStudents"); 
+let helpButton = document.getElementById("helpButton"); 
 
 let logoutButton = document.getElementById("logoutButton");
 let accountInfoButton = document.getElementById("accountInfoButton");
@@ -22,6 +25,8 @@ let closeSign = document.getElementById("closeSign");
 let closeAccount = document.getElementById("closeAccount");
 let closeRooms = document.getElementById("closeRooms");
 let closeStudents = document.getElementById("closeStudents");
+let closeTutorial = document.getElementById("closeTutorial");
+let closeCreateMeeting = document.getElementById("closeCreateMeeting");
 
 //#################################################################################
 //###########################  Onclick Functions  #################################
@@ -42,11 +47,18 @@ accountInfoButton.onclick = function(){
     accountModal.style.display = "block";
 }
 
+helpButton.onclick = function(){
+    closePops();
+    helpModal.style.display = "block";
+}
+
 closeLog.onclick = function(){closePops()};
 closeSign.onclick = function(){closePops()};
 closeAccount.onclick = function(){closePops()};
 closeRooms.onclick = function(){closePops()};
 closeStudents.onclick = function(){closePops()};
+closeTutorial.onclick = function(){closePops()};
+closeCreateMeeting.onclick = function(){closePops()};
 
 //#################################################################################
 //###########################  Utility Functions  #################################
@@ -57,6 +69,8 @@ function closePops(){
     accountModal.style.display = "none";
     classroomModal.style.display = "none";
     studentModal.style.display = "none";
+    helpModal.style.display = "none";
+    createMeetingModal.style.display = "none";
 }
 
 function setupInfo(user){
@@ -64,6 +78,7 @@ function setupInfo(user){
         // account info
         db.collection('users').doc(user.uid).get().then(doc => {
             const info = `
+                <h3> Name: ${doc.data().name} </h3>
                 <h3> Email: ${user.email} </h3>
                 <h3> School: ${doc.data().school} </h3>
             `;

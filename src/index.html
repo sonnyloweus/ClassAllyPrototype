@@ -1,99 +1,103 @@
 <!DOCTYPE html>
-<html">
+<html>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>API Tester</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
-    <script src="https://kit.fontawesome.com/98424b8b4f.js" crossorigin="anonymous"></script>
+<head>
+  <meta charset="UTF-8">
+  <title>API Tester</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+  <script src="https://kit.fontawesome.com/98424b8b4f.js" crossorigin="anonymous"></script>
 
-    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
 
-    <script>
-      window.$ = window.jQuery = require('./js/jquery.js');
-    </script>
+  <script>
+    window.$ = window.jQuery = require('./js/jquery.js');
+  </script>
 
-  </head>
+</head>
 
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
+<!-- ###################################################################################### -->
+<!-- ###################################################################################### -->
+<!-- ###################################################################################### -->
 
-  <body style="text-align:center; background-color: white !important;">
+<body style="text-align:center; background-color: white !important;">
 
-    <div class="bodyDiv">
+  <div class="bodyDiv">
 
-      <div id="navBarRightTemplate"></div>
-      <div id="navBarLeftTemplate"></div>
-      <div id="modalTemplate"></div>
+    <div id="navBarRightTemplate"></div>
+    <div id="navBarLeftTemplate"></div>
+    <div id="modalTemplate"></div>
 
-      <div id="mainBody" class="mainBody">
+    <div id="mainBody" class="mainBody">
 
-        <div id="currentPage"></div>
-
-      </div>
+      <div id="currentPage"></div>
 
     </div>
 
+  </div>
 
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
-    <script>
-      $("#navBarRightTemplate").load("templates/navRight.html");
-      $("#navBarLeftTemplate").load("templates/navLeft.html");
-      $("#modalTemplate").load("templates/modals.html");
-    </script>
 
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+  <!-- ###################################################################################### -->
+  <!-- ###################################################################################### -->
+  <!-- ###################################################################################### -->
+  <script>
+    $("#navBarRightTemplate").load("templates/navRight.html");
+    $("#navBarLeftTemplate").load("templates/navLeft.html");
+    $("#modalTemplate").load("templates/modals.html");
+  </script>
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
     https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
 
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyCvP4Bv3KmKyrUn5STNO0GtWeIxryWDWbc",
-        authDomain: "classally.firebaseapp.com",
-        databaseURL: "https://classally.com",
-        projectId: "classally",
-        appId: "1:411372173067:web:22317d448f7a8d09b0540e",
-        measurementId: "G-5V93BWFHW4"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyCvP4Bv3KmKyrUn5STNO0GtWeIxryWDWbc",
+      authDomain: "classally.firebaseapp.com",
+      databaseURL: "https://classally.firebaseio.com",
+      projectId: "classally",
+      storageBucket: "classally.appspot.com",
+      messagingSenderId: "411372173067",
+      appId: "1:411372173067:web:22317d448f7a8d09b0540e",
+      measurementId: "G-5V93BWFHW4"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
 
-      //make auth and firestore references
-      const auth = firebase.auth();
-      const db = firebase.firestore();
-    </script>
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
+    //make auth and firestore references
+    const auth = firebase.auth();
+    const rtdb = firebase.database();
+    const db = firebase.firestore();
+  </script>
+  <!-- ###################################################################################### -->
+  <!-- ###################################################################################### -->
+  <!-- ###################################################################################### -->
 
-    <script src="js/pageDynamics.js"></script>
-    <script src="js/modals.js"></script>
-    <script src="js/apiGadgets.js"></script>
-    <script src="js/apiAuth.js"></script>
-    <script src="js/firebaseAuth.js"></script>
-    <script src="js/render.js"></script>
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/modals.css">
-    <link rel="stylesheet" href="css/slideshow.css" />
-    <link rel="stylesheet" href="css/navbarRight.css" />
-    <link rel="stylesheet" href="css/navbarLeft.css" />
-    <link rel="stylesheet" href="css/students.css" />
-    <link rel="stylesheet" href="css/classrooms.css" />
+  <script src="js/pageDynamics.js"></script>
+  <script src="js/modals.js"></script>
+  <script src="js/apiGadgets.js"></script>
+  <script src="js/zoomAuth.js"></script>
+  <script src="js/firebaseAuth.js"></script>
+  <script src="js/render.js"></script>
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/slideshow.css" />
+  <link rel="stylesheet" href="css/navbarRight.css" />
+  <link rel="stylesheet" href="css/navbarLeft.css" />
+  <link rel="stylesheet" href="css/students.css" />
+  <link rel="stylesheet" href="css/classrooms.css" />
+  <link rel="stylesheet" href="css/tutorial.css" />
+  <!-- ###################################################################################### -->
+  <!-- ###################################################################################### -->
+  <!-- ###################################################################################### -->
 
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
-    <!-- ###################################################################################### -->
+</body>
 
-  </body>
-
-  </html>
+</html>

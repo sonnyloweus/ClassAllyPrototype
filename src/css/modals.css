@@ -40,6 +40,14 @@
   display: none;
 }
 
+#modal-createMeeting {
+  display: none;
+}
+
+#modal-tutorial {
+  display: none;
+}
+
 #addedStudents{
   width: 100%;
   border: 0.5px solid rgb(180, 176, 176);
@@ -61,4 +69,60 @@
 #classStudentsInput{
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
+}
+
+/* toggle button styling */
+
+#toggleSettings input[type=checkbox]{
+	height: 0;
+	width: 0;
+    visibility: hidden;
+}
+
+#toggleSettings label {
+	width: 70px;
+	height: 30px;
+	background: #d3d3d3;
+	display: block;
+	border-radius: 100px;
+    position: relative;
+    margin-top: -20px;
+}
+
+@media only screen and (max-width: 800px){
+    #toggleSettings label {
+        width: 50px;
+    } 
+}
+
+#toggleSettings label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 45px;
+	transition: 1s;
+}
+
+#toggleSettings input:checked + label {
+    background: #07e899;
+}
+
+#toggleSettings input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+#toggleSettings label:active:after {
+	width: 30px;
+}
+
+.toggle{
+    width: calc(95% - 80px);
+    position: absolute;
+    right: 20px;
+    margin-top: -26px;
 }

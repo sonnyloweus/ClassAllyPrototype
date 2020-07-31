@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>API Tester</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" />
+    <script src="https://kit.fontawesome.com/98424b8b4f.js" crossorigin="anonymous"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+
+    <script>
+        window.$ = window.jQuery = require('../js/jquery.js');
+    </script>
+
+</head>
+
+<body style="text-align:center; background-color: white !important;">
+
+    <div class="bodyDiv">
+
+        <div id="currentPage">
+            <div style="margin-top: -12px" id="meetingInfo">
+                <h1 id="topicHTML" style="font-weight: bold;" class="is-size-4">TitleTitle <br></h1>
+
+                <h3 id="idHTML">ID: &nbsp; </h3>
+                <h3 id="passwordID">Password: &nbsp;</h3>
+
+                <h3 style="line-height: 40px; display: inline-block; margin-right: 10px;">Copy Join URL:</h3>
+                <a id="copyJoinURL" onclick="copyText(this)"
+                    style="display: inline-block; border: none; color: white; background-color: orange;" role="button"
+                    class="button">
+                    <span class="icon">
+                        <i class="fas fa-clipboard"></i>
+                    </span>
+                </a>
+                <div id="copyValidation" style="display: none;">
+                    <span class="icon">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </div>
+                <br>
+                <br>
+                <a onclick="openURL(this)" id="startHTML" style="width: 90vw" role="button"
+                    class="button is-info is-medium">
+                    Start
+                    &nbsp;
+                    &nbsp;
+                    <span class="icon">
+                        <i class="fas fa-play"></i>
+                    </span>
+                </a>
+                <!-- <i class="fas fa-plus-circle"></i> -->
+            </div>
+
+            <a id="expandInfo" onclick="expand(this)" role="button" class="button is-outlined is-small">
+                <span class="icon">
+                    <i class="fas fa-minus-circle"></i>
+                </span>
+                &nbsp;
+                Info
+            </a>
+
+            <div style="display: none;" id="controlPanel">
+                <h3 style="font-weight: bold;">Attendance &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; App Track
+                </h3>
+                <div id="attendancePanel" class="controlSection">
+                    <a role="button" class="button controlButton is-medium is-danger">
+                        <span class="icon"><i class="fas fa-clipboard-list"></i></span>&nbsp;&nbsp;Roll
+                    </a>
+                    <a role="button" class="button controlButton is-medium is-danger" disabled>
+                        <span class="icon"><i class="fas fa-eraser"></i></span>&nbsp;&nbsp;Reset
+                    </a>
+                </div>
+                <div id="appTrack" class="controlSection">
+                    <a role="button" class="button controlButton is-medium is-link">
+                        <span class="icon"><i class="fas fa-chart-line"></i></span>&nbsp;&nbsp;Track
+                    </a>
+                    <a role="button" class="button controlButton is-medium is-link " disabled>
+                        <span class="icon"><i class="fas fa-lock"></i></i></span>&nbsp;&nbsp;Lock
+                    </a>
+                </div>
+
+
+                <h3 style="font-weight: bold; margin-top: 10px">Smart Chat</h3>
+                <div id="smartChat" class="controlSection">
+                    <a role="button" class="button controlButton is-medium is-success">
+                        <span class="icon"><i class="fas fa-eye"></i></span>&nbsp;&nbsp;Open
+                    </a>
+                    <a role="button" class="button controlButton is-medium is-success" disabled>
+                        <span class="icon"><i class="fas fa-lock"></i></span>&nbsp;&nbsp;Lock
+                    </a>
+
+                    <div style="margin-top: 7px" class="tabs is-centered is-small is-boxed">
+                        <ul>
+                            <li id="chat1nav" class="is-active"><a onclick="switchChat(this, 1)">General</a></li>
+                            <li id="chat2nav"><a onclick="switchChat(this, 2)">Resources</a></li>
+                            <li id="chat3nav"><a onclick="switchChat(this, 3)">Questions</a></li>
+                        </ul>
+                    </div>
+                    <div id="generalBox" class="messageBox">
+                        <!-- <div class="message">
+                            <p>Bob Sam 11:11pm</p>
+                            <p>generalBox</p>
+                        </div> -->
+                    </div>
+                    <div id="resourcesBox" class="messageBox">
+                        <!-- <div class="message">
+                            <p>Bob Sam 11:11pm</p>
+                            <p>resourcesBox</p>
+                        </div> -->
+                    </div>
+                    <div id="questionsBox" class="messageBox">
+                        <!-- <div class="message">
+                            <p>Bob Sam 11:11pm</p>
+                            <p>questionsBox</p>
+                        </div> -->
+                    </div>
+                    <form id="messageForm">
+                        <div style="margin-left: 10px; margin-right: 10px;" class="field has-addons">
+
+                            <div class="control is-expanded">
+                                <input id="messageContent" class="input" type="text" placeholder="Send A Message" required>
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    <span class="icon"><i class="fas fa-paper-plane"></i></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+                <h3 style="font-weight: bold; margin-top: 10px">Questions</h3>
+                <div id="questionsPanel" class="controlSection">
+                    <a role="button" class="button controlButton is-medium is-warning">
+                        <span class="icon"><i class="fas fa-comments"></i></span>&nbsp;&nbsp;Ask
+                    </a>
+                    <a role="button" class="button controlButton is-medium is-warning" disabled>
+                        <span class="icon"><i class="fas fa-redo"></i></span>&nbsp;&nbsp;Review
+                    </a>
+                </div>
+                <!-- <div class="controlSection"></div>
+                <div class="controlSection"></div> -->
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-database.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-analytics.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyCvP4Bv3KmKyrUn5STNO0GtWeIxryWDWbc",
+            authDomain: "classally.firebaseapp.com",
+            databaseURL: "https://classally.firebaseio.com/",
+            projectId: "classally",
+            storageBucket: "classally.appspot.com",
+            messagingSenderId: "411372173067",
+            appId: "1:411372173067:web:22317d448f7a8d09b0540e",
+            measurementId: "G-5V93BWFHW4"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        //make auth and firestore references
+        const auth = firebase.auth();
+        const rtdb = firebase.database();
+        const db = firebase.firestore();
+    </script>
+    <script src="../js/meetingPopout.js"></script>
+    <script src="../js/messaging.js"></script>
+    <link rel="stylesheet" href="../css/meetingPopout.css">
+</body>
+
+</html>

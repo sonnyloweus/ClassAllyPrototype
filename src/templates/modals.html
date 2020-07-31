@@ -8,6 +8,15 @@
 
       <form id="signup-form">
         <div class="field">
+          <label for="signup-name">Name</label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" id="signup-name" placeholder="Name" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-id-badge"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
           <label for="signup-email">Email address</label>
           <p class="control has-icons-left has-icons-right">
             <input class="input" type="email" id="signup-email" placeholder="Email" required />
@@ -187,6 +196,117 @@
       </form>
 
       <h3 id="studentMessage"></h3>
+    </div>
+  </div>
+</div>
+
+
+<!-- Tutorial MODAL -->
+<div id="modal-tutorial" class="popupBox tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
+      <button id="closeTutorial" class="button is-danger fa fa-times fa-lg closePopups"></button>
+
+      <h4 class="is-size-4">Tutorial</h4>
+        <div class="tutorial">
+          <h6>Steps:</h6>
+          <a href="#step-1">1</a>
+          <a href="#step-2">2</a>
+          <a href="#step-3">3</a>
+          <a href="#step-4">4</a>
+          <a href="#step-5">5</a>
+        
+          <div class="steps">
+            <div id="step-1">
+              1
+            </div>
+            <div id="step-2">
+              2
+            </div>
+            <div id="step-3">
+              3
+            </div>
+            <div id="step-4">
+              4
+            </div>
+            <div id="step-5">
+              5
+            </div>
+          </div>
+      </div>
+      <br />
+    </div>
+  </div>
+</div>
+
+<!-- Create Meeting MODAL -->
+<div id="modal-createMeeting" class="popupBox tile is-ancestor">
+  <div class="tile is-parent">
+    <div class="tile is-child box">
+
+      <button id="closeCreateMeeting" class="button is-danger fa fa-times fa-lg closePopups"></button>
+      <h4>Create Meeting</h4><br />
+
+      <form id="createMeeting-form">
+        <div class="field">
+          <label for="createMeeting-topic">Meeting Topic</label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="text" id="createMeeting-topic" value="" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-rocket"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <label for="createMeeting-email">Email address <p class="is-size-7">(default to account)</p></label>
+          <p class="control has-icons-left has-icons-right">
+            <input class="input" type="email" id="createMeeting-email" value="" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </p>
+        </div>
+        <div class="field">
+          <label for="createMeeting-password">Meeting password <p class="is-size-7">(max-length: 10)</p></label>
+          <p class="control has-icons-left">
+            <input class="input" type="password" id="createMeeting-password" maxlength="10" placeholder="Password" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+
+        <div style="margin-left: -10px" id="toggleSettings" class="field is-grouped is-grouped-centered">
+          <p class="control is-size-7">
+            Participant <br> Video
+          </p>
+          <p class="control is-size-7">
+            Mute Upon <br> Entry
+          </p>
+          <p class="control is-size-7">
+            Waiting <br> Room
+          </p>
+        </div>
+        <!-- participant_video, mute_upon_entry, waiting_room -->
+        <div id="toggleSettings" class="field is-grouped is-grouped-centered">
+          <p class="control">
+            <input type="checkbox" id="participant_video" />
+            <label for="participant_video"></label>
+          </p>
+          <p class="control">
+            <input type="checkbox" id="mute_upon_entry" checked/>
+            <label for="mute_upon_entry"></label>
+          </p>
+          <p class="control">
+            <input type="checkbox" id="waiting_room" checked/>
+            <label for="waiting_room"></label>
+          </p>
+        </div>
+
+        <button class="button is-link">Start</button>
+      </form>
+
+      <h3 id="singUpError"></h3>
     </div>
   </div>
 </div>

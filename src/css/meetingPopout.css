@@ -1,0 +1,212 @@
+html {
+    overflow: hidden !important;
+}
+
+body {
+    font-family: Comfortaa;
+    margin: auto;
+    max-width: 38rem;
+    padding: 2rem;
+}
+
+.bodyDiv {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    /* border-radius: 50px !important; */
+    background-color: #e9e6eb;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%);
+    padding-top: 50px;
+}
+
+
+.titlebar {
+    background-color: transparent !important;
+    height: 4vh !important;
+    color: black !important;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.action-menu-item {
+    color: black !important;
+    background-color: white !important;
+}
+
+.menubar-menu-container {
+    background-color: white !important;
+}
+
+.action-menu-item:last-of-type {
+    height: 35px !important;
+}
+
+.action-menu-item:hover {
+    color: white !important;
+    background-color: rgb(149, 149, 241) !important;
+}
+
+.window-controls-container {
+    filter: invert(1);
+}
+
+#controlPanel{
+    z-index: -1;
+    position: absolute;
+    top: 12vh;
+    left: 3vw;
+    /* left: 50%;
+    transform: translate(-50%); */
+}
+
+.controlSection{
+    border-radius: 20px;
+    width: 46vw;
+    height: 18vh;
+    /* border: 1px solid gray; */
+    display: inline-block;
+    background-color: #fcfafa !important;
+    /* box-shadow: 0px 0px 20px gray; */
+    margin-top: 1vh;
+}
+
+.controlButton{
+    border-radius: 40px;
+    border: none;
+    color: white !important;
+    margin-top: 15px !important;
+    /* background-color: gray !important; */
+    height: 40px;
+}
+
+#meetingInfo{
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    width: 102vw;
+    padding-top: 40px;
+    padding-bottom: 20px;
+    transform: translate(-50%);
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    /* border: 1px solid blue; */
+    transition: 0.3s;
+    overflow: hidden;
+    box-shadow: 0px 3px 20px gray;
+}
+
+#expandInfo{
+    display: inline-block; 
+    background-color: white;
+    color: rgb(122, 118, 118);
+    border-radius: 20px;
+    position: absolute; 
+    top: 33vh;
+    right: 20px;
+    border: 2px solid rgb(158, 155, 155);
+}
+
+#expandInfo:hover{
+    background-color: rgb(158, 155, 155);
+    color: white;
+}
+
+/* #attendancePanel {
+    background-color: orange !important;
+}
+
+#appTrack {
+    background-color: rgb(0, 107, 173) !important;
+} */
+
+#smartChat {
+    width: 95vw;
+    height: 45vh
+}
+
+#smartChat .controlButton{
+    margin-top: 1vh !important; 
+    height: 30px;
+}
+
+#questionsPanel {
+    width: 95vw;
+    height: 7.5vh
+}
+
+#messageContent{
+}
+
+#questionsPanel .controlButton{
+    margin-top: 1vh !important; 
+    height: 40px;
+}
+
+.messageBox{
+    width: 100%;
+    /* border: 1px solid gray; */
+    height: 60%;
+    margin-top: -20px;
+    text-align: left;
+    overflow-y: auto;
+    padding: 7px;
+    background-color: white;
+}
+
+.messageBox::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.messageBox::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+.messageBox::-webkit-scrollbar-thumb {
+    background: green;
+    border-radius: 10px;
+}
+
+.message{
+    margin-top: -10px;
+    background-color: white;
+}
+
+.is-active a{
+    color: black !important;
+    font-weight: bold !important;
+    background-color: transparent !important;
+}
+
+.message p{
+    line-height: 0.9;
+    word-wrap: break-word;
+}
+
+.message p:first-of-type{
+    color: blue;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: 40px;
+    margin-bottom: 0px; 
+}
+
+.message:first-of-type{
+    margin-top: 0px;
+}
+
+.message p:last-of-type{
+    font-size: 14.5px;
+    margin-left: 10px;
+}
+
+#resourcesBox{
+    display: none;
+}
+
+#questionsBox{
+    display: none;
+}

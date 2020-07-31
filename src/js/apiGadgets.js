@@ -1,15 +1,19 @@
 //#################################################################################
 //###############################  Variables ######################################
 //#################################################################################
+//npm install --save open
+const opn = require('opn');
+const { remote } = require('electron');
+// const { parse } = require('dotenv/types');
+
 let AddSlides = document.getElementById("AddSlides");
 let slider = document.getElementById("slider");
 let currentSlide = 1;
 let maxSlide = 6;
+let userEmail = 0;
 let participants = document.getElementById("participants");
 let weekdays = ["Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday"];
-
-//npm install --save open
-const opn = require('opn');
+let userName = "";
 
 //#################################################################################
 //###############################  Html Func ######################################
@@ -77,6 +81,17 @@ let listParticipants = {
     }
 }
 
+var createMeeting = {
+    "method": "POST",
+    "hostname": "api.zoom.us",
+    "port": null,
+    "path": "/v2/users/" + userEmail + "/meetings",
+    "headers": {
+        "content-type": "application/json",
+        "authorization": "Bearer " + access_token
+    }
+};
+
 //#################################################################################
 //##################################  Onclicks ####################################
 //#################################################################################
@@ -90,6 +105,59 @@ let listParticipants = {
 //#################################  Functions ####################################
 //#################################################################################
 
+function launchClass(el){
+    if(refToken != 0){
+        refreshToken();
+        closePops();
+        createMeetingModal.style.display = "block";
+
+        let dateObj = new Date();
+        let month = parseInt(dateObj.getMonth()) + 1;
+        let day = String(dateObj.getDate()).padStart(2, '0');
+        let year = dateObj.getFullYear();
+        let output = "- " + month + '/'+ day  + '/' + year;
+
+        document.getElementById("createMeeting-topic").value = el.id + " " + output;
+        document.getElementById("createMeeting-email").value = userEmail;
+        let participant_video = false;
+        let mute_upon_entry = true;
+        let waiting_room = true;
+        // console.log(document.getElementById("participant_video").checked)
+    }else{
+        alert("You need to authorize Zoom first!")
+    }
+}
+
+let participant_video = "";
+let mute_upon_entry =  "";
+let waiting_room = "";
+
+let topicName = "";
+let zoomEmail = "";
+let tempPassword  = "";
+let meetingType = 1;
+
+createMeetingForm = document.getElementById("createMeeting-form");
+createMeetingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // console.log("hi");
+    participant_video = createMeetingForm["participant_video"].checked;
+    mute_upon_entry =  createMeetingForm["mute_upon_entry"].checked;
+    waiting_room = createMeetingForm["waiting_room"].checked;
+
+    topicName = createMeetingForm["createMeeting-topic"].value;
+    zoomEmail = createMeetingForm["createMeeting-email"].value;
+    tempPassword  = createMeetingForm["createMeeting-password"].value;
+    meetingType = 1;
+
+    createMeeting["path"] = "/v2/users/"+ zoomEmail +"/meetings?";
+    createMeeting["headers"]["authorization"] = "Bearer " + access_token;
+
+    callAPI(createMeeting, "createMeeting");
+    closePops();
+    createMeetingForm.reset();
+});
+
 function callAPI(options, type) {
     var api = http.request(options, function (res) {
         var chunks = [];
@@ -100,15 +168,28 @@ function callAPI(options, type) {
 
         res.on("end", function () {
             var body = Buffer.concat(chunks);
-            body = JSON.parse(body)
-
+            // console.log(body.toString());
+            jsonBody = JSON.parse(body)
             if (type == "getMeetings") {
-                meetingsFunc(body);
+                meetingsFunc(jsonBody);
             } else if (type == "listParticipants") {
-                console.log(body);
+                // console.log(body);
+            }else if (type == "createMeeting"){
+                displayCreatedMeeting(jsonBody)
             }
         });
     });
+
+    if(type == "createMeeting"){
+        api.write(JSON.stringify({
+            "topic": topicName,
+            "password": tempPassword,
+            "type": meetingType,
+            "participant_video": participant_video,
+            "mute_upon_entry" : mute_upon_entry,
+            "waiting_room" : waiting_room
+        }));
+    }
 
     api.end();
 }
@@ -117,7 +198,7 @@ function copyText(id) {
     /* Get the text field */
     let temp = document.createElement("textarea");
     document.body.appendChild(temp);
-    console.log(id);
+    // console.log(id);
     temp.value = id.title;
     temp.select();
     document.execCommand("copy");
@@ -166,13 +247,36 @@ function openURL(id){
     opn(id.title);
 }
 
+function displayCreatedMeeting(body){
+    remote.BrowserWindow.getFocusedWindow().minimize();
+    console.log(body.topic);
+    let meetingInfo = {
+        "topic": body.topic,
+        "password": body.password,
+        "Id": body.id,
+        "joinURL": body.join_url,
+        "startURL": body.start_url,
+        "username": userName
+    }
+    let allInfoURL = new URLSearchParams(meetingInfo).toString();
+    let popup = window.open(
+        "templates/meetingPopout.html?" + allInfoURL, "Controls",
+        "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
+    popup.focus();
+    
+}
+
+// let popup = window.open(
+//     "templates/meetingPopout.html", "Controls",
+//     "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300");
+
 function meetingsFunc(body) {
     maxSlide = body.meetings.length;
     let AddSlides = document.getElementById("AddSlides");
     let slider = document.getElementById("slider");
-    console.log(maxSlide)
+    // console.log(maxSlide)
     for (let i = 1; i <= maxSlide; i++) {
-        console.log("creating")
+        // console.log("creating")
         let meetObj = body.meetings[i - 1]
         // duration, id, join_url, start_time, topic
         let tempDuration = meetObj["duration"];

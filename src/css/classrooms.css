@@ -34,7 +34,7 @@
 }
 
 .classroomDivMain {
-    position:relative;
+    position: relative;
     color: black;
     float: right;
     /* background-color: lightgray; */
@@ -42,7 +42,7 @@
     height: 100%;
 }
 
-.period{
+.period {
     font-size: 15px;
 }
 
@@ -61,7 +61,7 @@
     border-radius: 10px;
 }
 
-.enterClass{
+.enterClass {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -72,11 +72,11 @@
     color: white !important;
 }
 
-.selectedClass{
+.selectedClass {
     width: calc(100% - 10px);
 }
 
-.selectedClass input{
+.selectedClass input {
     margin-bottom: -15px;
 }
 
@@ -85,21 +85,21 @@
     font-size: 12px;
 }
 
-@media (max-width:750px) { 
-    .selectedClass{
+@media (max-width:750px) {
+    .selectedClass {
         width: calc(100% - 10px);
         height: 200px;
     }
 }
 
-.formSides{
+.formSides {
     display: inline-block;
 }
 
-.currentRoster{
-    width: 55%; 
+.currentRoster {
+    width: 55%;
     border-radius: 10px;
-    height: 125px; 
+    height: 125px;
     border: 0.5px solid rgb(177, 171, 171);
 }
 
@@ -116,4 +116,14 @@
 .currentRoster::-webkit-scrollbar-track {
     background: white;
     border-radius: 10px;
+}
+
+#currentStudents p {
+    display: inline-block;
+    font-size: 15px;
+}
+
+#currentStudents p:hover {
+    text-decoration: line-through;
+    cursor: pointer;
 }

@@ -134,7 +134,7 @@ authorizeButton.onclick = function () {
         var url = popup.location.href;
         let params = (new URL(url)).searchParams;
         authCode = params.get('code')
-        console.log(url);
+        // console.log(url);
         if (authCode != null) {
             popup.close();
             clearInterval(checkCode);

@@ -17,9 +17,12 @@ auth.onAuthStateChanged(user => {
         closePops();
         setupInfo(user);
         userId = user.uid;
+        userEmail = user.email;
+        // console.log(userEmail);
 
         db.collection('users').doc(user.uid).get().then(doc => {
 
+            userName = `${doc.data().name}`;
             let refToken = `${doc.data().refreshTok}`;
             let email = `${user.email}`;
             email = email.split("@");
@@ -49,9 +52,9 @@ auth.onAuthStateChanged(user => {
                 refreshToken();
             }
             if ($("#classroomButton").hasClass('activePageButton')){
-                drawClassrooms();
+                $("#currentPage").load("templates/classroomPage.html");
             }else if($("#studentButton").hasClass('activePageButton')){
-                drawStudents();
+                $("#currentPage").load("templates/studentsPage.html");
             }
 
         });
@@ -80,6 +83,7 @@ signupForm.addEventListener('submit', (e) => {
     //sign up the user, might take some time to complete, returns user credential
     const promise = auth.createUserWithEmailAndPassword(email, password).then(cred => {
         return db.collection('users').doc(cred.user.uid).set({
+            name: signupForm['signup-name'].value,
             school: signupForm['signup-school'].value,
             refreshTok: 0,
             classrooms: [],
