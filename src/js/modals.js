@@ -8,6 +8,7 @@ let classroomModal = document.getElementById("modal-classroom");
 let studentModal = document.getElementById("modal-students");
 let helpModal = document.getElementById("modal-tutorial");
 let createMeetingModal = document.getElementById("modal-createMeeting");
+let modalId = document.getElementById("modal-id");
 
 let loginButton = document.getElementById("loginButton");
 let signupButton = document.getElementById("signupButton"); 
@@ -27,6 +28,7 @@ let closeRooms = document.getElementById("closeRooms");
 let closeStudents = document.getElementById("closeStudents");
 let closeTutorial = document.getElementById("closeTutorial");
 let closeCreateMeeting = document.getElementById("closeCreateMeeting");
+// let closeId = document.getElementById("closeId");
 
 //#################################################################################
 //###########################  Onclick Functions  #################################
@@ -59,6 +61,7 @@ closeRooms.onclick = function(){closePops()};
 closeStudents.onclick = function(){closePops()};
 closeTutorial.onclick = function(){closePops()};
 closeCreateMeeting.onclick = function(){closePops()};
+// closeId.onclick = function(){closePops()};
 
 //#################################################################################
 //###########################  Utility Functions  #################################
@@ -71,6 +74,7 @@ function closePops(){
     studentModal.style.display = "none";
     helpModal.style.display = "none";
     createMeetingModal.style.display = "none";
+    modalId.style.display = "none";
 }
 
 function setupInfo(user){

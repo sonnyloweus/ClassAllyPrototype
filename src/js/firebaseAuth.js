@@ -25,12 +25,19 @@ auth.onAuthStateChanged(user => {
             userName = `${doc.data().name}`;
             let refToken = `${doc.data().refreshTok}`;
             let email = `${user.email}`;
+            let tempacc = `${doc.data().accessCode}`
             email = email.split("@");
             emailStatus.innerHTML = email[0] + "<br> @" + email[1];
 
             if(refToken == 0){
-                $(".meetings").css('display', 'none');
-                $('.authorizeSection').css('display', 'block');
+                if(tempacc != 0){
+                    // console.log(tempacc);
+                    $('.authorizeSection').css('display', 'none');
+                    getToken(tempacc);
+                }else{
+                    $(".meetings").css('display', 'none');
+                    $('.authorizeSection').css('display', 'block');
+                }
             }else{
                 // console.log(refToken);
                 // console.log("auto refresh detect");
@@ -49,6 +56,7 @@ auth.onAuthStateChanged(user => {
                         <a href="#slide" onclick='slide(this)'><span class="icon"><i class="fas fa-arrow-right"></i></span></a>
                     </div>
                 `;
+                console.log("calling refresh token");
                 refreshToken();
             }
             if ($("#classroomButton").hasClass('activePageButton')){
@@ -87,7 +95,8 @@ signupForm.addEventListener('submit', (e) => {
             school: signupForm['signup-school'].value,
             refreshTok: 0,
             classrooms: [],
-            students: []
+            students: [],
+            accessCode: 0
         });
     }).then(() => {
         // console.log(cred.user);
@@ -124,10 +133,39 @@ logoutButton.addEventListener('click', (e) => {
     e.preventDefault();
     auth.signOut().then(() => {
         console.log("User signed out");
+        clearMeetings();
         // location.reload();
         //front end stuff
     });
 })
+
+function logout(){
+    auth.signOut().then(() => {
+        console.log("User signed out");
+        modalId.style.display = "none";
+        clearMeetings();
+        // location.reload();
+        //front end stuff
+    });
+}
+
+function clearMeetings(){
+    let meetings = document.getElementById("meetings");
+    meetings.innerHTML = `
+        <h1 id="meetingsTitle">Schedule</h1>
+
+        <div id="slider" class="slider">
+
+        <div id="AddSlides" class="slides">
+
+        </div>
+        <a href="#slide" onclick='slide(this)'><span class="icon"><i class="fas fa-arrow-left"></i></span></a>
+        <!-- <a href="#slide-1" onclick='slide(this)'>1</a> -->
+        <!-- <a href="#slide-2" onclick='slide(this)'>2</a> -->
+        <a href="#slide" onclick='slide(this)'><span class="icon"><i class="fas fa-arrow-right"></i></span></a>
+        </div>
+    `;
+}
 
 //#################################################################################
 //################################  Log In  #######################################
@@ -144,8 +182,13 @@ loginForm.addEventListener('submit', (e) => {
     const promise = auth.signInWithEmailAndPassword(email, password).then(cred => {
         return db.collection('users').doc(cred.user.uid).get().then(doc => {
             let refToken = `${doc.data().refreshTok}`
+            let tempacc = `${doc.data().accessCode}`
             if(refToken == 0){
-                $('.authorizeSection').css('display', 'block');
+                if(tempacc == 0){
+                    $('.authorizeSection').css('display', 'block');
+                }else{
+                    $('.authorizeSection').css('display', 'none');
+                }
             }else{
                 $('.authorizeSection').css('display', 'none');
             }

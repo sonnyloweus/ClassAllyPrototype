@@ -36,7 +36,7 @@ let titleBarTitle = document.querySelector('.window-title');
 titleBarTitle.innerHTML = "";
 
 //#################################################################################
-//################################  Other Info  ###################################
+//#################################  Variable  ####################################
 //#################################################################################
 let topicHTML = document.getElementById("topicHTML");
 let idHTML = document.getElementById("idHTML");
@@ -48,13 +48,23 @@ let controlPanel = document.getElementById("controlPanel");
 let expandInfo = document.getElementById("expandInfo");
 let meetingInfo = document.getElementById("meetingInfo");
 const opn = require('opn');
-
+var http = require("https");
+let dotenv = require('dotenv');
+const result = dotenv.config();
+let endClass = document.getElementById("endClass");
+let controlBool = true;
+//#################################################################################
+//################################  Other Info  ###################################
+//#################################################################################
 let tempPars = (new URL(window.location.href)).searchParams;
 topicHTML.innerHTML = tempPars.get("topic") + " <br>";
 idHTML.innerHTML += tempPars.get("Id");
 passwordID.innerHTML += tempPars.get("password") + " <br>";
 copyJoinURL.title = tempPars.get("joinURL");
 startHTML.title = tempPars.get("startURL");
+let access_token = tempPars.get("access_token");
+let userId = tempPars.get("userId");
+
 
 function copyText(id) {
     /* Get the text field */
@@ -105,7 +115,7 @@ function openURL(id){
         &nbsp;
         Info
     `;
-    expandInfo.style.top = "53px";
+    expandInfo.style.top = "55px";
     meetingInfo.style.height = "80px";
     toggle = toggle * -1;
 }
@@ -120,7 +130,7 @@ expandInfo.onclick = function(){
             &nbsp;
             Info
         `;
-        expandInfo.style.top = "53px";
+        expandInfo.style.top = "55px";
         meetingInfo.style.height = "80px";
     }else if(toggle == -1){
         topicHTML.innerHTML = tempPars.get("topic") + "<br>";
@@ -163,4 +173,62 @@ function switchChat(el, num){
     }else{
         questionsBox.style.display = "block";
     }
+}
+
+
+window.addEventListener("beforeunload", function(e){
+    console.log(endClass.style.display)
+    if(startHTML.style.display == "none" && endClass.style.display == ""){
+        endClass.style.display = "block";
+        e.preventDefault();
+        e.returnValue = '';
+    }
+}, false);
+
+var endMeeting = {
+    "method": "PUT",
+    "hostname": "api.zoom.us",
+    "port": null,
+    "path": "/v2/meetings/" + tempPars.get("Id") + "/status",
+    "headers": {
+        "content-type": "application/json",
+        "authorization": "Bearer " + access_token
+    }
+};
+
+function callAPI(options, type) {
+    var api = http.request(options, function (res) {
+        var chunks = [];
+
+        res.on("data", function (chunk) {
+            chunks.push(chunk);
+        });
+
+        res.on("end", function () {
+            var body = Buffer.concat(chunks);
+            // console.log(body.toString());
+            jsonBody = JSON.parse(body)
+        });
+    });
+
+    if(type == "endMeeting"){
+        api.write(JSON.stringify({action: 'end'}));
+    }
+    api.end();
+}
+
+function endMeetingFunc(el){
+    // End Meeting
+    endMeeting["headers"]["authorization"] = "Bearer " + access_token;
+    callAPI(endMeeting, "endMeeting")
+
+    // stop listeners
+    rtdb.ref('ChatRooms/' + roomId + "/general/").off();
+    rtdb.ref('ChatRooms/' + roomId + "/resources/").off();
+    rtdb.ref('ChatRooms/' + roomId + "/questions/").off();
+    // delete chat
+    rtdb.ref('ChatRooms/' + tempPars.get("Id")).remove();
+    // close window
+    endClass.style.display = "none";
+    window.close();
 }

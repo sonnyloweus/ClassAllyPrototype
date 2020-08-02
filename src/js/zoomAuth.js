@@ -54,8 +54,8 @@ function refreshToken() {
                     access_token = body.access_token;
                     access_tokenHtml.innerHTML = 'Zoom Connection:<span class="icon"><i class="fas fa-check-square"></i></span>';
 
-                    getMeetings["headers"]["authorization"] = "Bearer " + access_token;
-                    callAPI(getMeetings, "getMeetings");
+                        getMeetings["headers"]["authorization"] = "Bearer " + access_token;
+                        callAPI(getMeetings, "getMeetings");
                 });
 
             });
@@ -70,19 +70,27 @@ function refreshToken() {
 //#################################################################################
 //####################  Getting Access Token First Time ###########################
 //#################################################################################
+//x5_FEfeYQYOYKvJQbEflSA
+//Xsfzed4uuwEjyOhKFiWogfwNcbWhYaSY
+//eDVfRkVmZVlRWU9ZS3ZKUWJFZmxTQTpYc2Z6ZWQ0dXV3RWp5T2hLRmlXb2dmd05jYldoWWFTWQ==
+//36Ty8z1S3G1jhNbnlhsYw
+//UVVFN7B1kL28qsyi00y4tZMTAXhlJ6V2
+//MzZUeTh6MVMzRzFqaE5ibmxoc1l3OlVWVkZON0Ixa0wyOHFzeWkwMHk0dFpNVEFYaGxKNlYy
 
-function getToken() {
+function getToken(tempAcc) {
     console.log("getting access token")
 
     var options = {
         "method": "POST",
         "hostname": "zoom.us",
         "port": null,
-        "path": "/oauth/token?grant_type=authorization_code&code=" + authCode + "&redirect_uri=https://marketplace.zoom.us/docs/oauth/callback/success/api/v2/zoom/complete-oauth",
+        "path": "/oauth/token?grant_type=authorization_code&code="+tempAcc+"&redirect_uri=" + "https://www.sonnylowe.us/classally/",
         "headers": {
             "authorization": "Basic " + process.env.BASE_ENCODE
         }
     };
+
+    // console.log(options["path"]);
 
     var acc = http.request(options, function (res) {
         var chunks = [];
@@ -93,12 +101,12 @@ function getToken() {
 
         res.on("end", function () {
             var body = Buffer.concat(chunks);
-            // console.log(body.toString())
+            console.log(body.toString())
             body = JSON.parse(body)
             // console.log(body.access_token);
 
             access_token = body.access_token;
-
+            
             db.collection('users').doc(userId).update({
                 refreshTok: body.refresh_token
             }).then(() => {
@@ -120,39 +128,51 @@ function getToken() {
 //######################  Getting Authorization Code ##############################
 //#################################################################################
 
-let authURL = "https://zoom.us/oauth/authorize?response_type=code&client_id=" + process.env.CLIENT_ID + "&redirect_uri=https://marketplace.zoom.us/docs/oauth/callback/success/api/v2/zoom/complete-oauth"
+let userIdString = "userId=" + userId;
+let authURL = "https://zoom.us/oauth/authorize?response_type=code&client_id=" + process.env.CLIENT_ID + "&redirect_uri="  + process.env.REDIRECT_URL;
 
 let authorizeButton = document.getElementById("authorize");
 authorizeButton.onclick = function () {
-    // opn(authURL);
-    let popup = window.open(
-        authURL, "Zoom Authentication",
-        "height=600,width=800,modal=yes,alwaysRaised=yes,frame=true");
+    // let popup = window.open(
+    //     authURL, "Zoom Authentication",
+    //     "height=600,width=800,modal=yes,alwaysRaised=yes,frame=true");
     // console.log();
 
-    let checkCode = setInterval(function () {
-        var url = popup.location.href;
-        let params = (new URL(url)).searchParams;
-        authCode = params.get('code')
-        // console.log(url);
-        if (authCode != null) {
-            popup.close();
-            clearInterval(checkCode);
-        }
-    }, 500);
+    userIdString = "userId=" + userId;
+    authURL = "https://zoom.us/oauth/authorize?response_type=code&client_id=" + process.env.CLIENT_ID + "&redirect_uri="  + process.env.REDIRECT_URL;
 
-    let checkClosed = setInterval(function () {
-        if (popup.closed) {
-            clearInterval(checkCode);
-            clearInterval(checkClosed);
+    let accountId = document.getElementById("account-id");
+    modalId.style.display = "block";
+    accountId.innerHTML = `
+        <h3> User Id: ` + userId +  `</h3><br>
+        <p>Follow instructions on browser before clicking aything.</p><br>
+        <button onclick="logout()" role="button" class="button is-info is-outlined" data-target="modal-logout" id="authLogoutButton">Log Out</button>
+    `;
+    opn(authURL);
 
-            if (authCode != null) {
-                // console.log(authCode);
-                console.log("auth code achieved");
-                $('.authorizeSection').css('display', 'none');
-                getToken();
-            }
+    // let checkCode = setInterval(function () {
+    //     var url = popup.location.href;
+    //     let params = (new URL(url)).searchParams;
+    //     authCode = params.get('code')
+    //     // console.log(url);
+    //     if (authCode != null) {
+    //         popup.close();
+    //         clearInterval(checkCode);
+    //     }
+    // }, 500);
 
-        }
-    }, 1000);
+    // let checkClosed = setInterval(function () {
+    //     if (popup.closed) {
+    //         clearInterval(checkCode);
+    //         clearInterval(checkClosed);
+
+    //         if (authCode != null) {
+    //             console.log(authCode);
+    //             console.log("auth code achieved");
+    //             $('.authorizeSection').css('display', 'none');
+    //             getToken();
+    //         }
+
+    //     }
+    // }, 1000);
 }

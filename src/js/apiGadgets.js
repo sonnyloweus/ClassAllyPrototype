@@ -249,16 +249,18 @@ function openURL(id){
 
 function displayCreatedMeeting(body){
     remote.BrowserWindow.getFocusedWindow().minimize();
-    console.log(body.topic);
     let meetingInfo = {
         "topic": body.topic,
         "password": body.password,
         "Id": body.id,
         "joinURL": body.join_url,
         "startURL": body.start_url,
-        "username": userName
+        "username": userName,
+        "access_token": access_token,
+        "userId": userId,
     }
     let allInfoURL = new URLSearchParams(meetingInfo).toString();
+    // console.log(allInfoURL);
     let popup = window.open(
         "templates/meetingPopout.html?" + allInfoURL, "Controls",
         "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
@@ -270,6 +272,8 @@ function displayCreatedMeeting(body){
 //     "templates/meetingPopout.html", "Controls",
 //     "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300");
 
+
+//time calculating not working
 function meetingsFunc(body) {
     maxSlide = body.meetings.length;
     let AddSlides = document.getElementById("AddSlides");

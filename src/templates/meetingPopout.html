@@ -20,6 +20,14 @@
     <div class="bodyDiv">
 
         <div id="currentPage">
+            <a onclick="endMeetingFunc(this)" id="endClass" role="button" class="button">
+                <span class="icon">
+                    <i class="fas fa-video"></i>
+                </span>
+                &nbsp;
+                End Meeting
+            </a>
+
             <div style="margin-top: -12px" id="meetingInfo">
                 <h1 id="topicHTML" style="font-weight: bold;" class="is-size-4">TitleTitle <br></h1>
 
@@ -183,6 +191,7 @@
         const rtdb = firebase.database();
         const db = firebase.firestore();
     </script>
+    <!-- <script src="../js/zoomAuth.js"></script> -->
     <script src="../js/meetingPopout.js"></script>
     <script src="../js/messaging.js"></script>
     <link rel="stylesheet" href="../css/meetingPopout.css">
