@@ -27,6 +27,7 @@
         e.preventDefault();
         const name = studentsForm['student-name'].value;
         const email = studentsForm['student-email'].value;
+        // console.log("adding student " + userId);
 
         let subCollect = db
             .collection("users").doc(userId).collection("students").add({
