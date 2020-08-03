@@ -23,17 +23,19 @@
     }
 
     const studentsForm = document.getElementById("students-form");
+    let studentFormAdd = document.getElementById("studentFormAdd");
     studentsForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const name = studentsForm['student-name'].value;
         const email = studentsForm['student-email'].value;
         // console.log("adding student " + userId);
-
+    
         let subCollect = db
             .collection("users").doc(userId).collection("students").add({
                 name: name,
                 email: email
             }).then(() => {
+                console.log("Added a Student")
                 studentsForm.reset();
                 closePops();
                 drawStudents();

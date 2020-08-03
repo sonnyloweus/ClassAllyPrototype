@@ -134,7 +134,7 @@ logoutButton.addEventListener('click', (e) => {
     auth.signOut().then(() => {
         console.log("User signed out");
         clearMeetings();
-        // location.reload();
+        location.reload();
         //front end stuff
     });
 })
@@ -144,7 +144,7 @@ function logout(){
         console.log("User signed out");
         modalId.style.display = "none";
         clearMeetings();
-        // location.reload();
+        location.reload();
         //front end stuff
     });
 }
