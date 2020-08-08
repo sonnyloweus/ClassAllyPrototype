@@ -247,3 +247,16 @@ body {
 #appTrack{
     height: 5vh;
 }
+
+#attendancePanel{
+    height: 23vh;
+}
+
+#notConnected{
+    margin-top: 10px;
+    margin-left: 5%;
+    width: 90%;
+    height: 11vh;
+    background-color: #e9e6eb;
+    border-radius: 10px;
+}

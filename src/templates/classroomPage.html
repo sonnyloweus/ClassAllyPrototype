@@ -90,6 +90,7 @@
         });
     }
 
+    // needs refactoring
     const addClassroomForm = document.getElementById("addClassroomForm");
     addClassroomForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -122,9 +123,21 @@
                 $("#currentPage").load("templates/classroomPage.html");
             });
         });
+
+        // let subCollect = db
+        //     .collection("users").doc(userId).collection("classrooms").add({
+        //         name: name,
+        //         period: periodNum,
+        //         students: studentsList
+        //     }).then(() => {
+        //         console.log("Added a Student")
+        //         studentsForm.reset();
+        //         closePops();
+        //         drawStudents();
+        //     });
     });
     let classroomsList = document.getElementById("classroomsList");
-
+    // needs refactoring
     function deleteClassroom(el){
         let indexNum = el.id;
 
@@ -140,7 +153,7 @@
             });
         });
     }
-
+    // needs refactoring
     function saveClassroom(saveClass, ID){
         const name = saveClass['class-name'].value;
         const periodNum = saveClass['class-num'].value;
@@ -186,8 +199,6 @@
         // console.log(studentsList)
     }
 
-    
-
     function addToCurrentStudents(el) {
         let saveClass = el.parentNode.parentNode.parentNode.parentNode;
         let editMessage = document.getElementById("editClassroomMessage");
@@ -209,6 +220,7 @@
         }
     }
 
+    // needs refactoring
     function enterClass(el){
         closePops();
         studentsList = [];
@@ -326,7 +338,7 @@
 
         });
     } 
-
+    // needs refactoring
     function drawClassrooms() {
 
         db.collection('users').doc(userId).collection("students").get().then((snapshot) => {

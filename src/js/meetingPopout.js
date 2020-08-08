@@ -217,7 +217,7 @@ attendanceView.onclick = function(){
     }else{
         attendanceHidden.style.display = "block";
         attendanceView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
-        attendanceView.parentElement.parentElement.style.height = "14vh";
+        attendanceView.parentElement.parentElement.style.height = "23vh";
     }
     attendanceToggle *= -1;
 }
