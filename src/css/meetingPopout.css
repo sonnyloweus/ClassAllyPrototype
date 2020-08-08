@@ -56,28 +56,27 @@ body {
     z-index: -1;
     position: absolute;
     top: 12vh;
-    left: 3vw;
+    left: 1vw;
     /* left: 50%;
     transform: translate(-50%); */
 }
 
 .controlSection{
     border-radius: 20px;
-    width: 46vw;
-    height: 18vh;
     /* border: 1px solid gray; */
     display: inline-block;
     background-color: #fcfafa !important;
     /* box-shadow: 0px 0px 20px gray; */
     margin-top: 1vh;
+    width: 95vw;
+    height: 14vh;
 }
 
 .controlButton{
     border-radius: 40px;
     border: none;
     color: white !important;
-    margin-top: 15px !important;
-    /* background-color: gray !important; */
+    margin-top: 1vh !important; 
     height: 40px;
 }
 
@@ -125,7 +124,8 @@ body {
 
 #smartChat {
     width: 95vw;
-    height: 45vh
+    height: 50vh;
+    position: relative;
 }
 
 #smartChat .controlButton{
@@ -133,23 +133,20 @@ body {
     height: 30px;
 }
 
-#questionsPanel {
-    width: 95vw;
-    height: 7.5vh
-}
-
-#messageContent{
-}
-
-#questionsPanel .controlButton{
+#attendancePanel .controlButton{
     margin-top: 1vh !important; 
-    height: 40px;
+    height: 30px;
+}
+
+#messageForm{
+    position: absolute;
+    bottom: 10px;
 }
 
 .messageBox{
     width: 100%;
     /* border: 1px solid gray; */
-    height: 60%;
+    height: 50%;
     margin-top: -20px;
     text-align: left;
     overflow-y: auto;
@@ -223,4 +220,30 @@ body {
     border-radius: 20px;
     background-color: red;
     color: white;
+}
+
+.changeViewState{
+    border: none !important;
+    background: none !important;
+    padding: 0px !important;
+    float: right;
+    margin-right: 20px;
+    margin-top: 7px !important;
+    height: 10px;
+}
+
+#questionsHidden{
+    display: none;
+}
+
+#questionsPanel{
+    height: 5vh;
+}
+
+#appTrackHidden{
+    display: none;
+}
+
+#appTrack{
+    height: 5vh;
 }

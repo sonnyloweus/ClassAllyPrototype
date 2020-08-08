@@ -1,5 +1,5 @@
 //#################################################################################
-//#######################@####  Custom TitleBar  ############@#####################
+//############################  Custom TitleBar  ##################################
 //#################################################################################
 //npm i custom-electron-titlebar
 const customTitlebar = require('custom-electron-titlebar');
@@ -53,6 +53,7 @@ let dotenv = require('dotenv');
 const result = dotenv.config();
 let endClass = document.getElementById("endClass");
 let controlBool = true;
+
 //#################################################################################
 //################################  Other Info  ###################################
 //#################################################################################
@@ -185,50 +186,70 @@ window.addEventListener("beforeunload", function(e){
     }
 }, false);
 
-var endMeeting = {
-    "method": "PUT",
-    "hostname": "api.zoom.us",
-    "port": null,
-    "path": "/v2/meetings/" + tempPars.get("Id") + "/status",
-    "headers": {
-        "content-type": "application/json",
-        "authorization": "Bearer " + access_token
+//#################################################################################
+//################################ Panel Toggles ##################################
+//#################################################################################
+
+let engageView = document.getElementById("engageView");
+let questionsHidden = document.getElementById("questionsHidden");
+let engageToggle = 1;
+engageView.onclick = function(){
+    if(engageToggle == -1){
+        questionsHidden.style.display = "none";
+        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        engageView.parentElement.parentElement.style.height = "5vh";
+    }else{
+        questionsHidden.style.display = "block";
+        engageView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
+        engageView.parentElement.parentElement.style.height = "14vh";
     }
-};
-
-function callAPI(options, type) {
-    var api = http.request(options, function (res) {
-        var chunks = [];
-
-        res.on("data", function (chunk) {
-            chunks.push(chunk);
-        });
-
-        res.on("end", function () {
-            var body = Buffer.concat(chunks);
-            // console.log(body.toString());
-            jsonBody = JSON.parse(body)
-        });
-    });
-
-    if(type == "endMeeting"){
-        api.write(JSON.stringify({action: 'end'}));
-    }
-    api.end();
+    engageToggle *= -1;
 }
 
-function endMeetingFunc(el){
-    // End Meeting
-    endMeeting["headers"]["authorization"] = "Bearer " + access_token;
-    callAPI(endMeeting, "endMeeting")
+let attendanceView = document.getElementById("attendanceView");
+let attendanceHidden = document.getElementById("attendanceHidden");
+let attendanceToggle = -1;
+attendanceView.onclick = function(){
+    if(attendanceToggle == -1){
+        attendanceHidden.style.display = "none";
+        attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        attendanceView.parentElement.parentElement.style.height = "5vh";
+    }else{
+        attendanceHidden.style.display = "block";
+        attendanceView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
+        attendanceView.parentElement.parentElement.style.height = "14vh";
+    }
+    attendanceToggle *= -1;
+}
 
-    // stop listeners
-    rtdb.ref('ChatRooms/' + roomId + "/general/").off();
-    rtdb.ref('ChatRooms/' + roomId + "/resources/").off();
-    rtdb.ref('ChatRooms/' + roomId + "/questions/").off();
-    // delete chat
-    rtdb.ref('ChatRooms/' + tempPars.get("Id")).remove();
-    // close window
-    endClass.style.display = "none";
-    window.close();
+let appTrackView = document.getElementById("appTrackView");
+let appTrackHidden = document.getElementById("appTrackHidden");
+let appTrackToggle = 1;
+appTrackView.onclick = function(){
+    if(appTrackToggle == -1){
+        appTrackHidden.style.display = "none";
+        appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        appTrackView.parentElement.parentElement.style.height = "5vh";
+    }else{
+        appTrackHidden.style.display = "block";
+        appTrackView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
+        appTrackView.parentElement.parentElement.style.height = "14vh";
+    }
+    appTrackToggle *= -1;
+}
+
+let smartChatView = document.getElementById("smartChatView");
+let smartChatHidden = document.getElementById("smartChatHidden");
+let smartChatToggle = -1;
+smartChatView.onclick = function(){
+    if(smartChatToggle == -1){
+        smartChatHidden.style.display = "none";
+        smartChatView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        smartChatView.parentElement.parentElement.style.height = "5vh";
+    }else{
+        smartChatHidden.style.display = "block";
+        smartChatView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
+        smartChatView.parentElement.parentElement.style.height = "50vh";
+    }
+    smartChatToggle *= -1;
 }

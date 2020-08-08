@@ -13,6 +13,7 @@ let refToken = 0;
 
 // npm i http
 var http = require("https");
+const { app } = require('electron');
 
 let access_tokenHtml = document.getElementById("access_token");
 
@@ -79,31 +80,26 @@ function refreshToken() {
 
 function getToken(tempAcc) {
     console.log("getting access token")
-
+    console.log(tempAcc);
     var options = {
         "method": "POST",
         "hostname": "zoom.us",
         "port": null,
-        "path": "/oauth/token?grant_type=authorization_code&code="+tempAcc+"&redirect_uri=" + "https://www.sonnylowe.us/classally/",
+        "path": "/oauth/token?grant_type=authorization_code&code="+tempAcc+"&redirect_uri=" + process.env.REDIRECT_URL,
         "headers": {
             "authorization": "Basic " + process.env.BASE_ENCODE
         }
     };
-
-    // console.log(options["path"]);
-
-    var acc = http.request(options, function (res) {
+    let acc = http.request(options, function (res) {
         var chunks = [];
-
+        
         res.on("data", function (chunk) {
             chunks.push(chunk);
         });
-
         res.on("end", function () {
             var body = Buffer.concat(chunks);
             console.log(body.toString())
             body = JSON.parse(body)
-            // console.log(body.access_token);
 
             access_token = body.access_token;
             
@@ -120,7 +116,6 @@ function getToken(tempAcc) {
 
         });
     });
-
     acc.end();
 }
 

@@ -175,6 +175,7 @@ function callAPI(options, type) {
             } else if (type == "listParticipants") {
                 // console.log(body);
             }else if (type == "createMeeting"){
+                console.log(body.toString());
                 displayCreatedMeeting(jsonBody)
             }
         });
@@ -268,9 +269,9 @@ function displayCreatedMeeting(body){
     
 }
 
-// let popup = window.open(
-//     "templates/meetingPopout.html", "Controls",
-//     "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300");
+let popup = window.open(
+    "templates/meetingPopout.html", "Controls",
+    "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300");
 
 
 //time calculating not working
