@@ -26,9 +26,12 @@
     let allStudentOptionsID = [];
     let colors = ["#F2C94C", "#6FCF97", "#56CCF2", "#F2994A", "#EA8A8A", "#DAABEC"];
 
+    const addClassroomForm = document.getElementById("addClassroomForm");
+
     addClassroom.onclick = function () {
         closePops();
         classroomModal.style.display = "block";
+        addClassroomForm.addEventListener('submit', addStudentClassEvent);
         studentsList = [];
         loadStudents();
         // drawClassrooms();
@@ -90,100 +93,62 @@
         });
     }
 
-    // needs refactoring
-    const addClassroomForm = document.getElementById("addClassroomForm");
-    addClassroomForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    // needs refactoring Done has Error
+    function addStudentClassEvent(event){
+        event.preventDefault();
+        event.stopImmediatePropagation();
         //get User info
         const name = addClassroomForm['class-name'].value;
         const periodNum = addClassroomForm['class-num'].value;
-        db.collection('users').doc(userId).get().then(doc => {
-            currentRooms = doc.data().classrooms;
-            if (currentRooms.length == 0) currentRooms = [];
 
-            for(let i = 0; i < studentsList.length; i++){
-                let tempIndex = allStudentOptions.indexOf(studentsList[i]);
-                studentsList[i] = allStudentOptionsID[tempIndex];
-            }
-            // console.log(studentsList);
-            let newRoom = {
-                "name": name,
-                "period": periodNum,
-                "students": studentsList
-            }
-            // console.log(doc.data().classrooms);
-            currentRooms.push(newRoom);
-            db.collection('users').doc(userId).update({
-                classrooms: currentRooms
-            }).then(() => {
-                // console.log("clicked");
-                addClassroomForm.reset();
-                closePops();
-                studentsList = [];
-                $("#currentPage").load("templates/classroomPage.html");
-            });
-        });
-
-        // let subCollect = db
-        //     .collection("users").doc(userId).collection("classrooms").add({
-        //         name: name,
-        //         period: periodNum,
-        //         students: studentsList
-        //     }).then(() => {
-        //         console.log("Added a Student")
-        //         studentsForm.reset();
-        //         closePops();
-        //         drawStudents();
-        //     });
-    });
-    let classroomsList = document.getElementById("classroomsList");
-    // needs refactoring
-    function deleteClassroom(el){
-        let indexNum = el.id;
-
-        db.collection('users').doc(userId).get().then(doc => {
-            currentRooms = doc.data().classrooms;
-            currentRooms.splice(indexNum, 1);
-            
-            db.collection('users').doc(userId).update({
-                classrooms: currentRooms
-            }).then(() => {
-                $("#currentPage").load("templates/classroomPage.html");
-                drawClassrooms();
-            });
+        for(let i = 0; i < studentsList.length; i++){
+            let tempIndex = allStudentOptions.indexOf(studentsList[i]);
+            studentsList[i] = allStudentOptionsID[tempIndex];
+        }
+        
+        let subCollect = db
+        .collection("users").doc(userId).collection("classrooms").add({
+            name: name,
+            period: periodNum,
+            students: studentsList
+        }).then(() => {
+            closePops();
+            studentsList = [];
+            $("#currentPage").load("templates/classroomPage.html");
+            addClassroomForm.removeEventListener('submit', addStudentClassEvent)
+            addClassroomForm.reset();
         });
     }
-    // needs refactoring
+
+    let classroomsList = document.getElementById("classroomsList");
+    // needs refactoring Done
+    function deleteClassroom(el){
+        let Id = el.id;
+        db.collection('users').doc(userId).collection("classrooms").doc(Id).delete().then(function() {
+            $("#currentPage").load("templates/classroomPage.html");
+            drawClassrooms();
+        }).catch(function(error) {
+            // console.error("Error removing document: ", error);
+        });
+    }
+    // needs refactoring Done
     function saveClassroom(saveClass, ID){
         const name = saveClass['class-name'].value;
         const periodNum = saveClass['class-num'].value;
-        ID = ID.substring(9)
 
-        db.collection('users').doc(userId).get().then(doc => {
-            currentRooms = (doc.data().classrooms);
-
-            for(let i = 0; i < studentsList.length; i++){
-                let tempIndex = allStudentOptions.indexOf(studentsList[i]);
-                studentsList[i] = allStudentOptionsID[tempIndex];
-            }
-            // console.log(studentsList);
-            let updatedRoom = {
-                "name": name,
-                "period": periodNum,
-                "students": studentsList
-            }
-            // console.log(doc.data().classrooms);
-            console.log("Id: " + ID);
-            // console.log("Classrooms: " + currentRooms);
-            currentRooms.splice(ID, 1, updatedRoom);
-            db.collection('users').doc(userId).update({
-                classrooms: currentRooms
-            }).then(() => {
-                // console.log("clicked");
-                saveClass.reset();
-                studentsList = [];
-                $("#currentPage").load("templates/classroomPage.html");
-            });
+        for(let i = 0; i < studentsList.length; i++){
+            let tempIndex = allStudentOptions.indexOf(studentsList[i]);
+            studentsList[i] = allStudentOptionsID[tempIndex];
+        }
+        db.collection('users').doc(userId).collection("classrooms").doc(ID).update({
+            name: name,
+            period: periodNum,
+            students: studentsList 
+        }).then(() => {
+            // console.log("clicked");
+            saveClass.reset();
+            studentsList = [];
+            $("#currentPage").load("templates/classroomPage.html");
         });
     }
 
@@ -220,20 +185,17 @@
         }
     }
 
-    // needs refactoring
+    // needs refactoring Done
     function enterClass(el){
         closePops();
         studentsList = [];
         loadStudents();
         let parentDiv = el.parentNode.parentNode;
-        let idNum = el.id.substring(9);
-        // console.log(idNum);
+        let idNum = el.id;
         let tempName = $(parentDiv).find('#title').text();
         let tempPeriod = $(parentDiv).find('#period').text().substring(8);
         //doesn't work if teacher types comma in name (fix that later)
         let tempList = $(parentDiv).find('#tempStudentsList').text().split(',');
-        // let tempNameList = convertToNames(tempList, 0, tempList.length-1);
-        // console.log(tempPeriod)
         
         db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
             let idsList = snapshot.docs;
@@ -338,7 +300,8 @@
 
         });
     } 
-    // needs refactoring
+    
+    // needs refactoring Done
     function drawClassrooms() {
 
         db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
@@ -357,21 +320,20 @@
                 
             });
 
-
-            db.collection('users').doc(userId).get().then(doc => {
-                currentClassrooms = doc.data().classrooms;
-                let numClasses = currentClassrooms.length;
+            db.collection('users').doc(userId).collection("classrooms").get().then((snapshot) => {
+                let tempClassList = snapshot.docs;
+                tempClassList.reverse();
                 classroomsList.innerHTML = "";
 
-                for (let i = (numClasses - 1); i >= 0; i--) {
-                    //9 character limit for one line
-                    let tempTitle = currentClassrooms[i]["name"];
-                    let tempPeriod = currentClassrooms[i]["period"];
-                    let tempStudents = currentClassrooms[i]["students"];
-                    // console.log(tempStudents);
+                tempClassList.forEach(function (doc, i) {
+                    let id = doc.id;
+                    let tempTitle = doc.data().name;
+                    let tempPeriod = doc.data().period;
+                    let tempStudents = doc.data().students;
+
                     let tempIndex = i % colors.length;
                     let revisedStudents = [];
-                    
+
                     for(let n = 0; n < tempStudents.length; n++){
                         // console.log("studentCheck: " + tempStudents[n])
                         if(allStudentOptionsID.includes(tempStudents[n])){
@@ -382,19 +344,11 @@
                             console.log("invalid, deleted student")
                         }
                     }
-                    // console.log("allStudents: " + allStudentOptionsID);
 
-                    
-                    let updatedRoom = {
-                        "name": tempTitle,
-                        "period": tempPeriod,
-                        "students": revisedStudents 
-                    }
-
-                    currentClassrooms.splice(i, 1, updatedRoom);
-
-                    db.collection('users').doc(userId).update({
-                        classrooms: currentClassrooms
+                    db.collection('users').doc(userId).collection("classrooms").doc(id).update({
+                        name: tempTitle,
+                        period: tempPeriod,
+                        students: revisedStudents 
                     }).then(() => {
                         tempStudents = revisedStudents;
 
@@ -408,7 +362,7 @@
                             tempStudents.length + ` Students </p></div>
                                     
                                     <p style="display: none" id="tempStudentsList">` + tempStudents + `</p>
-                                    <a role="button" onclick="enterClass(this)" class="enterClass button is-info" id="classroom` + i + `">
+                                    <a role="button" onclick="enterClass(this)" class="enterClass button is-info" id="` + id + `">
                                         <span class="icon">
                                         <i class="fas fa-arrow-right"></i>
                                         </span>
@@ -416,14 +370,11 @@
                                 </div>
                             </div>
                         `;
-                        
                     });
-                    // console.log(tempStudents);
-                }
+                });
             });
-
-        // console.log(allStudentOptionsID)
         });
+
     }
 
     if (typeof (userId) !== 'undefined' && userId != 0) {

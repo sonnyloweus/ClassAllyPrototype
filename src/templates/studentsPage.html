@@ -26,6 +26,7 @@
     let studentFormAdd = document.getElementById("studentFormAdd");
     studentsForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        e.stopImmediatePropagation();
         const name = studentsForm['student-name'].value;
         const email = studentsForm['student-email'].value;
         // console.log("adding student " + userId);
