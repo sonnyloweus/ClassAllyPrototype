@@ -144,7 +144,7 @@ function logout(){
         console.log("User signed out");
         modalId.style.display = "none";
         clearMeetings();
-        app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
+        // app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) })
         //front end stuff
     });
 }

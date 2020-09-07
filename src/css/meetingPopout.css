@@ -14,7 +14,7 @@ body {
     height: 100vh;
     width: 100vw;
     /* border-radius: 50px !important; */
-    background-color: #e9e6eb;
+    background-color: #ddd7e0;
     top: 0%;
     left: 50%;
     transform: translate(-50%);
@@ -69,7 +69,7 @@ body {
     /* box-shadow: 0px 0px 20px gray; */
     margin-top: 1vh;
     width: 95vw;
-    height: 14vh;
+    height: 23vh;
 }
 
 .controlButton{
@@ -77,7 +77,7 @@ body {
     border: none;
     color: white !important;
     margin-top: 1vh !important; 
-    height: 40px;
+    height: 30px;
 }
 
 #meetingInfo{
@@ -126,16 +126,6 @@ body {
     width: 95vw;
     height: 50vh;
     position: relative;
-}
-
-#smartChat .controlButton{
-    margin-top: 1vh !important; 
-    height: 30px;
-}
-
-#attendancePanel .controlButton{
-    margin-top: 1vh !important; 
-    height: 30px;
 }
 
 #messageForm{
@@ -252,7 +242,7 @@ body {
     height: 23vh;
 }
 
-#notConnected{
+.subBox{
     margin-top: 10px;
     margin-left: 5%;
     width: 90%;

@@ -193,28 +193,94 @@ window.addEventListener("beforeunload", function(e){
 let engageView = document.getElementById("engageView");
 let questionsHidden = document.getElementById("questionsHidden");
 let engageToggle = 1;
+
+let attendanceView = document.getElementById("attendanceView");
+let attendanceHidden = document.getElementById("attendanceHidden");
+let attendanceToggle = -1;
+
+let appTrackView = document.getElementById("appTrackView");
+let appTrackHidden = document.getElementById("appTrackHidden");
+let appTrackToggle = 1;
+
+let smartChatView = document.getElementById("smartChatView");
+let smartChatHidden = document.getElementById("smartChatHidden");
+let smartChatToggle = -1;
+
+// if chat is open -> engage, attendance, appTrack Toggle
+// if chat is closed -> No toggling needed
+// if chat being oppened, only allow one of others to be open
+// -1 == opened
+
+function checkPanelClosed(){
+    // if smartChat is open
+    if(smartChatToggle == -1){
+        questionsHidden.style.display = "none";
+        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        engageView.parentElement.parentElement.style.height = "5vh";
+        attendanceHidden.style.display = "none";
+        attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        attendanceView.parentElement.parentElement.style.height = "5vh";
+        appTrackHidden.style.display = "none";
+        appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        appTrackView.parentElement.parentElement.style.height = "5vh";
+        engageToggle = 1;
+        attendanceToggle = 1;
+        appTrackToggle = 1;
+    }
+}
+
+function closeOtherPanels(){
+    if(attendanceToggle == -1){
+        questionsHidden.style.display = "none";
+        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        engageView.parentElement.parentElement.style.height = "5vh";
+        appTrackHidden.style.display = "none";
+        appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        appTrackView.parentElement.parentElement.style.height = "5vh";
+        engageToggle = 1;
+        appTrackToggle = 1;
+    }else if(appTrackToggle == -1){
+        questionsHidden.style.display = "none";
+        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        engageView.parentElement.parentElement.style.height = "5vh";
+        attendanceHidden.style.display = "none";
+        attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        attendanceView.parentElement.parentElement.style.height = "5vh";
+        engageToggle = 1;
+        attendanceToggle = 1;
+    }else{
+        attendanceHidden.style.display = "none";
+        attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        attendanceView.parentElement.parentElement.style.height = "5vh";
+        appTrackHidden.style.display = "none";
+        appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        appTrackView.parentElement.parentElement.style.height = "5vh";
+        attendanceToggle = 1;
+        appTrackToggle = 1;
+    }
+}
+
 engageView.onclick = function(){
     if(engageToggle == -1){
         questionsHidden.style.display = "none";
         engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         engageView.parentElement.parentElement.style.height = "5vh";
     }else{
+        checkPanelClosed();
         questionsHidden.style.display = "block";
         engageView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
-        engageView.parentElement.parentElement.style.height = "14vh";
+        engageView.parentElement.parentElement.style.height = "23vh";
     }
     engageToggle *= -1;
 }
 
-let attendanceView = document.getElementById("attendanceView");
-let attendanceHidden = document.getElementById("attendanceHidden");
-let attendanceToggle = -1;
 attendanceView.onclick = function(){
     if(attendanceToggle == -1){
         attendanceHidden.style.display = "none";
         attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         attendanceView.parentElement.parentElement.style.height = "5vh";
     }else{
+        checkPanelClosed();
         attendanceHidden.style.display = "block";
         attendanceView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
         attendanceView.parentElement.parentElement.style.height = "23vh";
@@ -222,31 +288,27 @@ attendanceView.onclick = function(){
     attendanceToggle *= -1;
 }
 
-let appTrackView = document.getElementById("appTrackView");
-let appTrackHidden = document.getElementById("appTrackHidden");
-let appTrackToggle = 1;
 appTrackView.onclick = function(){
     if(appTrackToggle == -1){
         appTrackHidden.style.display = "none";
         appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         appTrackView.parentElement.parentElement.style.height = "5vh";
     }else{
+        checkPanelClosed();
         appTrackHidden.style.display = "block";
         appTrackView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
-        appTrackView.parentElement.parentElement.style.height = "14vh";
+        appTrackView.parentElement.parentElement.style.height = "23vh";
     }
     appTrackToggle *= -1;
 }
 
-let smartChatView = document.getElementById("smartChatView");
-let smartChatHidden = document.getElementById("smartChatHidden");
-let smartChatToggle = -1;
 smartChatView.onclick = function(){
     if(smartChatToggle == -1){
         smartChatHidden.style.display = "none";
         smartChatView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         smartChatView.parentElement.parentElement.style.height = "5vh";
     }else{
+        closeOtherPanels();
         smartChatHidden.style.display = "block";
         smartChatView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
         smartChatView.parentElement.parentElement.style.height = "50vh";
