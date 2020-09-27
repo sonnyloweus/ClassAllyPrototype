@@ -54,6 +54,8 @@ const result = dotenv.config();
 let endClass = document.getElementById("endClass");
 let controlBool = true;
 
+let takeRollButton = document.getElementById("takeRollButton");
+
 //#################################################################################
 //################################  Other Info  ###################################
 //#################################################################################
