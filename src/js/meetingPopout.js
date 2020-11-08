@@ -67,7 +67,8 @@ copyJoinURL.title = tempPars.get("joinURL");
 startHTML.title = tempPars.get("startURL");
 let access_token = tempPars.get("access_token");
 let userId = tempPars.get("userId");
-
+let classroomID = tempPars.get("classroomId");
+let students = tempPars.get("studentsList");
 
 function copyText(id) {
     /* Get the text field */
@@ -100,6 +101,20 @@ function openURL(id){
             },
             questions: {
                 HelperBot: 'Post questions here:'
+            },
+            participants: {
+                bob: {
+                    email: 'bob@gmail.com',
+                    apps: ''
+                },
+                sam: {
+                    email: 'sam@gmail.com',
+                    apps: ''
+                },
+                timmy: {
+                    email: 'timmy@gmail.com',
+                    apps: ''
+                }
             }
         }
     });

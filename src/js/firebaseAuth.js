@@ -12,6 +12,7 @@ auth.onAuthStateChanged(user => {
     if(user){
         $('.mainBody').css('display', 'block');
         $('.loggedInButtons').css('display', 'block');
+        $('#joinOrLog').css('display', 'none');
         $('.loggedOutButtons').css('display', 'none');
         $('.meetings').css('display', 'block');
         closePops();
@@ -71,6 +72,7 @@ auth.onAuthStateChanged(user => {
         $('.mainBody').css('display', 'none');
         $('.loggedInButtons').css('display', 'none');
         $('.loggedOutButtons').css('display', 'block');
+        $('#joinOrLog').css('display', 'block');
         $('.meetings').css('display', 'none');
         access_tokenHtml.innerHTML = 'Zoom Connection:<span class="icon"><i class="fas fa-times-circle"></i></span>';
         userId = 0;

@@ -12,6 +12,8 @@ let modalId = document.getElementById("modal-id");
 
 let loginButton = document.getElementById("loginButton");
 let signupButton = document.getElementById("signupButton"); 
+let loginButton1 = document.getElementById("loginButton1");
+let signupButton1 = document.getElementById("signupButton1"); 
 let addClassroom = document.getElementById("addClassroom"); 
 let addStudents = document.getElementById("addStudents"); 
 let helpButton = document.getElementById("helpButton"); 
@@ -33,6 +35,16 @@ let closeCreateMeeting = document.getElementById("closeCreateMeeting");
 //#################################################################################
 //###########################  Onclick Functions  #################################
 //#################################################################################
+
+loginButton1.onclick = function(){
+    closePops();
+    loginModal.style.display = "block";
+}
+
+signupButton1.onclick = function(){
+    closePops();
+    signupModal.style.display = "block";
+}
 
 loginButton.onclick = function(){
     closePops();

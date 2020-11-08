@@ -25,7 +25,7 @@
                     <i class="fas fa-video"></i>
                 </span>
                 &nbsp;
-                End Meeting
+                Leave Meeting
             </a>
 
             <div style="margin-top: -12px" id="meetingInfo">
@@ -77,14 +77,18 @@
                         </button>
                     </h3>
                     <div id="attendanceHidden">
-                        <a id="takeRollButton" role="button" class="button controlButton is-medium is-danger">
+                        <!-- <a id="takeRollButton" role="button" class="button controlButton is-medium is-danger">
                             <span class="icon"><i class="fas fa-clipboard-list"></i></span>&nbsp;&nbsp;Roll
                         </a>
                         <a role="button" class="button controlButton is-medium is-danger" disabled>
                             <span class="icon"><i class="fas fa-eraser"></i></span>&nbsp;&nbsp;Reset
-                        </a>
+                        </a> -->
                         <div id="notConnected" class="subBox">
-
+                            <!-- <div class="unconnectedMember"><div style="float: left"><p><span class="icon has-text-danger"><i class="fas fa-circle"></i></span>Sonny Lowe</p></div></div> -->
+                        </div>
+                        <br>
+                        <div id="Connected" class="subBox">
+                            <!-- <div class="unconnectedMember"><span class="icon has-text-danger"><i class="fas fa-circle"></i></span>&nbsp;<p>Sonny Lowe</p></div> -->
                         </div>
                     </div>
                 </div>
@@ -102,8 +106,8 @@
                         <a role="button" class="button controlButton is-medium is-link " disabled>
                             <span class="icon"><i class="fas fa-lock"></i></i></span>&nbsp;&nbsp;Lock
                         </a>
-                        <div id="" class="subBox">
-
+                        <div id="onTaskStudents" class="subBox">
+                            
                         </div>
                     </div>
                 </div>
@@ -211,6 +215,7 @@
     <script src="../js/meetingPopout.js"></script>
     <script src="../js/meetingPopoutAPI.js"></script>
     <script src="../js/messaging.js"></script>
+    <script src="../js/meetingGadgets.js"></script>
     <link rel="stylesheet" href="../css/meetingPopout.css">
 </body>
 

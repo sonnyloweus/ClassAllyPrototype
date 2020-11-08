@@ -117,6 +117,11 @@ function launchClass(el){
         let year = dateObj.getFullYear();
         let output = "- " + month + '/'+ day  + '/' + year;
 
+        // let databaseID = document.getElementById("classDatabaseID").innerText;
+        let databaseID = el.title;
+        let studentsList = $(el).data('students');
+        document.getElementById("createMeeting-databaseID").value = databaseID;
+        document.getElementById("createMeeting-students").value = studentsList;
         document.getElementById("createMeeting-topic").value = el.id + " " + output;
         document.getElementById("createMeeting-email").value = userEmail;
         let participant_video = false;
@@ -136,6 +141,8 @@ let topicName = "";
 let zoomEmail = "";
 let tempPassword  = "";
 let meetingType = 1;
+let tempDBid = "";
+let studentsList = "";
 
 createMeetingForm = document.getElementById("createMeeting-form");
 createMeetingForm.addEventListener('submit', (e) => {
@@ -148,6 +155,13 @@ createMeetingForm.addEventListener('submit', (e) => {
     topicName = createMeetingForm["createMeeting-topic"].value;
     zoomEmail = createMeetingForm["createMeeting-email"].value;
     tempPassword  = createMeetingForm["createMeeting-password"].value;
+    tempDBid = createMeetingForm["createMeeting-databaseID"].value;
+    studentsList = createMeetingForm["createMeeting-students"].value;
+
+    studentsList = studentsList.replace(/,/g, '-');
+    studentsList = studentsList.substring(1, studentsList.length-1);
+    console.log(studentsList);
+    console.log(tempDBid);
     meetingType = 1;
 
     createMeeting["path"] = "/v2/users/"+ zoomEmail +"/meetings?";
@@ -250,6 +264,7 @@ function openURL(id){
 
 function displayCreatedMeeting(body){
     remote.BrowserWindow.getFocusedWindow().minimize();
+    console.log(body);
     let meetingInfo = {
         "topic": body.topic,
         "password": body.password,
@@ -259,7 +274,10 @@ function displayCreatedMeeting(body){
         "username": userName,
         "access_token": access_token,
         "userId": userId,
+        "classroomId" : tempDBid,
+        "studentsList" : studentsList
     }
+    console.log(body.students);
     let allInfoURL = new URLSearchParams(meetingInfo).toString();
     // console.log(allInfoURL);
     let popup = window.open(
@@ -269,9 +287,9 @@ function displayCreatedMeeting(body){
     
 }
 
-let popup = window.open(
-    "templates/meetingPopout.html", "Controls",
-    "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300");
+// let popup = window.open(
+//     "templates/meetingPopout.html", "Controls",
+//     "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300");
 
 
 //time calculating not working

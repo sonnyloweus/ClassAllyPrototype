@@ -1,0 +1,104 @@
+<style>
+    .deck {
+        position: fixed;
+        top: 50%;
+        left: 47%;
+        transform: translate(-53%, -50%);
+        width: 55vw
+    }
+
+    .cards {
+        float: left;
+        width: 25vw;
+        height: 40vh;
+        background-color: white;
+        margin-left: 20px !important;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, .3);
+
+    }
+
+    .cards:last-of-type {
+        background-color: rgb(83, 83, 248);
+    }
+
+    .cards h1 {
+        margin-top: 20px;
+        font-size: 1.4em;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    #studentCard .field {
+        width: 90%;
+        position: relative;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    #studentCard .field:first-of-type{
+        margin-top: 10px;
+    }
+
+    #educatorCard li {
+        margin-top: 10px;
+    }
+
+    #educatorCard li a {
+        width: 90%;
+    }
+
+    #educatorCard {
+        color: white;
+    }
+
+    #errorMessageJoin{
+        margin-left: -25vw;
+    }
+</style>
+
+<div class="deck">
+    <p id="errorMessageJoin"></p>
+    <div class="cards" id="studentCard">
+        <h1>Student?</h1>
+        <div class="field">
+            <p class="control has-icons-left has-icons-right">
+                <input id="studentEmail" class="input" type="email" placeholder="Email" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-icons-left">
+                <input id="studentName" class="input" type="text" placeholder="Name" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-portrait"></i>
+                </span>
+            </p>
+        </div>
+        <div class="field">
+            <p class="control has-icons-left">
+                <input id="classZoomId" class="input" type="text" placeholder="Zoom Id" required>
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+            </p>
+        </div>
+        <a role="button" class="button is-info" id="joinClass">Join</a>
+    </div>
+    <div class="cards" id="educatorCard">
+        <h1>Educator?</h1>
+        <ul>
+            <li><a role="button" class="button is-info" data-target="modal-login" id="loginButton1">Login In</a>
+            </li>
+            <li><a role="button" class="button is-info" data-target="modal-signup" id="signupButton1">Sign Up</a>
+            </li>
+        </ul>
+    </div>
+
+</div>

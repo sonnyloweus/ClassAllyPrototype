@@ -67,9 +67,10 @@ body {
     display: inline-block;
     background-color: #fcfafa !important;
     /* box-shadow: 0px 0px 20px gray; */
-    margin-top: 1vh;
+    margin-top: 4vh;
     width: 95vw;
     height: 23vh;
+    margin-left: 1.5vw;
 }
 
 .controlButton{
@@ -86,7 +87,7 @@ body {
     left: 50%;
     width: 102vw;
     padding-top: 40px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     transform: translate(-50%);
     background-color: white;
     border-bottom-left-radius: 20px;
@@ -103,7 +104,7 @@ body {
     color: rgb(122, 118, 118);
     border-radius: 20px;
     position: absolute; 
-    top: 33vh;
+    top: 13vh;
     right: 20px;
     border: 0px solid rgb(158, 155, 155);
     box-shadow: 0px 10px 20px rgb(158, 155, 155);
@@ -114,17 +115,9 @@ body {
     color: white;
 }
 
-/* #attendancePanel {
-    background-color: orange !important;
-}
-
-#appTrack {
-    background-color: rgb(0, 107, 173) !important;
-} */
-
 #smartChat {
     width: 95vw;
-    height: 50vh;
+    height: 77vh;
     position: relative;
 }
 
@@ -136,7 +129,7 @@ body {
 .messageBox{
     width: 100%;
     /* border: 1px solid gray; */
-    height: 25vh;
+    height: 50vh;
     margin-top: -20px;
     text-align: left;
     overflow: scroll;
@@ -193,18 +186,10 @@ body {
     margin-left: 10px;
 }
 
-#resourcesBox{
-    display: none;
-}
-
-#questionsBox{
-    display: none;
-}
-
 #endClass{
     display: none; 
     z-index: 5; 
-    width: 80vw; 
+    width: 75vw; 
     position: absolute;
     right: 10px;
     top: 30px;
@@ -214,156 +199,10 @@ body {
     color: white;
 }
 
-.changeViewState{
-    border: none !important;
-    background: none !important;
-    padding: 0px !important;
-    float: right;
-    margin-right: 20px;
-    margin-top: 7px !important;
-    height: 10px;
-}
-
-#questionsHidden{
+#resourcesBox{
     display: none;
 }
 
-#questionsPanel{
-    height: 5vh;
-}
-
-#appTrackHidden{
+#questionsBox{
     display: none;
-}
-
-#appTrack{
-    height: 5vh;
-}
-
-#attendancePanel{
-    height: 23vh;
-}
-
-/* .subBox{
-    margin-top: 10px;
-    margin-left: 5%;
-    width: 90%;
-    height: 5vh;
-    background-color: #e9e6eb;
-    border-radius: 10px;
-} */
-
-.connectedMember{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-}
-
-.connectedMember span{
-    font-size: 10px;
-}
-
-#Connected{
-    overflow-y: hidden;
-    /* height: 16vh; */
-}
-
-#Connected .connectedMember{
-    display: inline-block;
-}
-
-.unconnectedMember{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-}
-
-.unconnectedMember span{
-    font-size: 10px;
-}
-
-#notConnected{
-    overflow-y: hidden;
-    /* height: 16vh; */
-}
-
-#notConnected .unconnectedMember{
-    display: inline-block;
-}
-
-#attendanceHidden::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-#attendanceHidden::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-}
-
-#attendanceHidden::-webkit-scrollbar-thumb {
-    background: orange;
-    border-radius: 10px;
-}
-
-#attendanceHidden{
-    padding-top: 10px;
-    overflow-y: scroll;
-    margin-top: 10px;
-    margin-left: 5%;
-    width: 90%;
-    height: 16vh;
-    background-color: #e9e6eb;
-    border-radius: 10px;
-}
-
-#onTaskStudents{
-    padding-top: 10px;
-    overflow-y: scroll;
-    margin-top: 10px;
-    margin-left: 5%;
-    width: 90%;
-    height: 11vh;
-    background-color: #e9e6eb;
-    border-radius: 10px;
-}
-
-#onTaskStudents::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-#onTaskStudents::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-}
-
-#onTaskStudents::-webkit-scrollbar-thumb {
-    background: orange;
-    border-radius: 10px;
-}
-
-studentTaskStatus
-
-.studentTaskStatus{
-    font-size: 14px;
-}
-
-.studentTaskStatus span{
-    font-size: 10px;
-}
-
-#taskStatus{
-    text-align: right;
-    margin-right: 100px;
-    font-size: 18px;
-}
-
-#onTaskStudents{
-    overflow-y: hidden;
-    /* height: 16vh; */
-}
-
-#onTaskStudents .studentTaskStatus{
-    text-align: left;
 }
