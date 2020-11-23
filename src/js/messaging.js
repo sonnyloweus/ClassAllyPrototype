@@ -51,6 +51,7 @@ messageForm.addEventListener("keyup", function(event) {
 // resourcesBox
 // questionsBox
 
+let lastGeneral = "";
 let dbGeneral = rtdb.ref('ChatRooms/' + roomId).child('general');
 dbGeneral.on('child_added', snap => {
     let tempKey = snap.key;
@@ -58,14 +59,27 @@ dbGeneral.on('child_added', snap => {
         let amPm = snap.key.substring(snap.key.length-2);
         tempKey = snap.key.substring(0, snap.key.length-6) + " " + amPm;
     }
-    generalBox.innerHTML += `
-        <div class="message">
-            <p>` + tempKey + `</p>
-            <p>` + snap.val() + `</p>
-        </div>
-    `;
+
+    if(lastGeneral == tempKey){
+        generalBox.innerHTML += `
+            <div class="message">
+                <p class="textTag">` + snap.val() + `</p>
+            </div>
+        `;
+    }else{
+        generalBox.innerHTML += `
+            <div class="message">
+                <p class="nameTag">` + tempKey + `</p>
+                <p class="textTag">` + snap.val() + `</p>
+            </div>
+        `;
+    }
+    lastGeneral = tempKey;
+
+    generalBox.scrollTop = generalBox.scrollHeight;
 })
 
+let lastResource = "";
 let dbResources = rtdb.ref('ChatRooms/' + roomId).child('resources');
 dbResources.on('child_added', snap => {
     let tempKey = snap.key;
@@ -73,14 +87,27 @@ dbResources.on('child_added', snap => {
         let amPm = snap.key.substring(snap.key.length-2);
         tempKey = snap.key.substring(0, snap.key.length-6) + " " + amPm;
     }
-    resourcesBox.innerHTML += `
-        <div class="message">
-            <p>` + tempKey + `</p>
-            <p>` + snap.val() + `</p>
-        </div>
-    `;
+
+    if(lastResource == tempKey){
+        resourcesBox.innerHTML += `
+            <div class="message">
+                <p class="textTag">` + snap.val() + `</p>
+            </div>
+        `;
+    }else{
+        resourcesBox.innerHTML += `
+            <div class="message">
+                <p class="nameTag">` + tempKey + `</p>
+                <p class="textTag">` + snap.val() + `</p>
+            </div>
+        `;
+    }
+    lastResource = tempKey;
+
+    resourcesBox.scrollTop = resourcesBox.scrollHeight;
 })
 
+let lastQuestions = "";
 let dbQuestions = rtdb.ref('ChatRooms/' + roomId).child('questions');
 dbQuestions.on('child_added', snap => {
     let tempKey = snap.key;
@@ -88,10 +115,22 @@ dbQuestions.on('child_added', snap => {
         let amPm = snap.key.substring(snap.key.length-2);
         tempKey = snap.key.substring(0, snap.key.length-6) + " " + amPm;
     }
-    questionsBox.innerHTML += `
-        <div class="message">
-            <p>` + tempKey + `</p>
-            <p>` + snap.val() + `</p>
-        </div>
-    `;
+
+    if(lastQuestions == tempKey){
+        questionsBox.innerHTML += `
+            <div class="message">
+                <p class="textTag">` + snap.val() + `</p>
+            </div>
+        `;
+    }else{
+        questionsBox.innerHTML += `
+            <div class="message">
+                <p class="nameTag">` + tempKey + `</p>
+                <p class="textTag">` + snap.val() + `</p>
+            </div>
+        `;
+    }
+    lastQuestions = tempKey;
+
+    questionsBox.scrollTop = questionsBox.scrollHeight;
 })

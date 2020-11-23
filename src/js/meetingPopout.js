@@ -103,18 +103,6 @@ function openURL(id){
                 HelperBot: 'Post questions here:'
             },
             participants: {
-                bob: {
-                    email: 'bob@gmail.com',
-                    apps: ''
-                },
-                sam: {
-                    email: 'sam@gmail.com',
-                    apps: ''
-                },
-                timmy: {
-                    email: 'timmy@gmail.com',
-                    apps: ''
-                }
             }
         }
     });

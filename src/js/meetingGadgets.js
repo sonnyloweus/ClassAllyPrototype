@@ -2,6 +2,7 @@ let notConnected = document.getElementById("notConnected");
 let Connected = document.getElementById("Connected");
 let onTaskStudents = document.getElementById("onTaskStudents");
 let unConnectedStudents = [];
+let unConnectedEmails = [];
 let allStudents = [];
 
 // classroomID
@@ -24,10 +25,12 @@ dbParticipants.on('child_added', snap => {
             </div>
         </div>
     `;
-    if(unConnectedStudents.includes(snap.key)){
-        const index = unConnectedStudents.indexOf(snap.key);
+    console.log(unConnectedEmails.includes(snap.val().email));
+    if(unConnectedEmails.includes(snap.val().email)){
+        const index = unConnectedEmails.indexOf(snap.val().email);
         if (index > -1) {
             unConnectedStudents.splice(index, 1);
+            unConnectedEmails.splice(index, 1);
             notConnected.innerHTML = "";
             drawUnconnected();
         }
@@ -42,6 +45,7 @@ db.collection('users').doc(userId).collection("students").get().then((snapshot) 
             console.log(doc.id);
             allStudents.push(doc.data().name);
             unConnectedStudents.push(doc.data().name);
+            unConnectedEmails.push(doc.data().email);
         }
         
     });
@@ -79,4 +83,8 @@ function drawUnconnected(){
         </div>`;
     }
 }
+
+//######################################################################
+//######################### Asking Questions ###########################
+//######################################################################
 

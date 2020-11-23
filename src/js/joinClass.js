@@ -17,6 +17,13 @@ joinClass.onclick = function(){
         }else{
             rtdb.ref('ChatRooms/' + classZoomId).once("value", snapshot => {
                 if (snapshot.exists()){
+
+                    rtdb.ref('ChatRooms/' + classZoomId + "/participants").update({
+                        [studentName]: {
+                            email: studentEmail,
+                            apps: ''
+                        }
+                    });
                     remote.BrowserWindow.getFocusedWindow().minimize();
                     let meetingInfo = {
                         "studentEmail": studentEmail,
@@ -25,9 +32,9 @@ joinClass.onclick = function(){
                     }
                     let allInfoURL = new URLSearchParams(meetingInfo).toString();
                     // console.log(allInfoURL);
-                    studentEmail = "";
-                    studentName = "";
-                    classZoomId = "";
+                    document.getElementById("studentEmail").value = "";
+                    document.getElementById("studentName").value = "";
+                    document.getElementById("classZoomId").value = "";
                     let popup = window.open(
                         "templates/studentMeetingPopup.html?" + allInfoURL, "Controls",
                         "height=380,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
