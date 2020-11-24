@@ -1,16 +1,16 @@
 //#################################################################################
 //#############################  API Variables  ###################################
 //#################################################################################
-var endMeeting = {
-    "method": "PUT",
-    "hostname": "api.zoom.us",
-    "port": null,
-    "path": "/v2/meetings/" + tempPars.get("Id") + "/status",
-    "headers": {
-        "content-type": "application/json",
-        "authorization": "Bearer " + access_token
-    }
-};
+// var endMeeting = {
+//     "method": "PUT",
+//     "hostname": "api.zoom.us",
+//     "port": null,
+//     "path": "/v2/meetings/" + tempPars.get("Id") + "/status",
+//     "headers": {
+//         "content-type": "application/json",
+//         "authorization": "Bearer " + access_token
+//     }
+// };
 
 //#################################################################################
 //#############################  API Functions  ###################################
@@ -39,8 +39,8 @@ function callAPI(options, type) {
 
 function endMeetingFunc(el){
     // End Meeting
-    endMeeting["headers"]["authorization"] = "Bearer " + access_token;
-    callAPI(endMeeting, "endMeeting")
+    // endMeeting["headers"]["authorization"] = "Bearer " + access_token;
+    // callAPI(endMeeting, "endMeeting")
 
     // stop listeners
     rtdb.ref('ChatRooms/' + roomId + "/general/").off();

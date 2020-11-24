@@ -10,6 +10,8 @@ let emailStatus = document.getElementById("emailStatus");
 //#################################################################################
 auth.onAuthStateChanged(user => {
     if(user){
+        access_tokenHtml.innerHTML = 'Connection:<span class="icon"><i class="fas fa-check-square"></i></span>';
+
         $('.mainBody').css('display', 'block');
         $('.loggedInButtons').css('display', 'block');
         $('#joinOrLog').css('display', 'none');
@@ -30,16 +32,16 @@ auth.onAuthStateChanged(user => {
             email = email.split("@");
             emailStatus.innerHTML = email[0] + "<br> @" + email[1];
 
-            if(refToken == 0){
-                if(tempacc != 0){
-                    // console.log(tempacc);
-                    $('.authorizeSection').css('display', 'none');
-                    getToken(tempacc);
-                }else{
-                    $(".meetings").css('display', 'none');
-                    $('.authorizeSection').css('display', 'block');
-                }
-            }else{
+            // if(refToken == 0){
+            //     if(tempacc != 0){
+            //         // console.log(tempacc);
+            //         $('.authorizeSection').css('display', 'none');
+            //         getToken(tempacc);
+            //     }else{
+            //         $(".meetings").css('display', 'none');
+            //         $('.authorizeSection').css('display', 'block');
+            //     }
+            // }else{
                 // console.log(refToken);
                 // console.log("auto refresh detect");
                 $(".meetings").css('display', 'block');
@@ -57,9 +59,9 @@ auth.onAuthStateChanged(user => {
                         <a href="#slide" onclick='slide(this)'><span class="icon"><i class="fas fa-arrow-right"></i></span></a>
                     </div>
                 `;
-                console.log("calling refresh token");
-                refreshToken();
-            }
+                // console.log("calling refresh token");
+                // refreshToken();
+            // }
             if ($("#classroomButton").hasClass('activePageButton')){
                 $("#currentPage").load("templates/classroomPage.html");
             }else if($("#studentButton").hasClass('activePageButton')){
@@ -74,7 +76,7 @@ auth.onAuthStateChanged(user => {
         $('.loggedOutButtons').css('display', 'block');
         $('#joinOrLog').css('display', 'block');
         $('.meetings').css('display', 'none');
-        access_tokenHtml.innerHTML = 'Zoom Connection:<span class="icon"><i class="fas fa-times-circle"></i></span>';
+        access_tokenHtml.innerHTML = 'Connection:<span class="icon"><i class="fas fa-times-circle"></i></span>';
         userId = 0;
     }
 });
@@ -104,7 +106,7 @@ signupForm.addEventListener('submit', (e) => {
         // console.log(cred.user);
         console.log("User signed up/in");
         //after sign up
-        $('.authorizeSection').css('display', 'block');
+        // $('.authorizeSection').css('display', 'block');
         singUpError.innerHTML = "";
         signupForm.reset();
     });
@@ -187,7 +189,8 @@ loginForm.addEventListener('submit', (e) => {
             let tempacc = `${doc.data().accessCode}`
             if(refToken == 0){
                 if(tempacc == 0){
-                    $('.authorizeSection').css('display', 'block');
+                    $('.authorizeSection').css('display', 'none');
+                    // $('.authorizeSection').css('display', 'block');
                 }else{
                     $('.authorizeSection').css('display', 'none');
                 }

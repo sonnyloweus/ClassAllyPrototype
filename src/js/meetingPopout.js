@@ -40,7 +40,7 @@ titleBarTitle.innerHTML = "";
 //#################################################################################
 let topicHTML = document.getElementById("topicHTML");
 let idHTML = document.getElementById("idHTML");
-let passwordID = document.getElementById("passwordID");
+// let passwordID = document.getElementById("passwordID");
 let copyJoinURL = document.getElementById("copyJoinURL");
 let startHTML = document.getElementById("startHTML");
 let copyValidation = document.getElementById("copyValidation");
@@ -62,10 +62,11 @@ let takeRollButton = document.getElementById("takeRollButton");
 let tempPars = (new URL(window.location.href)).searchParams;
 topicHTML.innerHTML = tempPars.get("topic") + " <br>";
 idHTML.innerHTML += tempPars.get("Id");
-passwordID.innerHTML += tempPars.get("password") + " <br>";
+// passwordID.innerHTML += tempPars.get("password") + " <br>";
 copyJoinURL.title = tempPars.get("joinURL");
-startHTML.title = tempPars.get("startURL");
-let access_token = tempPars.get("access_token");
+startHTML.title = tempPars.get("joinURL");
+console.log(tempPars.get("joinURL"));
+// let access_token = tempPars.get("access_token");
 let userId = tempPars.get("userId");
 let classroomID = tempPars.get("classroomId");
 let students = tempPars.get("studentsList");
@@ -89,6 +90,7 @@ function copyText(id) {
 let toggle = 1;
 
 function openURL(id){
+    console.log(id.title)
     opn(id.title);
     let zoomId = tempPars.get("Id");
     rtdb.ref('ChatRooms').update({
@@ -107,11 +109,16 @@ function openURL(id){
         }
     });
 
+    // bob: {
+    //     email: 'bob@gmail.com',
+    //     apps: ''
+    // },
+
     startHTML.style.display = "none";
     controlPanel.style.display = "block";
     meetingInfo.style.paddingBottom = "0px"
     idHTML.innerHTML = "ID: &nbsp; " + tempPars.get("Id");
-    passwordID.innerHTML = "Password: &nbsp; " + tempPars.get("password");
+    // passwordID.innerHTML = "Password: &nbsp; " + tempPars.get("password");
 
     topicHTML.innerHTML = tempPars.get("topic") + "<br><br><br><br><br>";
     expandInfo.innerHTML = `
@@ -148,9 +155,9 @@ expandInfo.onclick = function(){
             Info
         `;
         if(startHTML.style.display == "none"){
-            expandInfo.style.top = "23vh";
+            expandInfo.style.top = "19vh";
         }else{
-            expandInfo.style.top = "33vh";
+            expandInfo.style.top = "30vh";
         }
         meetingInfo.style.height = "";
     }

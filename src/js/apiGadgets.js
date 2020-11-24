@@ -104,6 +104,69 @@ var createMeeting = {
 //#################################################################################
 //#################################  Functions ####################################
 //#################################################################################
+function generateCode(count){
+    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZacdefhiklmnoqrstuvwxyz01234567890123456789'.split('');
+    let result = '';
+    for(let i = 0; i < count; i++){
+        let x = Math.floor(Math.random() * chars.length);
+        result = "" + result + chars[x];
+    }
+    let flag = false;
+    return result;
+}
+
+console.log(generateCode(6));
+
+function confirmLaunch(el){
+    let dateObj = new Date();
+    let month = parseInt(dateObj.getMonth()) + 1;
+    let day = String(dateObj.getDate()).padStart(2, '0');
+    let year = dateObj.getFullYear();
+    let output = "- " + month + '/'+ day  + '/' + year;
+    let databaseID = el.title;
+
+    // opn($(el).data('link'));
+    let information = $(el).data('info').split(",")
+    // console.log(information, $(el).data('link'));
+
+
+    let studentsList = $(el).data('students');
+    console.log(studentsList);
+    studentsList = studentsList.replace(/,/g, '-');
+    studentsList = studentsList.substring(1, studentsList.length);
+    console.log(studentsList);
+
+    confirmLaunchMeeting(information, $(el).data('link'), databaseID, studentsList);
+}
+
+function confirmLaunchMeeting(info, link, tempClassID, studentsList){
+    remote.BrowserWindow.getFocusedWindow().minimize();
+    let code = generateCode(6);
+    console.log("first code: " + code)
+    rtdb.ref('ChatRooms/' + code).once("value", snapshot => {
+        if (snapshot.exists()){
+            code = generateCode(6);
+        }
+    }).then(function(){
+        console.log("final code: " + code);
+        let meetingInfo = {
+            "topic": info[0] + " Per: " + info[1],
+            "joinURL": link,
+            "username": userName,
+            "userId": userId,
+            "classroomId" : tempClassID,
+            "studentsList" : studentsList,
+            "Id": code
+        }
+        console.log(meetingInfo);
+        let allInfoURL = new URLSearchParams(meetingInfo).toString();
+        // console.log(allInfoURL);
+        let popup = window.open(
+            "templates/meetingPopout.html?" + allInfoURL, "Controls",
+            "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
+        popup.focus(); 
+    });
+}
 
 function launchClass(el){
     if(refToken != 0){

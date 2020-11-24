@@ -6,10 +6,8 @@ let unConnectedEmails = [];
 let allStudents = [];
 
 // classroomID
-console.log(classroomID);
 students = students.split('-');
 console.log(students);
-console.log(userId);
 
 let dbParticipants = rtdb.ref('ChatRooms/' + roomId).child('participants');
 dbParticipants.on('child_added', snap => {

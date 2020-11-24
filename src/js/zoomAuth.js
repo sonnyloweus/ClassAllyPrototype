@@ -53,7 +53,7 @@ function refreshToken() {
                 }).then(() => {
                     authCode = null;
                     access_token = body.access_token;
-                    access_tokenHtml.innerHTML = 'Zoom Connection:<span class="icon"><i class="fas fa-check-square"></i></span>';
+                    access_tokenHtml.innerHTML = 'Connection:<span class="icon"><i class="fas fa-check-square"></i></span>';
 
                         getMeetings["headers"]["authorization"] = "Bearer " + access_token;
                         callAPI(getMeetings, "getMeetings");

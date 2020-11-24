@@ -100,6 +100,7 @@
         //get User info
         const name = addClassroomForm['class-name'].value;
         const periodNum = addClassroomForm['class-num'].value;
+        const zoomLink = addClassroomForm['class-link'].value;
 
         for(let i = 0; i < studentsList.length; i++){
             let tempIndex = allStudentOptions.indexOf(studentsList[i]);
@@ -110,6 +111,7 @@
         .collection("users").doc(userId).collection("classrooms").add({
             name: name,
             period: periodNum,
+            link: zoomLink,
             students: studentsList
         }).then(() => {
             closePops();
@@ -135,6 +137,7 @@
     function saveClassroom(saveClass, ID){
         const name = saveClass['class-name'].value;
         const periodNum = saveClass['class-num'].value;
+        const zoomLink = saveClass['class-link'].value;
 
         for(let i = 0; i < studentsList.length; i++){
             let tempIndex = allStudentOptions.indexOf(studentsList[i]);
@@ -143,6 +146,7 @@
         db.collection('users').doc(userId).collection("classrooms").doc(ID).update({
             name: name,
             period: periodNum,
+            link: zoomLink,
             students: studentsList 
         }).then(() => {
             // console.log("clicked");
@@ -193,10 +197,12 @@
         let parentDiv = el.parentNode.parentNode;
         let idNum = el.id;
         let tempName = $(parentDiv).find('#title').text();
+        let tempLink = $(parentDiv).find('#linkValue').text();
         let tempPeriod = $(parentDiv).find('#period').text().substring(8);
+        let tempInfo = [tempName, tempPeriod];
         //doesn't work if teacher types comma in name (fix that later)
         let tempList = $(parentDiv).find('#tempStudentsList').text().split(',');
-        
+        console.log(tempList)
         db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
             let idsList = snapshot.docs;
             let finalsList = [];
@@ -226,18 +232,29 @@
                             </p>
                             </div>
 
-                            <div class="field">
-                                <label style="" for="class-num">Period Num</label>
-                                <p class="control has-icons-left">
-                                <input style="" class="input is-small" type="number" id="class-num" value="`+ tempPeriod +`" required />
-                                <span class="icon is-small is-left">
-                                    <i class="fas fa-sort-numeric-up-alt"></i>
-                                </span>
-                                </p>
+                            <div class="field is-grouped">
+                                <div class="field" style="margin-right: 20px;">
+                                    <label style="" for="class-num">Period Num</label>
+                                    <p class="control has-icons-left">
+                                    <input style="" class="input is-small" type="number" id="class-num" value="`+ tempPeriod +`" required />
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-sort-numeric-up-alt"></i>
+                                    </span>
+                                    </p>
+                                </div>
+                                <div class="field">
+                                    <label style="" for="class-num">Link</label>
+                                    <p class="control has-icons-left">
+                                    <input style="" class="input is-small" type="url" id="class-link" value="`+ tempLink +`" required />
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-link"></i>
+                                    </span>
+                                    </p>
+                                </div>
                             </div>
                             
                             <label for="classStudentsInput">Students</label>
-                            <div class="field has-addons">
+                            <div style="margin-top: -20px" class="field has-addons">
 
                                 <!-- <label for="classStudentsInput">Students</label> -->
                                 <div style=""  class="control has-icons-left is-expanded">
@@ -269,7 +286,7 @@
                         
                     </form>
 
-                    <a data-students=" `+ tempList + ` " title=" ` + idNum + `" style="background-color: orange !important; bottom:-4px; right: 105px;" role="button" onclick="launchClass(this)" class="enterClass button is-info" id="` + tempName + `">
+                    <a data-students=" `+ tempList + `" data-link="`+ tempLink + ` " data-info="` + tempInfo + `" title=" ` + idNum + `" style="background-color: orange !important; bottom:-4px; right: 105px;" role="button" onclick="confirmLaunch(this)" class="enterClass button is-info" id="` + tempName + `">
                         <span class="icon">
                             <i class="fas fa-rocket"></i>
                         </span>
@@ -329,8 +346,13 @@
                     let id = doc.id;
                     let tempTitle = doc.data().name;
                     let tempPeriod = doc.data().period;
+                    let tempLink = doc.data().link;
                     let tempStudents = doc.data().students;
 
+                    let tempInfo = [tempTitle, tempPeriod];
+
+                    let tempList = "[" + tempStudents.join(',') + "]";
+                    console.log(tempStudents);
                     let tempIndex = i % colors.length;
                     let revisedStudents = [];
 
@@ -348,6 +370,7 @@
                     db.collection('users').doc(userId).collection("classrooms").doc(id).update({
                         name: tempTitle,
                         period: tempPeriod,
+                        link: tempLink,
                         students: revisedStudents 
                     }).then(() => {
                         tempStudents = revisedStudents;
@@ -357,11 +380,21 @@
                                 <div style="background-color: ` + colors[tempIndex] + `;" class="classroomDivSide"></div>
                                 <div class="classroomDivMain">
                                     <div style="font-weight: bold; font-size: 20px;"><p id="title">` + tempTitle + `</p></div>
+                                    <p style="display: none" id="linkValue">` + tempLink + `</p>
                                     <div><p class="period" id="period">Period: ` + tempPeriod + `</p></div>
                                     <div><p style="margin-left: 20px; text-align: left; font-size: 15px;" id="studentCount">` +
                             tempStudents.length + ` Students </p></div>
                                     
                                     <p style="display: none" id="tempStudentsList">` + tempStudents + `</p>
+
+                                    <a data-students=" `+ tempStudents + `" data-link="` + tempLink + `" data-info="` + tempInfo + `" title="` + id + `" style="background-color: orange !important; margin-right: 40px" role="button" onclick="confirmLaunch(this)" class="enterClass button is-info" id="joinClass ` + i +  ` ">
+                                        <span class="icon">
+                                            <i class="fas fa-rocket"></i>
+                                        </span>
+                                        &nbsp;
+                                        &nbsp;
+                                        Launch
+                                    </a>
                                     <a role="button" onclick="enterClass(this)" class="enterClass button is-info" id="` + id + `">
                                         <span class="icon">
                                         <i class="fas fa-arrow-right"></i>
