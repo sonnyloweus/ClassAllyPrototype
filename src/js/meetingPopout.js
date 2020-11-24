@@ -52,6 +52,7 @@ var http = require("https");
 let dotenv = require('dotenv');
 const result = dotenv.config();
 let endClass = document.getElementById("endClass");
+let underlay = document.getElementById("underlay");
 let controlBool = true;
 
 let takeRollButton = document.getElementById("takeRollButton");
@@ -191,12 +192,19 @@ function switchChat(el, num){
 
 window.addEventListener("beforeunload", function(e){
     console.log(endClass.style.display)
-    if(startHTML.style.display == "none" && endClass.style.display == ""){
+    if(startHTML.style.display == "none" && (endClass.style.display == "" || endClass.style.display == "none")){
         endClass.style.display = "block";
+        underlay.style.display = "block";
         e.preventDefault();
         e.returnValue = '';
     }
 }, false);
+
+underlay.onclick = function(){
+    endClass.style.display = "none";
+    underlay.style.display = "none";
+    console.log("hi");
+}
 
 //#################################################################################
 //################################ Panel Toggles ##################################

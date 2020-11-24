@@ -367,3 +367,14 @@ studentTaskStatus
 #onTaskStudents .studentTaskStatus{
     text-align: left;
 }
+
+#underlay{
+    position: fixed;
+    display: none;
+    top:0;
+    left: 0;
+    background-color: transparent;
+    border: none;
+    width: 100vw;
+    height: 100vh;
+}

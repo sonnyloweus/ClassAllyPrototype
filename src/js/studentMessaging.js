@@ -2,7 +2,7 @@ const { removeTabIndexAndUpdateFocus } = require("custom-electron-titlebar/lib/c
 
 let messageForm = document.getElementById("messageForm");
 let roomId = tempPars.get("classroomId");
-let username = tempPars.get("studentName");
+let email = tempPars.get("studentEmail");
 
 function submitMessage(){
     const date = new Date()
