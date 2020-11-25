@@ -346,6 +346,7 @@ body {
 studentTaskStatus
 
 .studentTaskStatus{
+    margin-top: 2px;
     font-size: 14px;
 }
 
@@ -355,17 +356,17 @@ studentTaskStatus
 
 #taskStatus{
     text-align: right;
-    margin-right: 100px;
     font-size: 18px;
 }
 
 #onTaskStudents{
-    overflow-y: hidden;
+    overflow-y: scroll;
     /* height: 16vh; */
 }
 
 #onTaskStudents .studentTaskStatus{
     text-align: left;
+    padding-left: 4px;
 }
 
 #underlay{
@@ -378,3 +379,17 @@ studentTaskStatus
     width: 100vw;
     height: 100vh;
 }
+
+.nudgeButton{
+    font-weight: bold;
+    padding: 10px !important;
+    height: 18px;
+    font-size: 11px;
+    margin-right: 10px;
+    float: right;
+}
+
+.nudgeButton span{
+    font-size: 14px;
+}
+

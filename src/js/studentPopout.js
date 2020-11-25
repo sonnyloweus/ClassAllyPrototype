@@ -55,6 +55,7 @@ function endMeetingFunc(el){
     rtdb.ref('ChatRooms/' + roomId + "/general/").off();
     rtdb.ref('ChatRooms/' + roomId + "/resources/").off();
     rtdb.ref('ChatRooms/' + roomId + "/questions/").off();
+    rtdb.ref('ChatRooms/' + roomId + "/nudged/").off();
     // delete participant
     rtdb.ref('ChatRooms/' + roomId + "/participants/" + username).remove();
     // close window

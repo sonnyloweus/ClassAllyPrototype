@@ -24,23 +24,40 @@
 
     const studentsForm = document.getElementById("students-form");
     let studentFormAdd = document.getElementById("studentFormAdd");
+    let studentMessage = document.getElementById("studentMessage");
+
     studentsForm.addEventListener('submit', (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
         const name = studentsForm['student-name'].value;
         const email = studentsForm['student-email'].value;
         // console.log("adding student " + userId);
-    
-        let subCollect = db
-            .collection("users").doc(userId).collection("students").add({
-                name: name,
-                email: email
-            }).then(() => {
-                console.log("Added a Student")
-                studentsForm.reset();
-                closePops();
-                drawStudents();
+
+        db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
+            let idsList = snapshot.docs;
+            // console.log(idsList)
+            let flag = false;
+            snapshot.docs.forEach(function (doc, i) {
+                if(email == doc.data().email){
+                    flag = true;
+                }
             });
+            if(!flag){
+                studentMessage.innerHTML = "";
+                let subCollect = db
+                    .collection("users").doc(userId).collection("students").add({
+                        name: name,
+                        email: email
+                    }).then(() => {
+                        console.log("Added a Student")
+                        studentsForm.reset();
+                        closePops();
+                        drawStudents();
+                    });
+            }else{
+                studentMessage.innerHTML = "<br> That email has already been assigned - each email needs to be unique";
+            }
+        });
     });
 
     let studentsListHTML = document.getElementById("studentsList");

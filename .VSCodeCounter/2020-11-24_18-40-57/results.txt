@@ -1,0 +1,71 @@
+Date : 2020-11-24 18:40:57
+Directory : c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly
+Total : 40 files,  15977 codes, 2062 comments, 2241 blanks, all 20280 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JavaScript |         16 |      8,242 |      1,926 |      1,816 |     11,984 |
+| JSON       |          2 |      5,150 |          0 |          2 |      5,152 |
+| HTML       |         12 |      1,397 |         80 |        212 |      1,689 |
+| CSS        |         10 |      1,188 |         56 |        211 |      1,455 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                    | files      | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                       |         40 |     15,977 |      2,062 |      2,241 |     20,280 |
+| src                                                                                                                                     |         38 |     10,827 |      2,062 |      2,239 |     15,128 |
+| src\css                                                                                                                                 |         10 |      1,188 |         56 |        211 |      1,455 |
+| src\js                                                                                                                                  |         15 |      8,213 |      1,910 |      1,806 |     11,929 |
+| src\templates                                                                                                                           |         10 |      1,295 |         65 |        189 |      1,549 |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                                | language   | code       | comment    | blank      | total      |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\package-lock.json                      | JSON       |      5,087 |          0 |          1 |      5,088 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\package.json                           | JSON       |         63 |          0 |          1 |         64 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\404.html                           | HTML       |         32 |          0 |          2 |         34 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\classrooms.css                 | CSS        |        106 |          4 |         19 |        129 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\index.css                      | CSS        |         97 |          0 |         18 |        115 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\meetingPopout.css              | CSS        |        305 |         26 |         65 |        396 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\modals.css                     | CSS        |        107 |          2 |         23 |        132 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\navbarLeft.css                 | CSS        |         73 |          1 |         12 |         86 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\navbarRight.css                | CSS        |         28 |          0 |          5 |         33 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\slideshow.css                  | CSS        |        138 |          6 |         21 |        165 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\studentPopout.css              | CSS        |        180 |          8 |         32 |        220 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\students.css                   | CSS        |         66 |          4 |          9 |         79 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\css\tutorial.css                   | CSS        |         88 |          5 |          7 |        100 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\index.html                         | HTML       |         70 |         15 |         21 |        106 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\index.js                           | JavaScript |         29 |         16 |         10 |         55 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\apiGadgets.js                   | JavaScript |        312 |         60 |         50 |        422 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\firebaseAuth.js                 | JavaScript |        154 |         45 |         27 |        226 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\joinClass.js                    | JavaScript |         44 |          1 |          6 |         51 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\jquery.js                       | JavaScript |      6,649 |      1,596 |      1,545 |      9,790 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\meetingGadgets.js               | JavaScript |        140 |         13 |         22 |        175 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\meetingPopout.js                | JavaScript |        280 |         29 |         31 |        340 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\meetingPopoutAPI.js             | JavaScript |         24 |         23 |          8 |         55 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\messaging.js                    | JavaScript |        119 |          3 |         14 |        136 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\modals.js                       | JavaScript |         80 |         12 |         17 |        109 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\pageDynamics.js                 | JavaScript |         25 |          6 |          7 |         38 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\render.js                       | JavaScript |         28 |         58 |         16 |        102 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\studentGadgets.js               | JavaScript |         38 |          1 |          8 |         47 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\studentMessaging.js             | JavaScript |        119 |          3 |         13 |        135 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\studentPopout.js                | JavaScript |        105 |         11 |         14 |        130 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\js\zoomAuth.js                     | JavaScript |         96 |         49 |         28 |        173 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\classroomPage.html       | HTML       |        364 |          1 |         52 |        417 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\gadgets.html             | HTML       |         16 |          0 |          2 |         18 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\joinOrLog.html           | HTML       |         92 |          0 |         13 |        105 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\meetingPopout.html       | HTML       |        180 |         32 |         29 |        241 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\modals.html              | HTML       |        296 |         24 |         32 |        352 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\navLeft.html             | HTML       |         51 |          0 |          5 |         56 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\navRight.html            | HTML       |         36 |          3 |          7 |         46 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\settingsPage.html        | HTML       |          1 |          0 |          0 |          1 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\studentMeetingPopup.html | HTML       |        103 |          4 |         24 |        131 |
+| c:\Users\sonny\OneDrive - Bellarmine College Preparatory\Everything\Coding\DesktopApps\ClassAlly\src\templates\studentsPage.html        | HTML       |        156 |          1 |         25 |        182 |
+| Total                                                                                                                                   |            |     15,977 |      2,062 |      2,241 |     20,280 |
++-----------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

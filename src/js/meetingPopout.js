@@ -106,6 +106,9 @@ function openURL(id){
                 HelperBot: 'Post questions here:'
             },
             participants: {
+            },
+            nudged: {
+                
             }
         }
     });
