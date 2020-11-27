@@ -129,7 +129,7 @@ body {
 .messageBox{
     width: 100%;
     /* border: 1px solid gray; */
-    height: 50vh;
+    height: 58vh;
     margin-top: -20px;
     text-align: left;
     overflow: scroll;

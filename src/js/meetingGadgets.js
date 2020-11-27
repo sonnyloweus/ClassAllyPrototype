@@ -1,5 +1,6 @@
 //list of what I need to do:
 // - finish engage feature
+// - stay in front of screen, cannot be seen by share screen
 
 let notConnected = document.getElementById("notConnected");
 let Connected = document.getElementById("Connected");
@@ -199,5 +200,5 @@ function checkOffTask(){
 
 let appTracker = setInterval(function(){ 
     checkOffTask();
-}, 20000);
+}, 5000);
 

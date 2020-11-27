@@ -136,7 +136,7 @@ body {
 .messageBox{
     width: 100%;
     /* border: 1px solid gray; */
-    height: 25vh;
+    height: 27vh;
     margin-top: -20px;
     text-align: left;
     overflow: scroll;
@@ -216,7 +216,7 @@ body {
 
 .changeViewState{
     border: none !important;
-    background: none !important;
+    background: none ;
     padding: 0px !important;
     float: right;
     margin-right: 20px;
@@ -324,7 +324,7 @@ body {
     margin-top: 10px;
     margin-left: 5%;
     width: 90%;
-    height: 11vh;
+    height: 16vh;
     background-color: #e9e6eb;
     border-radius: 10px;
 }
@@ -393,3 +393,15 @@ studentTaskStatus
     font-size: 14px;
 }
 
+#minimizedNotif{
+    background-color: red !important;
+    border-radius: 6px;
+    color: white;
+    height: 19px;
+    width: 32px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 21px;
+    margin-top: 3px !important;
+    padding-top: 1px !important;
+}

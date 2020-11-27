@@ -105,7 +105,7 @@ var createMeeting = {
 //#################################  Functions ####################################
 //#################################################################################
 function generateCode(count){
-    let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZacdefhiklmnoqrstuvwxyz01234567890123456789'.split('');
+    let chars = 'ABCDEFGHJKLMNOPQRSTUVWXYZacdefhikmnoqrstuvwxyz01234567890123456789'.split('');
     let result = '';
     for(let i = 0; i < count; i++){
         let x = Math.floor(Math.random() * chars.length);

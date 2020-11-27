@@ -71,6 +71,7 @@ console.log(tempPars.get("joinURL"));
 let userId = tempPars.get("userId");
 let classroomID = tempPars.get("classroomId");
 let students = tempPars.get("studentsList");
+let username = tempPars.get("username");
 
 function copyText(id) {
     /* Get the text field */
@@ -97,18 +98,17 @@ function openURL(id){
     rtdb.ref('ChatRooms').update({
         [zoomId]: {
             general: {
-                HelperBot: 'Post general info here:'
             },
             resources: {
-                HelperBot: 'Post resource links here:'
             },
             questions: {
-                HelperBot: 'Post questions here:'
             },
             participants: {
             },
             nudged: {
-                
+            },
+            info: {
+                teacher: username
             }
         }
     });
@@ -172,6 +172,27 @@ let generalBox = document.getElementById("generalBox");
 let resourcesBox = document.getElementById("resourcesBox");
 let questionsBox = document.getElementById("questionsBox");
 let currentChat = 1;
+let totalUnreads = 0;
+let generalUnreads = 0;
+let questionUnreads = 0;
+let resourceUndreads = 0;
+let minimizedNotif = document.getElementById("minimizedNotif");
+minimizedNotif.style.display = "none";
+
+function calculateUnreads(){
+    totalUnreads = generalUnreads + questionUnreads + resourceUndreads;
+    if(totalUnreads == 0){
+        minimizedNotif.style.display = "none";
+    }else{
+        minimizedNotif.style.display = "block";
+        if(totalUnreads >= 10){
+            minimizedNotif.innerText = "9+";
+        }else{
+            minimizedNotif.innerText = totalUnreads;
+        }
+    }
+}
+
 
 function switchChat(el, num){
     currentChat = num;
@@ -185,11 +206,15 @@ function switchChat(el, num){
     questionsBox.style.display = "none";
     if(currentChat == 1){
         generalBox.style.display = "block";
+        generalUnreads = 0;
     }else if (currentChat == 2){
         resourcesBox.style.display = "block";
+        resourceUndreads = 0;
     }else{
         questionsBox.style.display = "block";
+        questionUnreads = 0;
     }
+    calculateUnreads();
 }
 
 
@@ -232,21 +257,28 @@ let smartChatToggle = -1;
 // if chat is open -> engage, attendance, appTrack Toggle
 // if chat is closed -> No toggling needed
 // if chat being oppened, only allow one of others to be open
-// -1 == opened
+// -1 == opened     1 == closed
+
+// if chat or engage is open -> attendance, appTrack Toggle
+// if chat or engage closed -> No toggling needed
+// if chat opened --> engage close
+// if engage opened --> chat close
+// if chat being oppened, only allow one of others to be open
+// -1 == opened     1 == closed
+
+// questionsHidden.style.display = "none";
+//         engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+//         engageView.parentElement.parentElement.style.height = "5vh";
 
 function checkPanelClosed(){
     // if smartChat is open
-    if(smartChatToggle == -1){
-        questionsHidden.style.display = "none";
-        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
-        engageView.parentElement.parentElement.style.height = "5vh";
+    if(smartChatToggle == -1 || engageToggle == -1){
         attendanceHidden.style.display = "none";
         attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         attendanceView.parentElement.parentElement.style.height = "5vh";
         appTrackHidden.style.display = "none";
         appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         appTrackView.parentElement.parentElement.style.height = "5vh";
-        engageToggle = 1;
         attendanceToggle = 1;
         appTrackToggle = 1;
     }
@@ -254,32 +286,15 @@ function checkPanelClosed(){
 
 function closeOtherPanels(){
     if(attendanceToggle == -1){
-        questionsHidden.style.display = "none";
-        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
-        engageView.parentElement.parentElement.style.height = "5vh";
         appTrackHidden.style.display = "none";
         appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         appTrackView.parentElement.parentElement.style.height = "5vh";
-        engageToggle = 1;
         appTrackToggle = 1;
     }else if(appTrackToggle == -1){
-        questionsHidden.style.display = "none";
-        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
-        engageView.parentElement.parentElement.style.height = "5vh";
         attendanceHidden.style.display = "none";
         attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         attendanceView.parentElement.parentElement.style.height = "5vh";
-        engageToggle = 1;
         attendanceToggle = 1;
-    }else{
-        attendanceHidden.style.display = "none";
-        attendanceView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
-        attendanceView.parentElement.parentElement.style.height = "5vh";
-        appTrackHidden.style.display = "none";
-        appTrackView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
-        appTrackView.parentElement.parentElement.style.height = "5vh";
-        attendanceToggle = 1;
-        appTrackToggle = 1;
     }
 }
 
@@ -289,10 +304,15 @@ engageView.onclick = function(){
         engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
         engageView.parentElement.parentElement.style.height = "5vh";
     }else{
-        checkPanelClosed();
+        closeOtherPanels();
         questionsHidden.style.display = "block";
         engageView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
-        engageView.parentElement.parentElement.style.height = "23vh";
+        engageView.parentElement.parentElement.style.height = "50vh";
+
+        smartChatHidden.style.display = "none";
+        smartChatView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        smartChatView.parentElement.parentElement.style.height = "5vh";
+        smartChatToggle = 1;
     }
     engageToggle *= -1;
 }
@@ -335,6 +355,20 @@ smartChatView.onclick = function(){
         smartChatHidden.style.display = "block";
         smartChatView.innerHTML = '<span class="icon"><i class="fas fa-minus-circle"></i></span>';
         smartChatView.parentElement.parentElement.style.height = "50vh";
+
+        if(currentChat == 1){
+            generalUnreads = 0;
+        }else if(currentChat == 2){
+            resourceUndreads = 0;
+        }else if(currentChat == 3){
+            questionUnreads = 0;
+        }
+        
+        calculateUnreads();
+        questionsHidden.style.display = "none";
+        engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
+        engageView.parentElement.parentElement.style.height = "5vh";
+        engageToggle = 1;
     }
     smartChatToggle *= -1;
 }

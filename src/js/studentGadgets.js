@@ -25,7 +25,7 @@ let appTracker = setInterval(function(){
         }
     });
     refreshList();
-}, 20000);
+}, 5000);
 
 const notifier = require('node-notifier');
 const path = require('path');
