@@ -48,3 +48,7 @@ joinClass.onclick = function(){
     }
     
 }
+
+// let popup = window.open(
+//     "templates/studentMeetingPopup.html", "Controls",
+//     "height=380,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");

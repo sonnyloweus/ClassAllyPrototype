@@ -98,6 +98,12 @@ dbGeneral.endAt().on('child_added', snap => {
         }
         lastGeneral = tempKey;
 
+        if(currentChat == 1 && smartChatToggle == -1){
+            generalUnreads = 0;
+        }else{
+            generalUnreads += 1;
+        }
+        calculateUnreads();
         generalBox.scrollTop = generalBox.scrollHeight;
     }
 })
@@ -128,7 +134,12 @@ dbResources.on('child_added', snap => {
             `;
         }
         lastResource = tempKey;
-
+        if(currentChat == 2 && smartChatToggle == -1){
+            resourceUndreads = 0;
+        }else{
+            resourceUndreads += 1;
+        }
+        calculateUnreads();
         resourcesBox.scrollTop = resourcesBox.scrollHeight;
     }
 })
@@ -159,7 +170,12 @@ dbQuestions.on('child_added', snap => {
             `;
         }
         lastQuestions = tempKey;
-
+        if(currentChat == 3 && smartChatToggle == -1){
+            questionUnreads = 0;
+        }else{
+            questionUnreads += 1;
+        }
+        calculateUnreads();
         questionsBox.scrollTop = questionsBox.scrollHeight;
     }
 });

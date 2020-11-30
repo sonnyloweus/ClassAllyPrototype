@@ -42,10 +42,67 @@
                 Info
             </a>
 
+            <div id="modal-error" class="popupBox tile is-ancestor">
+                <div class="tile is-parent">
+                    <div class="tile is-child box">
+                        <button id="closeError" class="button is-danger fa fa-times fa-sm closePopups"></button>
+                        <h4>ClassAlly Bot</h4><br />
+                        <div id="error-details">
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div style="display: block;" id="controlPanel">
-                
+
+                <div id="questionsPanel" class="controlSection">
+                    <h3 style="font-weight: bold; margin-top: 5px; border-radius: 20px;">Engage
+                        <button id="engageView" class="button changeViewState">
+                            <span class="icon"><i class="fas fa-plus-circle"></i></span>
+                        </button>
+                    </h3>
+                    <div id="questionsHidden">
+                        <h1><strong id="questionStatus" class="noQuestions">No Questions Currently</strong></h1>
+                        <h3 id="questionType"><strong>Single Select</strong></h3>
+                        <div id="questionContainer">
+                            <p id="questionSentence">Is the center of mass of the earth right at it's core?</p>
+                        </div>
+                        <div id="responseSection">
+
+                            <!-- <textarea id="response-text" class="textarea" rows="6"
+                            placeholder="Put your response here..."></textarea> -->
+                            <!-- <div id="multipleChoice">
+                                <label class="radio">
+                                    <input type="radio" name="answer">
+                                    hfkjdasfhdj 
+                                </label>
+                                <br>
+                                <label class="checkbox">
+                                    <input type="checkbox" name="answer">
+                                    hfkjdasfhdj 
+                                </label>
+                                <br>
+                                <br>
+                            </div> -->
+
+                        </div>
+
+                        <a id="submitAnswer" role="button" class="button is-link is-rounded">
+                            <span class="icon"><i class="fas fa-paper-plane"></i></span>&nbsp;&nbsp;Submit
+                        </a>
+                    </div>
+                </div>
+
                 <div id="smartChat" class="controlSection">
                     <h3 style="font-weight: bold; margin-top: 5px; border-radius: 20px;">Smart Chat
+                        <button id="smartChatView" class="button changeViewState">
+                            <span class="icon"><i class="fas fa-minus-circle"></i></span>
+                        </button>
+
+                        <p id="minimizedNotif" class="button changeViewState">
+                            0
+                        </p>
                     </h3>
 
                     <div id="smartChatHidden">

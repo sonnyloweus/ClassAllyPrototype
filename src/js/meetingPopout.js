@@ -109,6 +109,10 @@ function openURL(id){
             },
             info: {
                 teacher: username
+            },
+            engage: {
+            },
+            responses: {
             }
         }
     });
@@ -219,12 +223,12 @@ function switchChat(el, num){
 
 
 window.addEventListener("beforeunload", function(e){
-    console.log(endClass.style.display)
     if(startHTML.style.display == "none" && (endClass.style.display == "" || endClass.style.display == "none")){
         endClass.style.display = "block";
         underlay.style.display = "block";
         e.preventDefault();
         e.returnValue = '';
+        console.log("showingButton")
     }
 }, false);
 
@@ -363,7 +367,7 @@ smartChatView.onclick = function(){
         }else if(currentChat == 3){
             questionUnreads = 0;
         }
-        
+
         calculateUnreads();
         questionsHidden.style.display = "none";
         engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';

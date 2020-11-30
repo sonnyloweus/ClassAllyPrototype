@@ -114,6 +114,126 @@ function drawConnected(){
 //######################### Asking Questions ###########################
 //######################################################################
 
+//switching question type function now inside meetingPopout.html
+let askQuestion = document.getElementById("askQuestion");
+let questionType = document.getElementById("questionType");
+let questionText = document.getElementById("question-text");
+let endSession = document.getElementById("endSession");
+let tempQuestionType = "";
+
+askQuestion.onclick = function(){
+    let responseType = questionType.value;    
+    let questionInputed = questionText.value;
+    tempQuestionType = responseType;
+    if(questionInputed == ""){
+        errorModal.style.display = "block";
+        errorDetails.innerText = "Please include a question!";
+    }else{
+        if(questionType.value != "freeResponse"){
+            let flag = false;
+            let optionText = [];
+            let optionTexts = document.getElementsByClassName("optionText");
+            for(let i = 0; i < optionTexts.length; i++){
+                if(optionTexts[i].value == "") flag = true; 
+                optionText.push(optionTexts[i].value);
+            }
+
+            if(flag){
+                errorModal.style.display = "block";
+                errorDetails.innerText = "Please make sure all options are filled!";
+            }else{
+                rtdb.ref('ChatRooms/' + tempPars.get("Id")).child('engage').update({
+                    engageQuestion: {
+                        questionType: responseType,
+                        question: questionInputed,
+                        options: optionText
+                    }
+                }).then(function(){
+                    errorModal.style.display = "block";
+                    errorDetails.innerText = "Question Sent! You can close the questioning session by clicking End Session";
+                    askQuestion.disabled = true;
+                    endSession.disabled = false;
+
+                    questionEditor.style.display = "none";
+                    responseEditor.style.display = "block";
+                    responseEditor.innerHTML = `
+                        <h2 style="float: left; margin-top: -30px;">Responses:</h2>
+                        <div id="allSelectResponses">
+            
+                        </div>
+                    `;
+                    //<p class="keyResponse"><strong>Sonny Lowe: </strong>1</p>
+                });
+            }
+        }else{
+            rtdb.ref('ChatRooms/' + tempPars.get("Id")).child('engage').update({
+                engageQuestion: {
+                    questionType: responseType,
+                    question: questionInputed
+                }
+            }).then(function(){
+                errorModal.style.display = "block";
+                errorDetails.innerText = "Question Sent! You can close the questioning session by clicking End Session";
+                askQuestion.disabled = true;
+                endSession.disabled = false;
+
+                questionEditor.style.display = "none";
+                responseEditor.style.display = "block";
+                responseEditor.innerHTML = `
+                    <h2 style="float: left; margin-top: -30px;">Responses:</h2>
+                    <div id="allFreeResponses">
+                        
+                    </div>
+                `;
+                // <p class="keyResponse"><strong>Sonny Lowe</strong></p>
+                // <p class="valueResponse">blah </p>
+            });
+        }
+    }
+}
+
+let dbEngage = rtdb.ref('ChatRooms/' + roomId).child('responses');
+dbEngage.on('child_added', snap => {
+    let tempKey = snap.key;
+    let tempVal = snap.val();
+    if(endSession.disabled == true){
+        rtdb.ref('ChatRooms/' + roomId + "/responses").remove();
+    }else{
+        if(tempQuestionType != "freeResponse"){
+            let allSelectResponses = document.getElementById("allSelectResponses");
+            if(tempQuestionType == "singleSelect"){
+                allSelectResponses.innerHTML += `
+                    <p class="keyResponse"><strong>`+ tempKey +`: </strong>`+ tempVal +`</p>
+                `;
+            }else{
+                allSelectResponses.innerHTML += `
+                    <p class="keyResponse"><strong>`+ tempKey +`: </strong>`+ tempVal.substring(0, tempVal.length-1) +`</p>
+                `;
+            }
+        }else{
+            let allFreeResponses = document.getElementById("allFreeResponses");
+            allFreeResponses.innerHTML += `
+                <p class="keyResponse"><strong>`+ tempKey +`</strong></p>
+                <p class="valueResponse">`+ tempVal +`</p>
+            `;
+
+        }
+    }
+});
+
+endSession.onclick = function(){
+    errorModal.style.display = "block";
+    errorDetails.innerText = "Question Session Ended!";
+    askQuestion.disabled = false;
+    endSession.disabled = true;
+
+    questionEditor.style.display = "block";
+    responseEditor.style.display = "none";
+    
+    rtdb.ref('ChatRooms/' + roomId + "/engage/engageQuestion").remove();
+    rtdb.ref('ChatRooms/' + roomId + "/responses").remove();
+}
+
 
 //######################################################################
 //######################## Checking Apps Track #########################
@@ -201,4 +321,3 @@ function checkOffTask(){
 let appTracker = setInterval(function(){ 
     checkOffTask();
 }, 5000);
-

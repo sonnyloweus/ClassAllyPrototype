@@ -405,3 +405,245 @@ studentTaskStatus
     margin-top: 3px !important;
     padding-top: 1px !important;
 }
+
+#endSession{
+    font-size: 15px;
+}
+
+#responseEditor{
+    margin-top: 10px;
+    margin-left: 5%;
+    width: 90%;
+    height: 38vh;
+    /* background-color: #e9e6eb; */
+    border-radius: 10px;
+    display: none;
+}
+
+#questionEditor{
+    margin-top: 10px;
+    margin-left: 5%;
+    width: 90%;
+    height: 38vh;
+    /* background-color: #e9e6eb; */
+    border-radius: 10px;
+}
+
+#questionType{
+    /* float: right; */
+    background-color: #2F80ED;
+    color: white;
+    width: 50vw;
+    height: 30px;
+    font-size: 15px;
+    padding: 0px 5px 0px 10px !important;
+}
+
+#selectDiv{
+    float: right;
+}
+
+textarea{
+    resize: none !important;
+    overflow-y: scroll;
+    padding: 2px;
+    border-radius: 10px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+textarea::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: orange;
+    border-radius: 10px;
+}
+
+#question-form{
+    margin-top: 10px;
+}
+
+#question-form h5{
+    float: left;
+    font-size: 15px;
+    margin-top: -5px;
+}
+
+#freeResponseBox{
+    background-color: #e9e6eb;
+    width: 92%;
+    margin-top: 40px;
+    margin-left: 4%;
+    border-radius: 10px;
+    height: 13vh;
+}
+
+#textFieldIcon{
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    width: 50%;
+    height: 30px;
+    background-color: orange;
+    color: white;
+    line-height: 30px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tableRow{
+    display: table-row;
+    border-spacing:0 5px; 
+}
+
+.tableRow .tableCell{
+    display: table-cell;
+}
+
+.choiceTextbox input{
+    width: 80% !important;
+    height: 30px !important;
+}
+
+.choiceTextbox p{
+    line-height: 30px;
+}
+
+.deleteOption button{
+    margin-top: -3px;
+    padding: 2px !important;
+    width: 30px !important;
+    height: 30px !important;
+}
+
+#addOption{
+    background-color: #2F80ED;
+    color: white;
+    width: 20vw;
+    height: 25px;
+    line-height: 25px;
+    float: right;
+    font-size: 15px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+#optionsTable{
+    width: 100%; 
+    display: table;
+    /* background-color: yellow; */
+}
+
+#optionsContainer{
+    height: 15vh;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#optionsContainer::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#optionsContainer::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+#optionsContainer::-webkit-scrollbar-thumb {
+    background: #3298DC;
+    border-radius: 10px;
+}
+
+.popupBox {
+    position: absolute;
+    z-index: 3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    /* height: 250px; */
+    transition: 1s;
+}
+
+.popupBox>.is-parent>.is-child {
+    box-shadow: 0 0 5px 5px rgb(187, 183, 183);
+}
+
+.closePopups {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#allFreeResponses{
+    width: 98%;
+    margin-left: 1%;
+    border-radius: 10px;
+    background-color: #e9e6eb;
+    height: 34vh;
+    margin-top: 33px;
+    overflow-y: scroll;
+}
+
+#allFreeResponses::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#allFreeResponses::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+#allFreeResponses::-webkit-scrollbar-thumb {
+    background: #3298DC;
+    border-radius: 10px;
+}
+
+.keyResponse{
+    padding-left: 45px;
+    font-size: 12px;
+    text-align: left;
+}
+
+.keyResponse strong{
+    color: blue !important;
+}
+
+.valueResponse{
+    font-size: 12px;
+}
+
+.keyResponse:first-of-type{
+    padding-top: 9px;
+}
+
+#allSelectResponses{
+    width: 98%;
+    margin-left: 1%;
+    border-radius: 10px;
+    background-color: #e9e6eb;
+    height: 12vh;
+    margin-top: 33px;
+    overflow-y: scroll;
+}
+
+#allSelectResponses::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#allSelectResponses::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+
+#allSelectResponses::-webkit-scrollbar-thumb {
+    background: #3298DC;
+    border-radius: 10px;
+}

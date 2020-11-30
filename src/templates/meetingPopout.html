@@ -124,6 +124,18 @@
                     </div>
                 </div>
 
+                <div id="modal-error" class="popupBox tile is-ancestor">
+                    <div class="tile is-parent">
+                      <div class="tile is-child box">
+                        <button id="closeError" class="button is-danger fa fa-times fa-sm closePopups"></button>
+                        <h4>ClassAlly Bot</h4><br />
+                        <div id="error-details">
+                  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 <div id="questionsPanel" class="controlSection">
                     <h3 style="font-weight: bold; margin-top: 5px; border-radius: 20px;">Engage
                         <button id="engageView" class="button changeViewState">
@@ -131,15 +143,47 @@
                         </button>
                     </h3>
                     <div id="questionsHidden">
-                        <a role="button" class="button controlButton is-medium is-warning">
+                        <button id="askQuestion" role="button" class="button controlButton is-medium is-warning">
                             <span class="icon"><i class="fas fa-comments"></i></span>&nbsp;&nbsp;Ask
-                        </a>
-                        <a role="button" class="button controlButton is-medium is-warning" disabled>
-                            <span class="icon"><i class="fas fa-redo"></i></span>&nbsp;&nbsp;Review
-                        </a>
-                        <div id="" class="subBox">
+                        </button>
+                        <button id="endSession" role="button" class="button controlButton is-medium is-warning" disabled>
+                            <span class="icon"><i class="fas fa-hourglass-end"></i></span>&nbsp;&nbsp;End Session
+                        </button>
 
+                        <div id="responseEditor" class="subBox">
                         </div>
+                        <div id="questionEditor" class="subBox">
+                            <p>
+                                <h5 style="float: left; margin-top: 5px;">Question:</h5>
+                                <div id="selectDiv" class="select is-rounded">
+                                    <select onchange="changeResponseType(this)" id="questionType">
+                                        <option value="freeResponse">Free Response</option>
+                                        <option value="singleSelect">Single Select</option>
+                                        <option value="multipleSelect">Multiple Select</option>
+                                    </select>
+                                </div>
+                            </p>
+
+                            <br>
+                            <div id="question-form">
+                                <div class="field">
+                                    <div class="field">
+                                        <div class="control">
+                                            <textarea id="question-text" class="textarea" rows="2"
+                                                placeholder="Put your question here..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="responseSide">
+                                    <h5 style="margin-top: -25px;">Response:</h5>
+                                    <div id="freeResponseBox">
+                                        <p id="textFieldIcon">Text-Field</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
 
@@ -228,6 +272,186 @@
         const db = firebase.firestore();
     </script>
     <!-- <script src="../js/zoomAuth.js"></script> -->
+
+    <script>
+        let questionEditor = document.getElementById("questionEditor");
+        let responseEditor = document.getElementById("responseEditor");
+        let currentType = "freeResponse";
+        let responseSide = document.getElementById("responseSide");
+        let optionAmount = 2;
+
+        function changeResponseType(el) {
+            let tempType = el.value;
+            if (tempType == "freeResponse") {
+                responseSide.innerHTML = `
+                    <h5 style="margin-top: -25px;">Response:</h5>
+                    <div id="freeResponseBox">
+                        <p id="textFieldIcon">Text-Field</p>
+                    </div>
+                `;
+                currentType = "freeResponse";
+            } else if (tempType == "singleSelect") {
+                if (currentType != "singleSelect" && currentType != "multipleSelect") {
+                    responseSide.innerHTML = `
+                    <p>
+                        <h5>Response:</h5>
+                        <button onclick="addOption(this)" class="button is-rounded is-link" id="addOption">Add</button>
+                    </p>
+                    
+                    <div id="optionsContainer">
+                        <div id="optionsTable">
+                            <div class="tableRow">
+                                <div class="tableCell choiceTextbox">
+                                    <p class="control">
+                                        <span class="optionNumbering">1</span> . &nbsp
+                                        <input class="input optionText" maxlength="50" type="text" placeholder="Option...">
+                                    </p>
+                                </div>
+                                <div class="tableRow deleteOption">
+                                    <button onclick="deleteOption(this)" id="` + "deleteOption1" + `" class="button is-danger">
+                                        <span class="icon">
+                                            <i class="fas fa-trash-alt fa-sm"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="tableRow">
+                                <div class="tableCell choiceTextbox">
+                                    <p class="control">
+                                        <span class="optionNumbering">2</span> . &nbsp
+                                        <input class="input optionText" maxlength="50" type="text" placeholder="Option...">
+                                    </p>
+                                </div>
+                                <div class="tableRow deleteOption">
+                                    <button onclick="deleteOption(this)" id="` + "deleteOption2" + `" class="button is-danger">
+                                        <span class="icon">
+                                            <i class="fas fa-trash-alt fa-sm"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    optionAmount = 2;
+                }
+                currentType = "singleSelect";
+            } else {
+                if (currentType != "singleSelect" && currentType != "multipleSelect") {
+                    responseSide.innerHTML = `
+                    <p>
+                        <h5>Response:</h5>
+                        <button onclick="addOption(this)" class="button is-rounded is-link" id="addOption">Add</button>
+                    </p>
+                    
+                    <div id="optionsContainer">
+                        <div id="optionsTable">
+                            <div class="tableRow">
+                                <div class="tableCell choiceTextbox">
+                                    <p class="control">
+                                        <span class="optionNumbering">1</span> . &nbsp
+                                        <input class="input optionText" maxlength="50" type="text" placeholder="Option...">
+                                    </p>
+                                </div>
+                                <div class="tableRow deleteOption">
+                                    <button onclick="deleteOption(this)" id="` + "deleteOption1" + `" class="button is-danger">
+                                        <span class="icon">
+                                            <i class="fas fa-trash-alt fa-sm"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="tableRow">
+                                <div class="tableCell choiceTextbox">
+                                    <p class="control">
+                                        <span class="optionNumbering">2</span> . &nbsp
+                                        <input class="input optionText" maxlength="50" type="text" placeholder="Option...">
+                                    </p>
+                                </div>
+                                <div class="tableRow deleteOption">
+                                    <button onclick="deleteOption(this)" id="` + "deleteOption2" + `" class="button is-danger">
+                                        <span class="icon">
+                                            <i class="fas fa-trash-alt fa-sm"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    optionAmount = 2;
+                }
+                currentType = "multipleSelect";
+            }
+        }
+
+        let errorModal = document.getElementById("modal-error");
+        let errorDetails = document.getElementById("error-details");
+        let closeError = document.getElementById("closeError");
+        errorModal.style.display = "none";
+
+        closeError.onclick = function(){
+            errorModal.style.display = "none";
+        }
+
+        function deleteOption(el){
+            let needDeleting = document.getElementById(el.id);
+            let parentDelete = needDeleting.parentElement.parentElement;
+            let optionNumbers = document.getElementsByClassName("optionNumbering");
+             
+            if(optionAmount >= 3){
+                parentDelete.remove();
+                optionAmount -= 1;
+
+                for(let i = 0; i < optionNumbers.length; i++){
+                    optionNumbers[i].innerHTML = i+1;
+                }
+            }else{
+                errorModal.style.display = "block";
+                errorDetails.innerText = "You must have at least 2 options!"
+            }
+        }
+
+        function addOption(el){
+            let optionsTable = document.getElementById("optionsTable");
+
+            if(optionAmount <= 5){
+                optionAmount += 1;
+                let optionText = [];
+                let optionTexts = document.getElementsByClassName("optionText");
+                for(let i = 0; i < optionTexts.length; i++){    
+                    optionText.push(optionTexts[i].value);
+                }
+                optionText.push("");
+                optionsTable.innerHTML += `
+                    <div class="tableRow">
+                        <div class="tableCell choiceTextbox">
+                            <p class="control">
+                                <span class="optionNumbering">` + optionAmount + `</span> . &nbsp
+                                <input class="input optionText" type="text" maxlength="50" placeholder="Option...">
+                            </p>
+                        </div>
+                        <div class="tableRow deleteOption">
+                            <button onclick="deleteOption(this)" id="deleteOption` + optionAmount + `" class="button is-danger">
+                                <span class="icon">
+                                    <i class="fas fa-trash-alt fa-sm"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                optionTexts = document.getElementsByClassName("optionText");
+                for(let i = 0; i < optionTexts.length; i++){    
+                    optionTexts[i].value = optionText[i];
+                }
+            }else{
+                errorModal.style.display = "block";
+                errorDetails.innerText = "Sorry, the maximum is 5 options."
+            }
+        }
+    </script>
+
     <script src="../js/meetingPopout.js"></script>
     <script src="../js/meetingPopoutAPI.js"></script>
     <script src="../js/messaging.js"></script>
