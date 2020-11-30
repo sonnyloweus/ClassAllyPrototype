@@ -1,8 +1,8 @@
 {
-  "name": "api",
-  "productName": "api",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "name": "ClassAlly",
+  "productName": "ClassAlly",
+  "version": "1.0.0-Beta",
+  "description": "The app that improves online learning as a whole",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -21,13 +21,13 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "api"
+            "name": "ClassAlly"
           }
         },
         {
           "name": "@electron-forge/maker-zip",
           "platforms": [
-            "darwin"
+            "windows"
           ]
         },
         {
