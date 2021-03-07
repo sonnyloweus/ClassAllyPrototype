@@ -30,3 +30,6 @@
     transform: translate(-50%);
 }
 
+.status{
+    word-break: break-all;
+}

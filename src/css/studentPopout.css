@@ -375,3 +375,8 @@ textarea::-webkit-scrollbar-thumb {
     margin-top: 3px !important;
     padding-top: 1px !important;
 }
+
+#anonymousCheck{
+    float: right;
+    font-size: 12px;
+}

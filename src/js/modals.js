@@ -30,6 +30,8 @@ let closeRooms = document.getElementById("closeRooms");
 let closeStudents = document.getElementById("closeStudents");
 let closeTutorial = document.getElementById("closeTutorial");
 let closeCreateMeeting = document.getElementById("closeCreateMeeting");
+
+let signupSchool = document.getElementById("signup-school");
 // let closeId = document.getElementById("closeId");
 
 //#################################################################################
@@ -43,7 +45,18 @@ loginButton1.onclick = function(){
 
 signupButton1.onclick = function(){
     closePops();
-    signupModal.style.display = "block";
+
+
+    db.collection('admin').doc('Info').collection("schools").get().then((snapshot) => {
+        let tempList = snapshot.docs;
+        tempList.forEach(doc => {
+            let tempName = doc.id;
+            signupSchool.innerHTML = signupSchool.innerHTML + `
+            <option value="`+tempName+`">` + tempName + `</option>
+            `;
+        });
+        signupModal.style.display = "block";
+    });
 }
 
 loginButton.onclick = function(){
@@ -53,7 +66,17 @@ loginButton.onclick = function(){
 
 signupButton.onclick = function(){
     closePops();
-    signupModal.style.display = "block";
+
+    db.collection('admin').doc('Info').collection("schools").get().then((snapshot) => {
+        let tempList = snapshot.docs;
+        tempList.forEach(doc => {
+            let tempName = doc.id;
+            signupSchool.innerHTML = signupSchool.innerHTML + `
+            <option value="`+tempName+`">` + tempName + `</option>
+            `;
+        });
+        signupModal.style.display = "block";
+    });
 }
 
 accountInfoButton.onclick = function(){

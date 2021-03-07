@@ -4,7 +4,7 @@
 let loginError = document.getElementById("loginError");
 let singUpError = document.getElementById("singUpError");
 let emailStatus = document.getElementById("emailStatus");
-
+let nameStatus = document.getElementById("nameStatus");
 //#################################################################################
 //#############3#######  Listen for Auth Status Change  ###########################
 //#################################################################################
@@ -30,7 +30,8 @@ auth.onAuthStateChanged(user => {
             let email = `${user.email}`;
             let tempacc = `${doc.data().accessCode}`
             email = email.split("@");
-            emailStatus.innerHTML = email[0] + "<br> @" + email[1];
+            emailStatus.innerHTML = email[0] + " @...";
+            nameStatus.innerHTML = userName;
 
             // if(refToken == 0){
             //     if(tempacc != 0){
@@ -91,43 +92,48 @@ signupForm.addEventListener('submit', (e) => {
     //get User info
     const email = signupForm['signup-email'].value;
     const password = signupForm['signup-password'].value;
+    const code = signupForm['signup-code'].value;
 
-    //sign up the user, might take some time to complete, returns user credential
-    const promise = auth.createUserWithEmailAndPassword(email, password).then(cred => {
-        return db.collection('users').doc(cred.user.uid).set({
-            name: signupForm['signup-name'].value,
-            school: signupForm['signup-school'].value,
-            refreshTok: 0,
-            classrooms: [],
-            students: [],
-            accessCode: 0
-        });
-    }).then(() => {
-        // console.log(cred.user);
-        console.log("User signed up/in");
-        //after sign up
-        // $('.authorizeSection').css('display', 'block');
-        singUpError.innerHTML = "";
-        signupForm.reset();
-    });
-
-    let errorMessage = 0;
-    promise.catch(e => {errorMessage = e.message}).then(() => {
-        // console.log(errorMessage);
-        singUpError.innerHTML = "<br>";
-        if(errorMessage == "The email address is badly formatted."){
-            errorMessage = "The email address is badly formatted"
-        }else if(errorMessage == "Password should be at least 6 characters"){
-            errorMessage = "Password should be at least 6 characters"
-        }else if(errorMessage == "The email address is already in use by another account."){
-            errorMessage = "The email address is already in use by another account."
-        } 
-        if(errorMessage == 0){
+    if(code == ""){
+        //sign up the user, might take some time to complete, returns user credential
+        const promise = auth.createUserWithEmailAndPassword(email, password).then(cred => {
+            return db.collection('users').doc(cred.user.uid).set({
+                name: signupForm['signup-name'].value,
+                school: signupForm['signup-school'].value,
+                refreshTok: 0,
+                classrooms: [],
+                students: [],
+                accessCode: 0
+            });
+        }).then(() => {
+            // console.log(cred.user);
+            console.log("User signed up/in");
+            //after sign up
+            // $('.authorizeSection').css('display', 'block');
             singUpError.innerHTML = "";
-        }else{
-            singUpError.innerHTML = "<br>" + errorMessage;
-        }
-    });
+            signupForm.reset();
+        });
+
+        let errorMessage = 0;
+        promise.catch(e => {errorMessage = e.message}).then(() => {
+            // console.log(errorMessage);
+            singUpError.innerHTML = "<br>";
+            if(errorMessage == "The email address is badly formatted."){
+                errorMessage = "The email address is badly formatted"
+            }else if(errorMessage == "Password should be at least 6 characters"){
+                errorMessage = "Password should be at least 6 characters"
+            }else if(errorMessage == "The email address is already in use by another account."){
+                errorMessage = "The email address is already in use by another account."
+            } 
+            if(errorMessage == 0){
+                singUpError.innerHTML = "";
+            }else{
+                singUpError.innerHTML = "<br>" + errorMessage;
+            }
+        });
+    }else{
+        singUpError.innerHTML = "<br>" + "Your access code is incorrect.";
+    }
 });
 
 //#################################################################################

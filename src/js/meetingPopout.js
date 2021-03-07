@@ -375,4 +375,4 @@ smartChatView.onclick = function(){
         engageToggle = 1;
     }
     smartChatToggle *= -1;
-}
+} 

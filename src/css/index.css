@@ -44,7 +44,7 @@ body{
   background-color: white !important;
 }
 
-.menubar-menu-button{
+.menubar-menu-button:first-of-type{
   margin-left: 12vw;
 }
 

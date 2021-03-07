@@ -40,13 +40,22 @@
             <div class="select is-fullwidth">
               <select id="signup-school">
                 <option selected disabled value="">Select Your School</option>
-                <option value="Bellarmine">Bellarmine</option>
+                
               </select>
             </div>
             <div class="icon is-small is-left">
               <i class="fas fa-school"></i>
             </div>
           </div>
+        </div>
+        <div class="field">
+          <label for="signup-code">Access Code</label>
+          <p class="control has-icons-left">
+            <input class="input" type="password" id="signup-code" placeholder="######" required />
+            <span class="icon is-small is-left">
+              <i class="fas fa-key"></i>
+            </span>
+          </p>
         </div>
         <button class="button is-link">Sign Up</button>
       </form>
@@ -167,7 +176,7 @@
 
         </div>
         <br>
-        <button id="submitClassroom" type="submit" class="button is-link">Ceate</button>
+        <button id="submitClassroom" type="submit" class="button is-link">Create</button>
       </form>
 
       <h3 style="margin-top: 10px;" class="is-size-7" id="classroomMessage"></h3>

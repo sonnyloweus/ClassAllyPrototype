@@ -24,7 +24,7 @@ let appTracker = setInterval(function(){
         }
     });
     refreshList();
-}, 5000);
+}, 8000);
 
 const notifier = require('node-notifier');
 const path = require('path');
@@ -36,7 +36,7 @@ dbNudged.on('child_added', snap => {
         // Object
         notifier.notify({
             title: 'Stay on Task',
-            message: "I know when you are sleeping, I know when your awake, I know if you've been bad or good so be good for goodness sake",
+            message: "Please stay on task!",
             icon: __dirname + '/assets/nobackgroundSmall.png',
             appID : 'ClassAlly'
         });

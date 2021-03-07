@@ -32,8 +32,8 @@ let menuTemplate = Menu.buildFromTemplate([
 
 new customTitlebar.Titlebar({
     backgroundColor: customTitlebar.Color.fromHex('#444'),
-    overflow: "hidden",
-    menu: menuTemplate,
+    overflow: "display"
+    // menu: menuTemplate,
     // icon: './assets/timerIcon-full.png',
 });
 

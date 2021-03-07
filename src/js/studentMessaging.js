@@ -4,6 +4,8 @@ let messageForm = document.getElementById("messageForm");
 let roomId = tempPars.get("classroomId");
 let email = tempPars.get("studentEmail");
 
+let anonymous = document.getElementById("anonymous");
+
 let startDate = Date.now();
 
 function submitMessage(){
@@ -28,6 +30,11 @@ function submitMessage(){
             [tempKey]: message
         });
     }else{
+
+        console.log(document.getElementById("anonymous").checked);
+        if(document.getElementById("anonymous").checked){
+            tempKey = "Student " + time;
+        }
         rtdb.ref('ChatRooms/' + roomId + "/questions/").update({
             [tempKey]: message
         });
