@@ -143,16 +143,27 @@
           <div class="field">
             <label style="float: left;" for="class-num">Period Num</label>
             <p class="control has-icons-left">
-              <input style="float: left; width: 70%;" class="input" type="number" id="class-num" placeholder="Per"
+              <input style="float: left; width: 98%;" class="input" type="number" id="class-num" placeholder="Per"
                 required />
               <span class="icon is-small is-left">
                 <i class="fas fa-sort-numeric-up-alt"></i>
               </span>
             </p>
           </div>
-          <div class="field has-addons">
+
+          <div class="field">
+            <label style="float: left;" for="class-studentNum">Students</label>
+            <p class="control has-icons-left">
+              <input style="float: right; width: 98%;" class="input" type="number" id="class-studentNum" placeholder="00"
+                required />
+              <span class="icon is-small is-left">
+                <i class="fas fa-school"></i>
+              </span>
+            </p>
+          </div>
+
+          <!-- <div class="field has-addons">
             <datalist id="class-students">
-              <!-- <option value="1234567890123456789012345"> -->
             </datalist>
 
             <div class="field has-addons">
@@ -169,12 +180,13 @@
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-
-        <div id="addedStudents">
+          </div> -->
 
         </div>
+
+        <!-- <div id="addedStudents">
+
+        </div> -->
         <br>
         <button id="submitClassroom" type="submit" class="button is-link">Create</button>
       </form>

@@ -73,7 +73,7 @@
 }
 
 .selectedClass {
-    width: calc(100% - 10px);
+    width: calc(80% - 10px);
 }
 
 .selectedClass input {

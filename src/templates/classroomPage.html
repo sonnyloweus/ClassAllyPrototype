@@ -15,15 +15,7 @@
 <script>
     let addClassroom = document.getElementById("addClassroom");
     let currentRooms = "";
-    let studentsList = [];
-
-    let classStudents = document.getElementById("class-students");
     let classroomMessage = document.getElementById("classroomMessage");
-    let addStudentClass = document.getElementById("addStudentClass");
-    let addedStudentsHTML = document.getElementById("addedStudents");
-
-    let allStudentOptions = [];
-    let allStudentOptionsID = [];
     let colors = ["#F2C94C", "#6FCF97", "#56CCF2", "#F2994A", "#EA8A8A", "#DAABEC"];
 
     const addClassroomForm = document.getElementById("addClassroomForm");
@@ -32,68 +24,9 @@
         closePops();
         classroomModal.style.display = "block";
         addClassroomForm.addEventListener('submit', addStudentClassEvent);
-        studentsList = [];
-        loadStudents();
         // drawClassrooms();
     }
 
-    //has an error with this *fixed!
-    function removeStudent(e) {
-        let tempName = e.innerText.substring(0, e.innerText.length - 1);
-        $(e).remove();
-
-        let tempIndex = studentsList.indexOf(tempName);
-        // console.log(e.innerText);
-        // console.log(tempIndex);
-        studentsList.splice(tempIndex, 1);
-
-        // console.log(studentsList)
-    }
-
-    addStudentClass.onclick = function () {
-        let tempValue = addClassroomForm["classStudentsInput"].value;
-        // console.log(tempValue);
-        if (studentsList.includes(tempValue)) {
-            classroomMessage.innerText = "Student is already added to list.";
-        } else if (allStudentOptions.includes(tempValue)) {
-
-            studentsList.push(tempValue);
-            classroomMessage.innerText = "";
-            addedStudentsHTML.innerHTML = addedStudentsHTML.innerHTML + "<p onclick='removeStudent(this)'>" +
-                tempValue + ",</p> ";
-            addClassroomForm["classStudentsInput"].value = "";
-
-        } else {
-            classroomMessage.innerText =
-                "Cannot find Student Selected. Please search and click on corrosponding student in the dropdown. You can add students in the students section. You can always add students later.";
-        }
-    }
-
-    function loadStudents() {
-        addedStudentsHTML.innerHTML = "";
-        db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
-            classStudents.innerHTML = "";
-            allStudentOptions = [];
-            allStudentOptionsID = [];
-            let tempList = snapshot.docs;
-            tempList.reverse();
-            tempList.forEach(doc => {
-                //9 character limit for one line
-                let tempName = doc.data().name;
-                if (tempName.length > 20) {
-                    tempName = tempName.substring(0, 20) + "..";
-                }
-                allStudentOptions.push(tempName);
-                allStudentOptionsID.push(doc.id);
-                classStudents.innerHTML = classStudents.innerHTML + `
-                <option value="` + tempName + `">
-                `;
-            });
-            // console.log(allStudentOptionsID)
-        });
-    }
-
-    // needs refactoring Done has Error
     function addStudentClassEvent(event){
         event.preventDefault();
         event.stopImmediatePropagation();
@@ -101,21 +34,15 @@
         const name = addClassroomForm['class-name'].value;
         const periodNum = addClassroomForm['class-num'].value;
         const zoomLink = addClassroomForm['class-link'].value;
-
-        for(let i = 0; i < studentsList.length; i++){
-            let tempIndex = allStudentOptions.indexOf(studentsList[i]);
-            studentsList[i] = allStudentOptionsID[tempIndex];
-        }
-        
+        const studentNum = addClassroomForm['class-studentNum'].value;
         let subCollect = db
         .collection("users").doc(userId).collection("classrooms").add({
             name: name,
             period: periodNum,
             link: zoomLink,
-            students: studentsList
+            students: studentNum
         }).then(() => {
             closePops();
-            studentsList = [];
             $("#currentPage").load("templates/classroomPage.html");
             addClassroomForm.removeEventListener('submit', addStudentClassEvent)
             addClassroomForm.reset();
@@ -123,7 +50,6 @@
     }
 
     let classroomsList = document.getElementById("classroomsList");
-    // needs refactoring Done
     function deleteClassroom(el){
         let Id = el.id;
         db.collection('users').doc(userId).collection("classrooms").doc(Id).delete().then(function() {
@@ -133,277 +59,179 @@
             // console.error("Error removing document: ", error);
         });
     }
-    // needs refactoring Done
+
     function saveClassroom(saveClass, ID){
         const name = saveClass['class-name'].value;
         const periodNum = saveClass['class-num'].value;
         const zoomLink = saveClass['class-link'].value;
-
-        for(let i = 0; i < studentsList.length; i++){
-            let tempIndex = allStudentOptions.indexOf(studentsList[i]);
-            studentsList[i] = allStudentOptionsID[tempIndex];
-        }
+        const studentNum = saveClass['class-studentNum'].value;
         db.collection('users').doc(userId).collection("classrooms").doc(ID).update({
             name: name,
             period: periodNum,
             link: zoomLink,
-            students: studentsList 
+            students: studentNum 
         }).then(() => {
             // console.log("clicked");
             saveClass.reset();
-            studentsList = [];
             $("#currentPage").load("templates/classroomPage.html");
         });
-    }
-
-    function removeFromCurrentStudents(e) {
-        let tempName = e.innerText.substring(0, e.innerText.length - 1);
-        $(e).remove();
-
-        let tempIndex = studentsList.indexOf(tempName);
-        // console.log(e.innerText);
-        // console.log(tempIndex);
-        studentsList.splice(tempIndex, 1);
-
-        // console.log(studentsList)
-    }
-
-    function addToCurrentStudents(el) {
-        let saveClass = el.parentNode.parentNode.parentNode.parentNode;
-        let editMessage = document.getElementById("editClassroomMessage");
-        let currentStudentsHTML = document.getElementById("currentStudents");
-        let tempValue = saveClass["classStudentsInput"].value;
-        // console.log(tempValue);
-        if (studentsList.includes(tempValue)) {
-            editMessage.innerText = "Student is already added to list.";
-        } else if (allStudentOptions.includes(tempValue)) {
-            studentsList.push(tempValue);
-            editMessage.innerText = "";
-            currentStudentsHTML.innerHTML = currentStudentsHTML.innerHTML + "<p onclick='removeFromCurrentStudents(this)'>" +
-                tempValue + ",</p> ";
-            saveClass["classStudentsInput"].value = "";
-
-        } else {
-            editMessage.innerText =
-                "Cannot find Student Selected. Please search and click on corrosponding student in the dropdown. You can add students in the students section. You can always add students later.";
-        }
     }
 
     // needs refactoring Done
     function enterClass(el){
         closePops();
-        studentsList = [];
-        loadStudents();
         let parentDiv = el.parentNode.parentNode;
         let idNum = el.id;
         let tempName = $(parentDiv).find('#title').text();
         let tempLink = $(parentDiv).find('#linkValue').text();
         let tempPeriod = $(parentDiv).find('#period').text().substring(8);
-        let tempInfo = [tempName, tempPeriod];
-        //doesn't work if teacher types comma in name (fix that later)
-        let tempList = $(parentDiv).find('#tempStudentsList').text().split(',');
-        console.log(tempList)
-        db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
-            let idsList = snapshot.docs;
-            let finalsList = [];
-            let finalsListHTML = "";
-            // console.log(idsList)
-            snapshot.docs.forEach(function (doc, i) {
-                if(tempList.includes(doc.id)){
-                    finalsList.push(doc.data().name)
-                    studentsList.push(doc.data().name);
-                    finalsListHTML += "<p onclick='removeFromCurrentStudents(this)'>" +
-                doc.data().name + ",</p> "; 
-                }
-            });
-            // console.log(finalsList);
+        let tempStudentNum = $(parentDiv).find('#tempStudentsList').text();
+        let tempInfo = [tempName, tempPeriod, tempStudentNum];
 
-            if (!$(parentDiv).hasClass('selectedClass')) {
-                el.parentNode.innerHTML = `
-                    <form id="editClassroomForm` + idNum +`">
-                        <div style="float: left; margin-left: 10px; width: 40%" class="formSides">
-                            <div class="field">
-                            <label for="class-name">Class Name</label>
-                            <p class="control has-icons-left has-icons-right">
-                                <input class="input is-small" type="text" id="class-name" value="` + tempName + `" required />
-                                <span class="icon is-small is-left">
-                                <i class="fas fa-chalkboard"></i>
-                                </span>
-                            </p>
-                            </div>
+        if (!$(parentDiv).hasClass('selectedClass')) {
+            el.parentNode.innerHTML = `
+                <form id="editClassroomForm` + idNum +`">
+                    <div style="float: left; margin-left: 10px; width: 40%" class="formSides">
+                        <div class="field">
+                        <label for="class-name">Class Name</label>
+                        <p class="control has-icons-left has-icons-right">
+                            <input class="input is-small" type="text" id="class-name" value="` + tempName + `" required />
+                            <span class="icon is-small is-left">
+                            <i class="fas fa-chalkboard"></i>
+                            </span>
+                        </p>
+                        </div>
 
-                            <div class="field is-grouped">
-                                <div class="field" style="margin-right: 20px;">
-                                    <label style="" for="class-num">Period Num</label>
-                                    <p class="control has-icons-left">
+                        <div class="field is-grouped">
+                            <div class="field" style="margin-right: 20px;">
+                                <label style="" for="class-num">Period Num</label>
+                                <p class="control has-icons-left">
                                     <input style="" class="input is-small" type="number" id="class-num" value="`+ tempPeriod +`" required />
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-sort-numeric-up-alt"></i>
                                     </span>
-                                    </p>
-                                </div>
-                                <div class="field">
-                                    <label style="" for="class-num">Link</label>
-                                    <p class="control has-icons-left">
-                                    <input style="" class="input is-small" type="url" id="class-link" value="`+ tempLink +`" required />
-                                    <span class="icon is-small is-left">
-                                        <i class="fas fa-link"></i>
-                                    </span>
-                                    </p>
-                                </div>
+                                </p>
                             </div>
-                            
-                            <label for="classStudentsInput">Students</label>
-                            <div style="margin-top: -20px" class="field has-addons">
-
-                                <!-- <label for="classStudentsInput">Students</label> -->
-                                <div style=""  class="control has-icons-left is-expanded">
-                                    <input id="classStudentsInput" class="input is-small" type="text" placeholder="Search" list="class-students">
+                            <div class="field">
+                                <label style="" for="class-studentNum">Students</label>
+                                <p class="control has-icons-left has-icons-right">
+                                    <input class="input is-small" type="number" id="class-studentNum" value="` + tempStudentNum + `" required />
                                     <span class="icon is-small is-left">
                                     <i class="fas fa-school"></i>
                                     </span>
-                                </div>
-                                
-                                <div style="" class="control">
-                                    <a class="button is-small is-info" id="addToCurrentStudents" onclick="addToCurrentStudents(this)">
-                                    Add
-                                    </a>
-                                </div>
+                                </p>
                             </div>
                         </div>
-
-                        <div id="currentStudents" class="formSides currentRoster">
-                            ` +finalsListHTML +`
-                        </div>
-                        <h3 style="float: left; margin-left: 10px;margin-top: 10px;" class="formSides is-size-7" id="editClassroomMessage"></h3>
-                        <br>
-
-                        <button title="save changes" style="bottom:-4px; right: 0px;" role="button" class="enterClass button is-info" id="`+ idNum +`">
-                            <span class="icon">
-                                <i class="fas fa-check"></i>
-                            </span>
-                        </button>
                         
-                    </form>
+                        <div class="field">
+                            <label style="" for="class-link"></label>
+                            <p class="control has-icons-left">
+                                <input class="input is-small" type="url" id="class-link" value="`+ tempLink +`" required />
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-link"></i>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
 
-                    <a data-students=" `+ tempList + `" data-link="`+ tempLink + ` " data-info="` + tempInfo + `" title=" ` + idNum + `" style="background-color: orange !important; bottom:-4px; right: 105px;" role="button" onclick="confirmLaunch(this)" class="enterClass button is-info" id="` + tempName + `">
+                    
+                    <h3 style="float: left; margin-left: 10px;margin-top: 10px;" class="formSides is-size-7" id="editClassroomMessage"></h3>
+                    <br>
+
+                    <button title="save changes" style="bottom:-4px; right: 0px;" role="button" class="enterClass button is-info" id="`+ idNum +`">
                         <span class="icon">
-                            <i class="fas fa-rocket"></i>
+                            <i class="fas fa-check"></i>
                         </span>
-                        &nbsp;
-                        &nbsp;
-                        Launch
-                    </a>
+                    </button>
+                    
+                </form>
 
-                    <a title="Close without saving" style="background-color: red !important; bottom:-4px; right: 70px;" role="button" onclick="enterClass(this)" class="enterClass button is-info" id="">
-                        <span class="icon">
-                            <i class="fas fa-times"></i>
-                        </span>
-                    </a>
-                    <a title="delete student" style="background-color: red !important; bottom:-4px; right: 35px;" role="button" onclick="deleteClassroom(this)" class="enterClass button is-info" id="`+ idNum + `">
-                        <span class="icon">
-                            <i class="fas fa-trash-alt"></i>
-                        </span>
-                    </a>
-                `;
+                <a data-students=" `+ tempStudentNum + `" data-link="`+ tempLink + ` " data-info="` + tempInfo + `" title=" ` + idNum + `" style="background-color: orange !important; bottom:-4px; right: 105px;" role="button" onclick="confirmLaunch(this)" class="enterClass button is-info" id="` + tempName + `">
+                    <span class="icon">
+                        <i class="fas fa-rocket"></i>
+                    </span>
+                    &nbsp;
+                    &nbsp;
+                    Launch
+                </a>
 
-                const saveClass = document.getElementById("editClassroomForm" + idNum +"");
-                saveClass.addEventListener('submit', (e) => {e.preventDefault(); saveClassroom(saveClass, el.id)});
-            } else {
-                // console.log("hi")
-                drawClassrooms();
-            }
-            parentDiv.classList.toggle("selectedClass");
+                <a title="Close without saving" style="background-color: red !important; bottom:-4px; right: 70px;" role="button" onclick="enterClass(this)" class="enterClass button is-info" id="">
+                    <span class="icon">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </a>
+                <a title="delete student" style="background-color: red !important; bottom:-4px; right: 35px;" role="button" onclick="deleteClassroom(this)" class="enterClass button is-info" id="`+ idNum + `">
+                    <span class="icon">
+                        <i class="fas fa-trash-alt"></i>
+                    </span>
+                </a>
+            `;
 
-        });
+            const saveClass = document.getElementById("editClassroomForm" + idNum +"");
+            saveClass.addEventListener('submit', (e) => {e.preventDefault(); saveClassroom(saveClass, el.id)});
+        } else {
+            // console.log("hi")
+            drawClassrooms();
+        }
+        parentDiv.classList.toggle("selectedClass");
+
+        // });
     } 
     
     // needs refactoring Done
     function drawClassrooms() {
 
-        db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
-            allStudentOptions = [];
-            allStudentOptionsID = [];
-            let tempList = snapshot.docs;
-            tempList.reverse();
-            tempList.forEach(doc => {
-                //9 character limit for one line
-                let tempName = doc.data().name;
-                if (tempName.length > 20) {
-                    tempName = tempName.substring(0, 20) + "..";
-                }
-                allStudentOptions.push(tempName);
-                allStudentOptionsID.push(doc.id);
-                
-            });
+        db.collection('users').doc(userId).collection("classrooms").get().then((snapshot) => {
+            let tempClassList = snapshot.docs;
+            tempClassList.reverse();
+            classroomsList.innerHTML = "";
 
-            db.collection('users').doc(userId).collection("classrooms").get().then((snapshot) => {
-                let tempClassList = snapshot.docs;
-                tempClassList.reverse();
-                classroomsList.innerHTML = "";
+            tempClassList.forEach(function (doc, i) {
+                let id = doc.id;
+                let tempTitle = doc.data().name;
+                let tempPeriod = doc.data().period;
+                let tempLink = doc.data().link;
+                let tempStudents = doc.data().students;
 
-                tempClassList.forEach(function (doc, i) {
-                    let id = doc.id;
-                    let tempTitle = doc.data().name;
-                    let tempPeriod = doc.data().period;
-                    let tempLink = doc.data().link;
-                    let tempStudents = doc.data().students;
+                let tempInfo = [tempTitle, tempPeriod, tempStudents];
 
-                    let tempInfo = [tempTitle, tempPeriod];
+                let tempIndex = i % colors.length;
 
-                    let tempList = "[" + tempStudents.join(',') + "]";
-                    console.log(tempStudents);
-                    let tempIndex = i % colors.length;
-                    let revisedStudents = [];
+                db.collection('users').doc(userId).collection("classrooms").doc(id).update({
+                    name: tempTitle,
+                    period: tempPeriod,
+                    link: tempLink,
+                    students: tempStudents 
+                }).then(() => {
 
-                    for(let n = 0; n < tempStudents.length; n++){
-                        // console.log("studentCheck: " + tempStudents[n])
-                        if(allStudentOptionsID.includes(tempStudents[n])){
-                            // console.log("valid student")
-                            revisedStudents.push(tempStudents[n]);
-                        }else{
-                            console.log("allStudents: " + allStudentOptionsID)
-                            console.log("invalid, deleted student")
-                        }
-                    }
+                    classroomsList.innerHTML = classroomsList.innerHTML + `
+                        <div class="classroomDiv">
+                            <div style="background-color: ` + colors[tempIndex] + `;" class="classroomDivSide"></div>
+                            <div class="classroomDivMain">
+                                <div style="font-weight: bold; font-size: 20px;"><p id="title">` + tempTitle + `</p></div>
+                                <p style="display: none" id="linkValue">` + tempLink + `</p>
+                                <div><p class="period" id="period">Period: ` + tempPeriod + `</p></div>
+                                <div><p style="margin-left: 20px; text-align: left; font-size: 15px;" id="studentCount">` +
+                        tempStudents + ` Students </p></div>
+                                
+                                <p style="display: none" id="tempStudentsList">` + tempStudents + `</p>
 
-                    db.collection('users').doc(userId).collection("classrooms").doc(id).update({
-                        name: tempTitle,
-                        period: tempPeriod,
-                        link: tempLink,
-                        students: revisedStudents 
-                    }).then(() => {
-                        tempStudents = revisedStudents;
-
-                        classroomsList.innerHTML = classroomsList.innerHTML + `
-                            <div class="classroomDiv">
-                                <div style="background-color: ` + colors[tempIndex] + `;" class="classroomDivSide"></div>
-                                <div class="classroomDivMain">
-                                    <div style="font-weight: bold; font-size: 20px;"><p id="title">` + tempTitle + `</p></div>
-                                    <p style="display: none" id="linkValue">` + tempLink + `</p>
-                                    <div><p class="period" id="period">Period: ` + tempPeriod + `</p></div>
-                                    <div><p style="margin-left: 20px; text-align: left; font-size: 15px;" id="studentCount">` +
-                            tempStudents.length + ` Students </p></div>
-                                    
-                                    <p style="display: none" id="tempStudentsList">` + tempStudents + `</p>
-
-                                    <a data-students=" `+ tempStudents + `" data-link="` + tempLink + `" data-info="` + tempInfo + `" title="` + id + `" style="background-color: orange !important; margin-right: 40px" role="button" onclick="confirmLaunch(this)" class="enterClass button is-info" id="joinClass ` + i +  ` ">
-                                        <span class="icon">
-                                            <i class="fas fa-rocket"></i>
-                                        </span>
-                                        &nbsp;
-                                        &nbsp;
-                                        Launch
-                                    </a>
-                                    <a role="button" onclick="enterClass(this)" class="enterClass button is-info" id="` + id + `">
-                                        <span class="icon">
-                                        <i class="fas fa-arrow-right"></i>
-                                        </span>
-                                    </a>
-                                </div>
+                                <a data-students=" `+ tempStudents + `" data-link="` + tempLink + `" data-info="` + tempInfo + `" title="` + id + `" style="background-color: orange !important; margin-right: 40px" role="button" onclick="confirmLaunch(this)" class="enterClass button is-info" id="joinClass ` + i +  ` ">
+                                    <span class="icon">
+                                        <i class="fas fa-rocket"></i>
+                                    </span>
+                                    &nbsp;
+                                    &nbsp;
+                                    Launch
+                                </a>
+                                <a role="button" onclick="enterClass(this)" class="enterClass button is-info" id="` + id + `">
+                                    <span class="icon">
+                                    <i class="fas fa-arrow-right"></i>
+                                    </span>
+                                </a>
                             </div>
-                        `;
-                    });
+                        </div>
+                    `;
                 });
             });
         });
@@ -411,7 +239,7 @@
     }
 
     if (typeof (userId) !== 'undefined' && userId != 0) {
-        loadStudents();
         drawClassrooms();
     }
+
 </script>
