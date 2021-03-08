@@ -2,19 +2,17 @@
 // - finish engage feature
 // - stay in front of screen, cannot be seen by share screen
 
-let notConnected = document.getElementById("notConnected");
 let Connected = document.getElementById("Connected");
 let onTaskStudents = document.getElementById("onTaskStudents");
-let unConnectedStudents = [];
-let unConnectedEmails = [];
 let ConnectedEmails = [];
 let ConnectedNames = [];
 let allStudents = [];
 let allStudentEmails = [];
 
+let fraction = document.getElementById("fraction");
+fraction.innerText = ConnectedEmails.length + "/" + students; 
+
 // classroomID
-students = students.split('-');
-console.log(students);
 
 let dbParticipants = rtdb.ref('ChatRooms/' + roomId).child('participants');
 dbParticipants.on('child_added', snap => {
@@ -23,14 +21,7 @@ dbParticipants.on('child_added', snap => {
     ConnectedEmails.push(snap.val().email);
     ConnectedNames.push(tempKey);
     drawConnected();
-    if(unConnectedEmails.includes(snap.val().email)){
-        const index = unConnectedEmails.indexOf(snap.val().email);
-        if (index > -1) {
-            unConnectedStudents.splice(index, 1);
-            unConnectedEmails.splice(index, 1);
-            drawUnconnected();
-        }
-    }
+    fraction.innerText = ConnectedEmails.length + "/" + students; 
     drawApplicationTracker();
 });
 
@@ -45,53 +36,9 @@ dbParticipants.on('child_removed', snap => {
             drawConnected();
         }
     }
-
-    console.log(snap.val().emai);
-    console.log(allStudentEmails);
-
-    if(allStudentEmails.includes(snap.val().email)){
-        unConnectedEmails.push(snap.val().email);
-        unConnectedStudents.push(tempKey);
-        drawUnconnected();
-        console.log("replaced into unconnected");
-    }
-    console.log(ConnectedEmails)
+    fraction.innerText = ConnectedEmails.length + "/" + students; 
     drawApplicationTracker();
 })
-
-db.collection('users').doc(userId).collection("students").get().then((snapshot) => {
-    let idsList = snapshot.docs;
-    // console.log(idsList)
-    snapshot.docs.forEach(function (doc, i) {
-        if(students.includes(doc.id)){
-            console.log(doc.id);
-            allStudents.push(doc.data().name);
-            allStudentEmails.push(doc.data().email);
-            unConnectedStudents.push(doc.data().name);
-            unConnectedEmails.push(doc.data().email);
-        }
-        
-    });
-    console.log(unConnectedStudents);
-
-    drawUnconnected();
-    drawApplicationTracker();
-});
-
-function drawUnconnected(){
-    notConnected.innerHTML = "";
-    for(let i = 0; i<unConnectedStudents.length; i++){
-        notConnected.innerHTML += `<div class="unconnectedMember">
-        <div style="float: left">
-            <p>
-            <span class="icon has-text-danger">
-            <i class="fas fa-circle"></i>
-            </span> ` + unConnectedStudents[i] + `
-            </p>
-            </div>
-        </div>`;
-    }
-}
 
 function drawConnected(){
     Connected.innerHTML = "";

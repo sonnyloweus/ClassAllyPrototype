@@ -16,7 +16,7 @@ let weekdays = ["Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday",
 let userName = "";
 
 //#################################################################################
-//###############################  Html Func ######################################
+//#############################  Schedule Func ####################################
 //#################################################################################
 function slide(e) {
     // console.log(e.innerHTML);
@@ -49,60 +49,7 @@ function slide(e) {
 }
 
 //#################################################################################
-//##################################  Objects #####################################
-//#################################################################################
-
-// https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetings
-//  /v2/users/sonny.lowe23@bcp.org/meetings?page_number=1&page_size=30&type=upcoming
-// https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingregistrants
-//  /v2/meetings/000000000/registrants?page_number=1&page_size=30&status=approved
-// https://marketplace.zoom.us/docs/api-reference/zoom-api/dashboards/dashboardmeetingparticipants
-//  /v2/metrics/meetings/0000000000/participants?page_size=30&type=live
-
-let getMeetings = {
-    "method": "GET",
-    "hostname": "api.zoom.us",
-    "port": null,
-    "path": "/v2/users/sonny.lowe23@bcp.org/meetings?page_number=1&page_size=30&type=upcoming",
-    "headers": {
-        "content-type": "application/json",
-        "authorization": "Bearer " + access_token
-    }
-};
-
-let listParticipants = {
-    "method": "GET",
-    "hostname": "api.zoom.us",
-    "port": null,
-    "path": "/v2/metrics/meetings/7113140148/participants?page_size=30&type=live",
-    "headers": {
-        "content-type": "application/json",
-        "authorization": "Bearer " + access_token
-    }
-}
-
-var createMeeting = {
-    "method": "POST",
-    "hostname": "api.zoom.us",
-    "port": null,
-    "path": "/v2/users/" + userEmail + "/meetings",
-    "headers": {
-        "content-type": "application/json",
-        "authorization": "Bearer " + access_token
-    }
-};
-
-//#################################################################################
-//##################################  Onclicks ####################################
-//#################################################################################
-
-// participants.onclick = function () {
-//     listParticipants["headers"]["authorization"] = "Bearer " + access_token;
-//     callAPI(listParticipants, "listParticipants");
-// }
-
-//#################################################################################
-//#################################  Functions ####################################
+//#################################  meeting ####################################
 //#################################################################################
 function generateCode(count){
     let chars = 'ABCDEFGHJKLMNPQRSTUVWXYZacdefhikmnoqrstuvwxyz1234567890123456789'.split('');
@@ -115,10 +62,8 @@ function generateCode(count){
     return result;
 }
 
-console.log(generateCode(6));
-
 function confirmLaunch(el){
-    let dateObj = new Date();
+    let dateObj = new Date()
     let month = parseInt(dateObj.getMonth()) + 1;
     let day = String(dateObj.getDate()).padStart(2, '0');
     let year = dateObj.getFullYear();
@@ -129,20 +74,13 @@ function confirmLaunch(el){
     let information = $(el).data('info').split(",")
     // console.log(information, $(el).data('link'));
 
-
-    let studentsList = $(el).data('students');
-    console.log(studentsList);
-    studentsList = studentsList.replace(/,/g, '-');
-    studentsList = studentsList.substring(1, studentsList.length);
-    console.log(studentsList);
-
-    confirmLaunchMeeting(information, $(el).data('link'), databaseID, studentsList);
+    confirmLaunchMeeting(information, $(el).data('link'), databaseID);
 }
 
-function confirmLaunchMeeting(info, link, tempClassID, studentsList){
+function confirmLaunchMeeting(info, link, tempClassID){
     remote.BrowserWindow.getFocusedWindow().minimize();
     let code = generateCode(6);
-    console.log("first code: " + code)
+
     rtdb.ref('ChatRooms/' + code).once("value", snapshot => {
         if (snapshot.exists()){
             code = generateCode(6);
@@ -155,7 +93,7 @@ function confirmLaunchMeeting(info, link, tempClassID, studentsList){
             "username": userName,
             "userId": userId,
             "classroomId" : tempClassID,
-            "studentsList" : studentsList,
+            "studentsCount" : info[2],
             "Id": code
         }
         console.log(meetingInfo);
@@ -166,110 +104,6 @@ function confirmLaunchMeeting(info, link, tempClassID, studentsList){
             "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
         popup.focus(); 
     });
-}
-
-function launchClass(el){
-    if(refToken != 0){
-        refreshToken();
-        closePops();
-        createMeetingModal.style.display = "block";
-
-        let dateObj = new Date();
-        let month = parseInt(dateObj.getMonth()) + 1;
-        let day = String(dateObj.getDate()).padStart(2, '0');
-        let year = dateObj.getFullYear();
-        let output = "- " + month + '/'+ day  + '/' + year;
-
-        // let databaseID = document.getElementById("classDatabaseID").innerText;
-        let databaseID = el.title;
-        let studentsList = $(el).data('students');
-        document.getElementById("createMeeting-databaseID").value = databaseID;
-        document.getElementById("createMeeting-students").value = studentsList;
-        document.getElementById("createMeeting-topic").value = el.id + " " + output;
-        document.getElementById("createMeeting-email").value = userEmail;
-        let participant_video = false;
-        let mute_upon_entry = true;
-        let waiting_room = true;
-        // console.log(document.getElementById("participant_video").checked)
-    }else{
-        alert("You need to authorize Zoom first!")
-    }
-}
-
-let participant_video = "";
-let mute_upon_entry =  "";
-let waiting_room = "";
-
-let topicName = "";
-let zoomEmail = "";
-let tempPassword  = "";
-let meetingType = 1;
-let tempDBid = "";
-let studentsList = "";
-
-createMeetingForm = document.getElementById("createMeeting-form");
-createMeetingForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // console.log("hi");
-    participant_video = createMeetingForm["participant_video"].checked;
-    mute_upon_entry =  createMeetingForm["mute_upon_entry"].checked;
-    waiting_room = createMeetingForm["waiting_room"].checked;
-
-    topicName = createMeetingForm["createMeeting-topic"].value;
-    zoomEmail = createMeetingForm["createMeeting-email"].value;
-    tempPassword  = createMeetingForm["createMeeting-password"].value;
-    tempDBid = createMeetingForm["createMeeting-databaseID"].value;
-    studentsList = createMeetingForm["createMeeting-students"].value;
-
-    studentsList = studentsList.replace(/,/g, '-');
-    studentsList = studentsList.substring(1, studentsList.length-1);
-    console.log(studentsList);
-    console.log(tempDBid);
-    meetingType = 1;
-
-    createMeeting["path"] = "/v2/users/"+ zoomEmail +"/meetings?";
-    createMeeting["headers"]["authorization"] = "Bearer " + access_token;
-
-    callAPI(createMeeting, "createMeeting");
-    closePops();
-    createMeetingForm.reset();
-});
-
-function callAPI(options, type) {
-    var api = http.request(options, function (res) {
-        var chunks = [];
-
-        res.on("data", function (chunk) {
-            chunks.push(chunk);
-        });
-
-        res.on("end", function () {
-            var body = Buffer.concat(chunks);
-            // console.log(body.toString());
-            jsonBody = JSON.parse(body)
-            if (type == "getMeetings") {
-                meetingsFunc(jsonBody);
-            } else if (type == "listParticipants") {
-                // console.log(body);
-            }else if (type == "createMeeting"){
-                console.log(body.toString());
-                displayCreatedMeeting(jsonBody)
-            }
-        });
-    });
-
-    if(type == "createMeeting"){
-        api.write(JSON.stringify({
-            "topic": topicName,
-            "password": tempPassword,
-            "type": meetingType,
-            "participant_video": participant_video,
-            "mute_upon_entry" : mute_upon_entry,
-            "waiting_room" : waiting_room
-        }));
-    }
-
-    api.end();
 }
 
 function copyText(id) {

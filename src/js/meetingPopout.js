@@ -70,7 +70,7 @@ console.log(tempPars.get("joinURL"));
 // let access_token = tempPars.get("access_token");
 let userId = tempPars.get("userId");
 let classroomID = tempPars.get("classroomId");
-let students = tempPars.get("studentsList");
+let students = tempPars.get("studentsCount");
 let username = tempPars.get("username");
 
 function copyText(id) {
@@ -197,7 +197,6 @@ function calculateUnreads(){
     }
 }
 
-
 function switchChat(el, num){
     currentChat = num;
     let tempParent = el.parentNode;
@@ -269,10 +268,6 @@ let smartChatToggle = -1;
 // if engage opened --> chat close
 // if chat being oppened, only allow one of others to be open
 // -1 == opened     1 == closed
-
-// questionsHidden.style.display = "none";
-//         engageView.innerHTML = '<span class="icon"><i class="fas fa-plus-circle"></i></span>';
-//         engageView.parentElement.parentElement.style.height = "5vh";
 
 function checkPanelClosed(){
     // if smartChat is open
