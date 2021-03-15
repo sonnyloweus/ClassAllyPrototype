@@ -9,6 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
+    "build": "electron-packager . ClassAlly --platform=darwin",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
