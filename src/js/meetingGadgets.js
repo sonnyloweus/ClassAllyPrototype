@@ -185,10 +185,6 @@ endSession.onclick = function(){
 //######################################################################
 //######################## Checking Apps Track #########################
 //######################################################################
-let blocklist = ["youtube", "minecraft", "among", "fortnite", 
-                "valorant", "instagram", "tiktok", "facebook", 
-                ".io", "messages", "discord", "pintrest", 
-                "twitch", "twitter", "coolmathgames"];
 let offTask = [];
 
 function drawApplicationTracker(){
@@ -236,35 +232,28 @@ function nudgeStudent(el){
     });
 }
 
-function checkOffTask(){
-    offTask = [];
+let dbOffTask = rtdb.ref('ChatRooms/' + roomId).child('offTask');
+dbOffTask.on('child_added', snap => {
+    let tempVal = snap.val();
 
-    dbParticipants.once("value", (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-            let childKey = childSnapshot.key;
-            let childData = childSnapshot.val();
-            let apps = childData.apps;
-            let flag = false;
-            for(let i = 0; i < apps.length; i++){
-                let tempstr = apps[i].toLowerCase();
-                for(let n = 0; n < blocklist.length; n++){
-                    if(tempstr.includes(blocklist[n])){
-                        flag = true;
-                        offTask.push(childData.email);
-                        console.log(childData.email)
-                        break;
-                    }
-                }
-                if(flag){
-                    break;
-                }
-            }
-        });
-    }).then(function(){
-        drawApplicationTracker();
-    });
-}
+    offTask.push(tempVal);
 
-let appTracker = setInterval(function(){ 
-    checkOffTask();
-}, 5000);
+    rtdb.ref('ChatRooms/' + offTask + "/nudged/" + snap.key).remove();
+    offTask.push(tempVal);
+    drawApplicationTracker();
+});
+
+let dbOffTask = rtdb.ref('ChatRooms/' + roomId).child('onTask');
+onTask.on('child_added', snap => {
+    let tempVal = snap.val();
+    let indexNum = offTask.indexOf(tempVal)
+
+    if(indexNum != -1){
+        offTask.splice(indexNum, 1);
+    }
+
+    rtdb.ref('ChatRooms/' + offTask + "/nudged/" + snap.key).remove();
+    let indexOfOnTask = offTask.indexOf(tempVal);
+    offTask.splice(indexOfOnTask, 1);
+    drawApplicationTracker();
+});

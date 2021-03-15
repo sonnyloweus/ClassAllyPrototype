@@ -107,6 +107,10 @@ function openURL(id){
             },
             nudged: {
             },
+            offTask: {
+            },
+            onTask: {
+            },
             info: {
                 teacher: username
             },

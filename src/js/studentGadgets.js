@@ -1,5 +1,12 @@
 const {desktopCapturer} = require('electron');
 
+//######################################################################
+//######################## Checking Apps Track #########################
+//######################################################################
+let blocklist = ["youtube", "minecraft", "among", "fortnite", 
+                "valorant", "instagram", "tiktok", "facebook", 
+                ".io", "messages", "discord", "pintrest", 
+                "twitch", "twitter", "coolmathgames", "steam"];
 
 let listApps;
 function refreshList(){
@@ -16,15 +23,39 @@ function refreshList(){
 }
 refreshList();
 
+let wasOffTask = false;
 let appTracker = setInterval(function(){ 
-    rtdb.ref('ChatRooms/' + roomId).child('participants').update({
-        [username]: {
-            apps: listApps,
-            email: email
+
+    let flag = false;
+    for(let i = 0; i < apps.length; i++){
+        let tempstr = apps[i].toLowerCase();
+        for(let n = 0; n < blocklist.length; n++){
+            if(tempstr.includes(blocklist[n])){
+                flag = true;
+                wasOffTask = true;
+                rtdb.ref('ChatRooms/' + tempPars.get("Id")).child('offTask').update({
+                    newOffTask: email
+                });
+
+                break;
+            }
         }
-    });
+        if(flag){
+            break;
+        }
+    }
+
+    if(wasOffTask){
+        if(!flag){
+            wasOffTask = false;
+            rtdb.ref('ChatRooms/' + tempPars.get("Id")).child('onTask').update({
+                newOnTask: email
+            });
+        }
+    }
+
     refreshList();
-}, 8000);
+}, 10000);
 
 const notifier = require('node-notifier');
 const path = require('path');
@@ -44,6 +75,10 @@ dbNudged.on('child_added', snap => {
         rtdb.ref('ChatRooms/' + roomId + "/nudged/" + snap.key).remove();
     }
 });
+
+//######################################################################
+//########################### Engage Feature ###########################
+//######################################################################
 
 let questionType = document.getElementById("questionType");
 let questionSentence = document.getElementById("questionSentence");
