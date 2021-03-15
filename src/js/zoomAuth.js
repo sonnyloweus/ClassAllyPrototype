@@ -4,8 +4,8 @@
 
 // Bring in environment secrets through dotenv
 // npm install dotenv
-let dotenv = require('dotenv');
-const result = dotenv.config();
+// let dotenv = require('dotenv');
+// const result = dotenv.config();
 let access_token = 0;
 let authCode = 0;
 let userId = 0;
@@ -15,7 +15,7 @@ let refToken = 0;
 var http = require("https");
 const { app } = require('electron');
 
-let access_tokenHtml = document.getElementById("access_token");
+// let access_tokenHtml = document.getElementById("access_token");
 
 //#################################################################################
 //#####################  Refreshing the Access Token  #############################
