@@ -72,10 +72,12 @@ underlay.onclick = function(){
     underlay.style.display = "none";
 }
 
-let dbClass = rtdb.ref('ChatRooms/' + roomId);
+let dbClass = rtdb.ref('ChatRooms/' + roomId + "/info");
 dbClass.on('child_removed', snap => {
     // console.log("the teacher has ended the meeting")
+    endMeetingFunc();
 });
+
 
 //#################################################################################
 //################################  Other Info  ###################################

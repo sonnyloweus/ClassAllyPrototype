@@ -15,7 +15,7 @@ let refToken = 0;
 var http = require("https");
 const { app } = require('electron');
 
-// let access_tokenHtml = document.getElementById("access_token");
+let access_tokenHtml = document.getElementById("access_token");
 
 //#################################################################################
 //#####################  Refreshing the Access Token  #############################

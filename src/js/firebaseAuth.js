@@ -191,18 +191,18 @@ loginForm.addEventListener('submit', (e) => {
     //sign up the user, might take some time to complete, returns user credential
     const promise = auth.signInWithEmailAndPassword(email, password).then(cred => {
         return db.collection('users').doc(cred.user.uid).get().then(doc => {
-            let refToken = `${doc.data().refreshTok}`
-            let tempacc = `${doc.data().accessCode}`
-            if(refToken == 0){
-                if(tempacc == 0){
-                    $('.authorizeSection').css('display', 'none');
-                    // $('.authorizeSection').css('display', 'block');
-                }else{
-                    $('.authorizeSection').css('display', 'none');
-                }
-            }else{
-                $('.authorizeSection').css('display', 'none');
-            }
+            // let refToken = `${doc.data().refreshTok}`
+            // let tempacc = `${doc.data().accessCode}`
+            // if(refToken == 0){
+            //     if(tempacc == 0){
+            //         $('.authorizeSection').css('display', 'none');
+            //         // $('.authorizeSection').css('display', 'block');
+            //     }else{
+            //         $('.authorizeSection').css('display', 'none');
+            //     }
+            // }else{
+            //     $('.authorizeSection').css('display', 'none');
+            // }
         });
     }).then(() => {
         // console.log(cred.user);
