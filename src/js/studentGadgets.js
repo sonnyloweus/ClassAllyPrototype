@@ -18,7 +18,6 @@ function refreshList(){
         listApps = result.map(value => {
             return value.name;
         });
-        console.log(listApps);
     });
 }
 refreshList();
@@ -27,16 +26,20 @@ let wasOffTask = false;
 let appTracker = setInterval(function(){ 
 
     let flag = false;
-    for(let i = 0; i < apps.length; i++){
-        let tempstr = apps[i].toLowerCase();
+    console.log(listApps);
+    for(let i = 0; i < listApps.length; i++){
+        let tempstr = listApps[i].toLowerCase();
         for(let n = 0; n < blocklist.length; n++){
             if(tempstr.includes(blocklist[n])){
                 flag = true;
-                wasOffTask = true;
-                rtdb.ref('ChatRooms/' + tempPars.get("Id")).child('offTask').update({
-                    newOffTask: email
-                });
 
+                if(!wasOffTask){
+                    wasOffTask = true;
+                    rtdb.ref('ChatRooms/'  + roomId).child('offTask').update({
+                        newOffTask: email
+                    });
+                    console.log("offTask")
+                }
                 break;
             }
         }
@@ -48,7 +51,8 @@ let appTracker = setInterval(function(){
     if(wasOffTask){
         if(!flag){
             wasOffTask = false;
-            rtdb.ref('ChatRooms/' + tempPars.get("Id")).child('onTask').update({
+            console.log("onTask")
+            rtdb.ref('ChatRooms/' + roomId).child('onTask').update({
                 newOnTask: email
             });
         }

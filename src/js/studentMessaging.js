@@ -1,7 +1,6 @@
 const { removeTabIndexAndUpdateFocus } = require("custom-electron-titlebar/lib/common/dom");
 
 let messageForm = document.getElementById("messageForm");
-let roomId = tempPars.get("classroomId");
 let email = tempPars.get("studentEmail");
 
 let anonymous = document.getElementById("anonymous");

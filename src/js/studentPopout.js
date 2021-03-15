@@ -48,6 +48,11 @@ window.addEventListener("beforeunload", function(e){
 
 let tempPars = (new URL(window.location.href)).searchParams;
 let username = tempPars.get("studentName");
+let roomId = tempPars.get("classroomId");
+
+//#################################################################################
+//###############################  Leave Meeting  #################################
+//#################################################################################
 
 function endMeetingFunc(el){
     clearInterval(appTracker);
@@ -66,6 +71,11 @@ underlay.onclick = function(){
     endClass.style.display = "none";
     underlay.style.display = "none";
 }
+
+let dbClass = rtdb.ref('ChatRooms/' + roomId);
+dbClass.on('child_removed', snap => {
+    // console.log("the teacher has ended the meeting")
+});
 
 //#################################################################################
 //################################  Other Info  ###################################

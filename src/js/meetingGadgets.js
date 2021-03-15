@@ -238,22 +238,22 @@ dbOffTask.on('child_added', snap => {
 
     offTask.push(tempVal);
 
-    rtdb.ref('ChatRooms/' + offTask + "/nudged/" + snap.key).remove();
-    offTask.push(tempVal);
+    rtdb.ref('ChatRooms/' + roomId + "/offTask/" + snap.key).remove();
     drawApplicationTracker();
 });
 
-let dbOffTask = rtdb.ref('ChatRooms/' + roomId).child('onTask');
-onTask.on('child_added', snap => {
+let dbonTask = rtdb.ref('ChatRooms/' + roomId).child('onTask');
+dbonTask.on('child_added', snap => {
     let tempVal = snap.val();
     let indexNum = offTask.indexOf(tempVal)
-
+    
     if(indexNum != -1){
+        console.log(offTask)
         offTask.splice(indexNum, 1);
+        console.log("backOnTask")
+        console.log(offTask)
     }
 
-    rtdb.ref('ChatRooms/' + offTask + "/nudged/" + snap.key).remove();
-    let indexOfOnTask = offTask.indexOf(tempVal);
-    offTask.splice(indexOfOnTask, 1);
+    rtdb.ref('ChatRooms/' + roomId + "/onTask/" + snap.key).remove();
     drawApplicationTracker();
 });

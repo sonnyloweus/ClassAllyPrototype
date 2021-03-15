@@ -49,6 +49,6 @@ function endMeetingFunc(el){
     // delete chat
     rtdb.ref('ChatRooms/' + tempPars.get("Id")).remove();
     // close window
-    clearInterval(appTracker);
+    // clearInterval(appTracker);
     window.close();
 }
