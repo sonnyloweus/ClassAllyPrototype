@@ -1,3 +1,6 @@
+# ignore all . files and . folders
+.*
+
 # Logs
 logs
 *.log
@@ -87,6 +90,3 @@ typings/
 
 # Electron-Forge
 out/
-
-#VSCodeCounter
-.VSCodeCounter/
