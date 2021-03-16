@@ -6,10 +6,11 @@
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
-    "package": "electron-forge package",
+    "pack:osx": "electron-packager . ClassAlly --out=out/osx --prune=true --platform=darwin --src/icon=assets/appLogo.png --overwrite",
+    "pack:win": "electron-packager . ClassAlly --out=out/win --prune=true --platform=win32 --arch=x64 --icon=src/assets/appLogo.ico --overwrite",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "build": "electron-packager . ClassAlly --platform=darwin",
+    "build": "npm run pack:osx && npm run pack:win",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
