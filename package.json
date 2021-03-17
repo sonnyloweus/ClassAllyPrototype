@@ -6,12 +6,32 @@
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
-    "pack:osx": "electron-packager . ClassAlly --out=out/osx --prune=true --platform=darwin --src/icon=assets/appLogo.png --overwrite",
-    "pack:win": "electron-packager . ClassAlly --out=out/win --prune=true --platform=win32 --arch=x64 --icon=src/assets/appLogo.ico --overwrite",
+    "pack:osx": "electron-packager . ClassAlly --out=C:/Users/sonny/Downloads/ --prune=true --platform=darwin --src/icon=assets/appLogo.png --overwrite",
+    "pack:win": "electron-packager . ClassAlly --out=C:/Users/sonny/Downloads/ --prune=true --platform=win32 --arch=x64 --icon=src/assets/appLogo.ico --overwrite",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "build": "npm run pack:osx && npm run pack:win",
+    "package": "npm run pack:osx && npm run pack:win",
+    "build": "electron-builder",
     "lint": "echo \"No linting configured\""
+  },
+  "build": {
+    "appId": "com.classally.app",
+    "productName": "ClassAlly",
+    "copyright": "Copyright © 2021 ClassAlly",
+    "directories": {
+      "output": "C:/Users/sonny/Downloads/out/"
+    },
+    "win": {
+      "target": ["nsis"],
+      "icon": "src/assets/appLogo.ico"
+    },
+    "nsis": {
+      "installerIcon": "src/assets/appLogo.ico",
+      "uninstallerIcon": "src/assets/appLogo.ico",
+      "uninstallDisplayName": "ClassAlly",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "keywords": [],
   "author": "ClassAlly",
