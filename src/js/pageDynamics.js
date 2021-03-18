@@ -35,3 +35,21 @@ settingsButton.onclick = function(){
     $("#currentPage").load("templates/settingsPage.html");
 }
 
+//#################################################################################
+//################################  Closing #######################################
+//#################################################################################
+
+
+window.addEventListener("beforeunload", function(e){
+
+    if(tempWindow != ""){
+        if(!tempWindow.closed){
+            e.preventDefault();
+            e.returnValue = '';
+
+            createAlert("You have a class open - please end it before closing ClasAlly!")
+            console.log("you have a class open")
+        }
+    }
+
+}, false);

@@ -77,6 +77,7 @@ function confirmLaunch(el){
     confirmLaunchMeeting(information, $(el).data('link'), databaseID);
 }
 
+let tempWindow = "";
 function confirmLaunchMeeting(info, link, tempClassID){
     remote.BrowserWindow.getFocusedWindow().minimize();
     let code = generateCode(6);
@@ -99,17 +100,12 @@ function confirmLaunchMeeting(info, link, tempClassID){
         console.log(meetingInfo);
         let allInfoURL = new URLSearchParams(meetingInfo).toString();
         // console.log(allInfoURL);
-        let popup = window.open(
+        tempWindow = window.open(
             "templates/meetingPopout.html?" + allInfoURL, "Controls",
             "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
-        popup.focus(); 
+        tempWindow.focus(); 
     });
 }
-
-let popup = window.open(
-    "templates/meetingPopout.html?", "Controls",
-    "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
-popup.focus(); 
 
 function copyText(id) {
     /* Get the text field */

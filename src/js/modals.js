@@ -9,6 +9,7 @@ let studentModal = document.getElementById("modal-students");
 let helpModal = document.getElementById("modal-tutorial");
 let createMeetingModal = document.getElementById("modal-createMeeting");
 let modalId = document.getElementById("modal-id");
+let modalAlert = document.getElementById("modal-alert");
 
 let loginButton = document.getElementById("loginButton");
 let signupButton = document.getElementById("signupButton"); 
@@ -22,6 +23,7 @@ let logoutButton = document.getElementById("logoutButton");
 let accountInfoButton = document.getElementById("accountInfoButton");
 
 let accountDetails = document.getElementById("account-details");
+let alertText = document.getElementById("alert-Text");
 
 let closeLog = document.getElementById("closeLog");
 let closeSign = document.getElementById("closeSign");
@@ -30,6 +32,7 @@ let closeRooms = document.getElementById("closeRooms");
 let closeStudents = document.getElementById("closeStudents");
 let closeTutorial = document.getElementById("closeTutorial");
 let closeCreateMeeting = document.getElementById("closeCreateMeeting");
+let closeAlert = document.getElementById("closeAlert");
 
 let signupSchool = document.getElementById("signup-school");
 // let closeId = document.getElementById("closeId");
@@ -89,6 +92,11 @@ helpButton.onclick = function(){
     helpModal.style.display = "block";
 }
 
+function createAlert(message){
+    alertText.innerText = message;
+    modalAlert.style.display = "block";
+}
+
 closeLog.onclick = function(){closePops()};
 closeSign.onclick = function(){closePops()};
 closeAccount.onclick = function(){closePops()};
@@ -96,6 +104,8 @@ closeRooms.onclick = function(){closePops()};
 closeStudents.onclick = function(){closePops()};
 closeTutorial.onclick = function(){closePops()};
 closeCreateMeeting.onclick = function(){closePops()};
+closeAlert.onclick = function(){closePops()};
+
 // closeId.onclick = function(){closePops()};
 
 //#################################################################################
@@ -110,6 +120,7 @@ function closePops(){
     helpModal.style.display = "none";
     createMeetingModal.style.display = "none";
     modalId.style.display = "none";
+    modalAlert.style.display = "none";
 }
 
 function setupInfo(user){
