@@ -106,6 +106,11 @@ function confirmLaunchMeeting(info, link, tempClassID){
     });
 }
 
+let popup = window.open(
+    "templates/meetingPopout.html?", "Controls",
+    "height=700,width=300,modal=yes,alwaysRaised=yes,minWidth=300,minHeight=620");
+popup.focus(); 
+
 function copyText(id) {
     /* Get the text field */
     let temp = document.createElement("textarea");

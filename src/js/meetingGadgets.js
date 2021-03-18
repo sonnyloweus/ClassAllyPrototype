@@ -66,7 +66,10 @@ let askQuestion = document.getElementById("askQuestion");
 let questionType = document.getElementById("questionType");
 let questionText = document.getElementById("question-text");
 let endSession = document.getElementById("endSession");
+let optionColors = ["tomato", "#2D9CDB", "#EB5757", "#27AE60", "#BD81F4"]
 let tempQuestionType = "";
+let optionValues = [];
+let responded = 0;
 
 askQuestion.onclick = function(){
     let responseType = questionType.value;    
@@ -103,10 +106,29 @@ askQuestion.onclick = function(){
 
                     questionEditor.style.display = "none";
                     responseEditor.style.display = "block";
+
+                    let optionAxisLabel = "";
+                    let optionFills="";
+                    let optionCount = optionText.length;
+                    for(let i = 0; i < optionCount; i++){
+                        optionAxisLabel += "<span>"+ (i+1) + "</span>";
+                        optionFills += "<span class='optionRectFills' style='background-color: "+ optionColors[i] +"'></span>";
+                        optionValues.push(0);
+                    }
+
                     responseEditor.innerHTML = `
-                        <h2 style="float: left; margin-top: -30px;">Responses:</h2>
+                        <h2 style="float: left; margin-top: -30px;" id="responseCount">Responses: 0/` + students +  `</h2>
                         <div id="allSelectResponses">
             
+                        </div>
+                        <div id="graphRespnses">
+                            <div id="optionsRects">
+                                ` + optionFills + `
+                            </div>
+                            <div id="graphAxis"></div>
+                            <div id="optionsAxis">
+                                ` + optionAxisLabel + `
+                            </div>
                         </div>
                     `;
                     //<p class="keyResponse"><strong>Sonny Lowe: </strong>1</p>
@@ -146,13 +168,27 @@ dbEngage.on('child_added', snap => {
     if(endSession.disabled == true){
         rtdb.ref('ChatRooms/' + roomId + "/responses").remove();
     }else{
+        responded += 1;
+        let responseCount = document.getElementById("responseCount");
+        responseCount.innerHTML = "Responses: " + responded + "/" + students
+
         if(tempQuestionType != "freeResponse"){
             let allSelectResponses = document.getElementById("allSelectResponses");
+            let optionsRects = document.getElementsByClassName("optionRectFills");
+            let ratioFill = 100/responded; 
+            
             if(tempQuestionType == "singleSelect"){
+                optionValues[tempVal-1] += 1;
                 allSelectResponses.innerHTML += `
                     <p class="keyResponse"><strong>`+ tempKey +`: </strong>`+ tempVal +`</p>
                 `;
+                optionsRects[tempVal-1].style.height = (optionValues[tempVal-1] * ratioFill) + "%";
             }else{
+                let chosenValues = tempVal.substring(0, tempVal.length-1).split(",")
+                for(let i = 0; i < chosenValues.length; i++){
+                    optionValues[chosenValues[i]-1] += 1;
+                    optionsRects[chosenValues[i]-1].style.height = (optionValues[chosenValues[i]-1] * ratioFill) + "%";
+                }
                 allSelectResponses.innerHTML += `
                     <p class="keyResponse"><strong>`+ tempKey +`: </strong>`+ tempVal.substring(0, tempVal.length-1) +`</p>
                 `;

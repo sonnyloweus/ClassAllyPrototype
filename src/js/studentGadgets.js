@@ -173,79 +173,13 @@ closeError.onclick = function(){
 }
 
 submitAnswer.onclick = function(){
-    if(responseType != "freeResponse"){
 
-        if(responseType == "singleSelect"){
-            
-            let radios = document.getElementsByName('answer');
-            let chosenRadio = "";
-            let hasAnswer = false;
-            for (let i = 0; i < radios.length; i++) {
-              if (radios[i].checked) {
-                // do whatever you want with the checked radio
-                chosenRadio = (i+1);
-                hasAnswer = true;
-                break;
-              }
-            }
-            
-            if(hasAnswer){
-                rtdb.ref('ChatRooms/' + roomId).child('responses').update({
-                    [username]: chosenRadio
-                }).then(function(){
-                    questionStatus.innerText = "No Questions Currently"
-                    questionStatus.classList.add("noQuestions");
-                    questionType.style.display = "none";
-                    questionSentence.style.display = "none";
-                    submitAnswer.style.opacity = "0%";
-                    responseSection.innerHTML = ``;
-                    errorModal.style.display = "block";
-                    errorDetails.innerText = "Response Recorded";
-                });
-            }else{
-                errorModal.style.display = "block";
-                errorDetails.innerText = "You must select one option!";
-            }
+    let questionExists = true;
+    rtdb.ref('ChatRooms/' + roomId + "/engage").child('engageQuestion')
+        .once("value").then(function(snapshot) {
+            questionExists = snapshot.exists();
 
-        }else{
-
-            let checks = document.getElementsByName('answer');
-            let chosenChecks = "";
-            let hasAnswer = false;
-            for (let i = 0; i < checks.length; i++) {
-              if (checks[i].checked) {
-                // do whatever you want with the checked radio
-                chosenChecks += " " + (i+1) + ",";
-                hasAnswer = true;
-              }
-            }
-            
-            if(hasAnswer){
-                rtdb.ref('ChatRooms/' + roomId).child('responses').update({
-                    [username]: chosenChecks
-                }).then(function(){
-                    questionStatus.innerText = "No Questions Currently"
-                    questionStatus.classList.add("noQuestions");
-                    questionType.style.display = "none";
-                    questionSentence.style.display = "none";
-                    submitAnswer.style.opacity = "0%";
-                    responseSection.innerHTML = ``;
-                    errorModal.style.display = "block";
-                    errorDetails.innerText = "Response Recorded";
-                });
-            }else{
-                errorModal.style.display = "block";
-                errorDetails.innerText = "You must select one option!";
-            }
-
-        }
-    }else{
-        let responseText = document.getElementById("response-text").value;
-
-        if(responseText != ""){
-            rtdb.ref('ChatRooms/' + roomId).child('responses').update({
-                [username]: responseText
-            }).then(function(){
+            if(!questionExists){
                 questionStatus.innerText = "No Questions Currently"
                 questionStatus.classList.add("noQuestions");
                 questionType.style.display = "none";
@@ -253,11 +187,94 @@ submitAnswer.onclick = function(){
                 submitAnswer.style.opacity = "0%";
                 responseSection.innerHTML = ``;
                 errorModal.style.display = "block";
-                errorDetails.innerText = "Response Recorded";
-            });
-        }else{
-            errorModal.style.display = "block";
-            errorDetails.innerText = "You must respond!";
-        }
-    }
+                errorDetails.innerText = "Question Session Ended";
+            }else if(responseType != "freeResponse"){
+
+                if(responseType == "singleSelect"){
+                    
+                    let radios = document.getElementsByName('answer');
+                    let chosenRadio = "";
+                    let hasAnswer = false;
+                    for (let i = 0; i < radios.length; i++) {
+                      if (radios[i].checked) {
+                        // do whatever you want with the checked radio
+                        chosenRadio = (i+1);
+                        hasAnswer = true;
+                        break;
+                      }
+                    }
+                    
+                    if(hasAnswer){
+                        rtdb.ref('ChatRooms/' + roomId).child('responses').update({
+                            [username]: chosenRadio
+                        }).then(function(){
+                            questionStatus.innerText = "No Questions Currently"
+                            questionStatus.classList.add("noQuestions");
+                            questionType.style.display = "none";
+                            questionSentence.style.display = "none";
+                            submitAnswer.style.opacity = "0%";
+                            responseSection.innerHTML = ``;
+                            errorModal.style.display = "block";
+                            errorDetails.innerText = "Response Recorded";
+                        });
+                    }else{
+                        errorModal.style.display = "block";
+                        errorDetails.innerText = "You must select one option!";
+                    }
+        
+                }else{
+        
+                    let checks = document.getElementsByName('answer');
+                    let chosenChecks = "";
+                    let hasAnswer = false;
+                    for (let i = 0; i < checks.length; i++) {
+                      if (checks[i].checked) {
+                        // do whatever you want with the checked radio
+                        chosenChecks += " " + (i+1) + ",";
+                        hasAnswer = true;
+                      }
+                    }
+                    
+                    if(hasAnswer){
+                        rtdb.ref('ChatRooms/' + roomId).child('responses').update({
+                            [username]: chosenChecks
+                        }).then(function(){
+                            questionStatus.innerText = "No Questions Currently"
+                            questionStatus.classList.add("noQuestions");
+                            questionType.style.display = "none";
+                            questionSentence.style.display = "none";
+                            submitAnswer.style.opacity = "0%";
+                            responseSection.innerHTML = ``;
+                            errorModal.style.display = "block";
+                            errorDetails.innerText = "Response Recorded";
+                        });
+                    }else{
+                        errorModal.style.display = "block";
+                        errorDetails.innerText = "You must select one option!";
+                    }
+        
+                }
+            }else{
+                let responseText = document.getElementById("response-text").value;
+        
+                if(responseText != ""){
+                    rtdb.ref('ChatRooms/' + roomId).child('responses').update({
+                        [username]: responseText
+                    }).then(function(){
+                        questionStatus.innerText = "No Questions Currently"
+                        questionStatus.classList.add("noQuestions");
+                        questionType.style.display = "none";
+                        questionSentence.style.display = "none";
+                        submitAnswer.style.opacity = "0%";
+                        responseSection.innerHTML = ``;
+                        errorModal.style.display = "block";
+                        errorDetails.innerText = "Response Recorded";
+                    });
+                }else{
+                    errorModal.style.display = "block";
+                    errorDetails.innerText = "You must respond!";
+                }
+            }
+    });
+
 }
