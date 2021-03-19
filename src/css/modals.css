@@ -56,6 +56,11 @@
   display: none;
 }
 
+#modal-update{
+  display: none;
+  z-index: 5;
+}
+
 #addedStudents{
   width: 100%;
   border: 0.5px solid rgb(180, 176, 176);

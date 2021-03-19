@@ -51,10 +51,12 @@ const createWindow = () => {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
-  // if(!isDev){
+  if(!isDev){
     // trigger autoupdate check
-    autoUpdater.checkForUpdates();
-  // }
+    setTimeout(function restart(){
+      autoUpdater.checkForUpdates();
+    }, 2000)
+  }
 };
 
 app.on('ready', () => {
@@ -87,7 +89,7 @@ autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow(autoUpdater.getFeedURL());
 });
 autoUpdater.on('update-available', info => {
-  sendStatusToWindow('Update available.');
+  sendStatusToWindow('1');
 });
 autoUpdater.on('update-not-available', info => {
   sendStatusToWindow('Update not available.');
@@ -101,8 +103,10 @@ autoUpdater.on('download-progress', progressObj => {
   );
 });
 autoUpdater.on('update-downloaded', info => {
-  sendStatusToWindow('Update downloaded; will install now');
-  autoUpdater.quitAndInstall();
+  sendStatusToWindow('2');
+  setTimeout(function restart(){
+    autoUpdater.quitAndInstall();
+  }, 2000)
 });
 
 autoUpdater.on('error', (error)=> {

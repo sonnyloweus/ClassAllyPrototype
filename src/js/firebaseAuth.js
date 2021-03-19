@@ -69,6 +69,9 @@ auth.onAuthStateChanged(user => {
                 $("#currentPage").load("templates/studentsPage.html");
             }
 
+            createUpdate("Update Available. Do not close this application while downloading! <br> Downloading... <div class='fa-lg'><i class='fas fa-spinner fa-spin'></i></div>");
+
+
         });
 
     }else{

@@ -100,15 +100,21 @@
 
 
   <script>
-    console.log('I am updated');
     console.log('this is version 1.0.1 Beta');
   
     // Listen for messages
     const { ipcRenderer } = require('electron');
     ipcRenderer.on('message', function (event, text) {
       console.log('Message from updater:', text);
+      if(text == 1){
+        //update Available
+        createUpdate("Update Available. Do not close this application while downloading! <br> Downloading... <div class='fa-lg'><i class='fas fa-spinner fa-spin'></i></div>")
+      }else if(text==2){
+        //update finished
+        createUpdate("Installation Finished! Follow the setup window to re-install")
+      }
     });
-  
+    
   </script>
   <!-- ###################################################################################### -->
   <!-- ###################################################################################### -->
