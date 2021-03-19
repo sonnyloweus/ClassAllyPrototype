@@ -1,0 +1,6 @@
+provider: github
+private: true
+owner: sonnyloweus
+repo: ClassAllyPrototype
+token: df6663adccd3e56e73465605edc377e198afd7ab
+releaseType: draft

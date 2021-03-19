@@ -11,7 +11,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "package": "npm run pack:osx && npm run pack:win",
-    "build": "electron-builder",
+    "build": "electron-builder --publish always",
     "lint": "echo \"No linting configured\""
   },
   "build": {
@@ -22,7 +22,9 @@
       "output": "C:/Users/sonny/Downloads/out/"
     },
     "win": {
-      "target": ["nsis"],
+      "target": [
+        "nsis"
+      ],
       "icon": "src/assets/appLogo.ico"
     },
     "nsis": {
@@ -31,7 +33,25 @@
       "uninstallDisplayName": "ClassAlly",
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.education",
+      "icon": "src/assets/appLogo.ico"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "private": true,
+        "owner": "sonnyloweus",
+        "repo": "ClassAllyPrototype",
+        "token": "df6663adccd3e56e73465605edc377e198afd7ab",
+        "releaseType": "draft"
+      }
+    ]
   },
   "keywords": [],
   "author": "ClassAlly",
@@ -81,6 +101,9 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.52",
     "@electron-forge/maker-zip": "^6.0.0-beta.52",
     "electron": "9.1.0",
-    "electron-builder": "^22.10.5"
+    "electron-builder": "^22.10.5",
+    "electron-is-dev": "^2.0.0",
+    "electron-log": "^4.3.2",
+    "electron-updater": "^4.3.8"
   }
 }

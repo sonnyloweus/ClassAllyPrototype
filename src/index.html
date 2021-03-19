@@ -97,6 +97,18 @@
   <link rel="stylesheet" href="css/students.css" />
   <link rel="stylesheet" href="css/classrooms.css" />
   <link rel="stylesheet" href="css/tutorial.css" />
+
+
+  <script>
+    console.log('I am updated');
+  
+    // Listen for messages
+    const { ipcRenderer } = require('electron');
+    ipcRenderer.on('message', function (event, text) {
+      console.log('Message from updater:', text);
+    });
+  
+  </script>
   <!-- ###################################################################################### -->
   <!-- ###################################################################################### -->
   <!-- ###################################################################################### -->
