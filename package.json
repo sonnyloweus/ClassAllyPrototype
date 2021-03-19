@@ -1,7 +1,7 @@
 {
   "name": "ClassAlly",
   "productName": "ClassAlly",
-  "version": "1.0.0-Beta",
+  "version": "1.0.1-Beta",
   "description": "The app that improves online learning as a whole",
   "main": "src/index.js",
   "scripts": {
@@ -92,7 +92,10 @@
     "node-notifier": "^8.0.0",
     "open": "^7.1.0",
     "opn": "^6.0.0",
-    "require": "^2.4.20"
+    "require": "^2.4.20",
+    "electron-is-dev": "^2.0.0",
+    "electron-log": "^4.3.2",
+    "electron-updater": "^4.3.8"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.52",
