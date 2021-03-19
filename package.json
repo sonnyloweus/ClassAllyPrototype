@@ -1,7 +1,7 @@
 {
   "name": "ClassAlly",
   "productName": "ClassAlly",
-  "version": "1.0.1-Beta",
+  "version": "1.0.3-Beta",
   "description": "The app that improves online learning as a whole",
   "main": "src/index.js",
   "scripts": {
