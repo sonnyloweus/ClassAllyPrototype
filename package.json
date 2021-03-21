@@ -19,7 +19,7 @@
     "productName": "ClassAlly",
     "copyright": "Copyright © 2021 ClassAlly",
     "directories": {
-      "output": "out/darwin/"
+      "output": "out/win/"
     },
     "win": {
       "target": [

@@ -100,10 +100,10 @@
 
 
   <script>
-    console.log('this is version 1.0.3 Beta');
   
     // Listen for messages
-    const { ipcRenderer } = require('electron');
+    const {ipcRenderer } = require('electron');
+    console.log(remote.app.getVersion());
     ipcRenderer.on('message', function (event, text) {
       console.log('Message from updater:', text);
       if(text == 1){
