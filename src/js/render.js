@@ -2,43 +2,47 @@
 //#######################@####  Custom TitleBar  ############@#####################
 //#################################################################################
 //npm i custom-electron-titlebar
-const customTitlebar = require('custom-electron-titlebar');
-const {Menu} = require('electron').remote;
 
-// setTimeout(function() {
-//     $(".overlay").fadeOut(500);
-//     document.getElementById("header").style.display = "block";
-// }, 2500);
+if(process.platform !== "darwin"){
 
-let menuTemplate = Menu.buildFromTemplate([
-    {
-        label: 'View',
-            submenu: [
-            { label:'Minimize', 
-                role:"minimize"
-            },
-            { label:'Close', 
-                role:"close"
-            },
-            { label:'Reload', 
-                role:"reload"
-            },
-            { label:'Force Reload', 
-                role:"forceReload"
-            }
-        ]
-    }
-  ])
+    const customTitlebar = require('custom-electron-titlebar');
+    const {Menu} = require('electron').remote;
 
-new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex('#444'),
-    overflow: "display"
-    // menu: menuTemplate,
-    // icon: './assets/timerIcon-full.png',
-});
+    // setTimeout(function() {
+    //     $(".overlay").fadeOut(500);
+    //     document.getElementById("header").style.display = "block";
+    // }, 2500);
 
-let titleBarTitle = document.querySelector('.window-title');
-titleBarTitle.innerHTML = "";
+    let menuTemplate = Menu.buildFromTemplate([
+        {
+            label: 'View',
+                submenu: [
+                { label:'Minimize', 
+                    role:"minimize"
+                },
+                { label:'Close', 
+                    role:"close"
+                },
+                { label:'Reload', 
+                    role:"reload"
+                },
+                { label:'Force Reload', 
+                    role:"forceReload"
+                }
+            ]
+        }
+    ])
+
+    new customTitlebar.Titlebar({
+        backgroundColor: customTitlebar.Color.fromHex('#444'),
+        overflow: "display"
+        // menu: menuTemplate,
+        // icon: './assets/timerIcon-full.png',
+    });
+
+    let titleBarTitle = document.querySelector('.window-title');
+    titleBarTitle.innerHTML = "";
+}
 
 // <img style='margin-top: 50px' width='150px' src='assets/largeLogo.png'>
 // titlebar.updateIcon('../assets/largeLogo.png');

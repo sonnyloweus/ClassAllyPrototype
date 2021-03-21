@@ -79,7 +79,10 @@ function confirmLaunch(el){
 
 let tempWindow = "";
 function confirmLaunchMeeting(info, link, tempClassID){
-    remote.BrowserWindow.getFocusedWindow().minimize();
+    if(process.platform !== "darwin"){
+        remote.BrowserWindow.getFocusedWindow().minimize();
+    }
+
     let code = generateCode(6);
 
     rtdb.ref('ChatRooms/' + code).once("value", snapshot => {

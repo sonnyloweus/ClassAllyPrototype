@@ -32,19 +32,33 @@ let mainWindow = "";
 
 const createWindow = () => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 680,
-    minWidth: 700,
-    minHeight: 580,
-    // transparent: true,
-    frame: false,
+  if (process.platform === 'darwin') {
+    mainWindow = new BrowserWindow({
+      width: 1000,
+      height: 680,
+      minWidth: 700,
+      minHeight: 580,
+      // transparent: true,
+      webPreferences:{
+        nodeIntegration: true,
+      },
+      icon: __dirname + '/assets/appLogo.png'
+    });
+  }else{
+    mainWindow = new BrowserWindow({
+      width: 1000,
+      height: 680,
+      minWidth: 700,
+      minHeight: 580,
+      // transparent: true,
+      frame: false,
 
-    webPreferences:{
-      nodeIntegration: true,
-    },
-    icon: __dirname + '/assets/appLogo.png'
-  });
+      webPreferences:{
+        nodeIntegration: true,
+      },
+      icon: __dirname + '/assets/appLogo.png'
+    });
+  }
 
   // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
