@@ -1,7 +1,7 @@
 {
   "name": "ClassAlly",
   "productName": "ClassAlly",
-  "version": "1.0.3-Beta",
+  "version": "1.0.4-Beta",
   "description": "The app that improves online learning as a whole",
   "main": "src/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "productName": "ClassAlly",
     "copyright": "Copyright © 2021 ClassAlly",
     "directories": {
-      "output": "C:/Users/sonny/Downloads/out/"
+      "output": "out/darwin/"
     },
     "win": {
       "target": [
