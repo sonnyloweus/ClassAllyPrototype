@@ -40,7 +40,7 @@
         "zip"
       ],
       "category": "public.app-category.education",
-      "icon": "src/assets/appLogo.ico"
+      "icon": "src/assets/appLogo.icns"
     },
     "publish": [
       {

@@ -10,17 +10,6 @@ const path = require('path');
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
-// let gitRepo = {
-//   provider: "github",
-//   repo: "ClassAllyPrototype",
-//   owner: "sonnyloweus",
-//   host: "github.com",
-//   protocol: "https",
-//   token: "df6663adccd3e56e73465605edc377e198afd7ab",
-//   private: true,
-
-// }
-// autoUpdater.setFeedURL(gitRepo);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
