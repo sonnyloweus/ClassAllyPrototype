@@ -24,7 +24,9 @@ joinClass.onclick = function(){
                             apps: ''
                         }
                     });
-                    remote.BrowserWindow.getFocusedWindow().minimize();
+                    if(process.platform !== "darwin"){
+                        remote.BrowserWindow.getFocusedWindow().minimize();
+                    }
                     let meetingInfo = {
                         "studentEmail": studentEmail,
                         "studentName": studentName,

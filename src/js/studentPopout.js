@@ -2,38 +2,43 @@
 //############################  Custom TitleBar  ##################################
 //#################################################################################
 //npm i custom-electron-titlebar
-const customTitlebar = require('custom-electron-titlebar');
-const {Menu} = require('electron').remote;
+if(process.platform !== "darwin"){
 
-let menuTemplate = Menu.buildFromTemplate([
-    {
-        label: 'View',
-            submenu: [
-            { label:'Minimize', 
-                role:"minimize"
-            },
-            { label:'Close', 
-                role:"close"
-            },
-            { label:'Reload', 
-                role:"reload"
-            },
-            { label:'Force Reload', 
-                role:"forceReload"
-            }
-        ]
-    }
-  ])
+    const customTitlebar = require('custom-electron-titlebar');
+    const {Menu} = require('electron').remote;
 
-new customTitlebar.Titlebar({
-    backgroundColor: customTitlebar.Color.fromHex('#444'),
-    overflow: "hidden",
-    menu: menuTemplate,
-    // icon: './assets/timerIcon-full.png',
-});
+    let menuTemplate = Menu.buildFromTemplate([
+        {
+            label: 'View',
+                submenu: [
+                { label:'Minimize', 
+                    role:"minimize"
+                },
+                { label:'Close', 
+                    role:"close"
+                },
+                { label:'Reload', 
+                    role:"reload"
+                },
+                { label:'Force Reload', 
+                    role:"forceReload"
+                }
+            ]
+        }
+    ])
 
-let titleBarTitle = document.querySelector('.window-title');
-titleBarTitle.innerHTML = "";
+    new customTitlebar.Titlebar({
+        backgroundColor: customTitlebar.Color.fromHex('#444'),
+        overflow: "hidden",
+        menu: menuTemplate,
+        // icon: './assets/timerIcon-full.png',
+    });
+
+    let titleBarTitle = document.querySelector('.window-title');
+    titleBarTitle.innerHTML = "";
+
+}
+
 let endClass = document.getElementById("endClass");
 let underlay = document.getElementById("underlay");
 
