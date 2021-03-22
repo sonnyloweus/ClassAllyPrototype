@@ -69,11 +69,13 @@ dbNudged.on('child_added', snap => {
     let tempVal = snap.val();
     if(tempVal == email){
         // Object
+
+        console.log("hi");
         notifier.notify({
             title: 'Stay on Task',
             message: "Please stay on task!",
             icon: __dirname + '/assets/nobackgroundSmall.png',
-            appID : 'ClassAlly'
+            appID : 'com.classally.app'
         });
 
         rtdb.ref('ChatRooms/' + roomId + "/nudged/" + snap.key).remove();
