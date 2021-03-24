@@ -150,7 +150,7 @@ askQuestion.onclick = function(){
                 questionEditor.style.display = "none";
                 responseEditor.style.display = "block";
                 responseEditor.innerHTML = `
-                    <h2 style="float: left; margin-top: -30px;">Responses:</h2>
+                    <h2 style="float: left; margin-top: -30px;" id="responseCount">Responses: 0/` + students +  `</h2>
                     <div id="allFreeResponses">
                         
                     </div>
