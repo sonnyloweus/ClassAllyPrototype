@@ -70,6 +70,7 @@ let optionColors = ["tomato", "#2D9CDB", "#EB5757", "#27AE60", "#BD81F4"]
 let tempQuestionType = "";
 let optionValues = [];
 let responded = 0;
+let respondedMultiple = 0;
 
 askQuestion.onclick = function(){
     let responseType = questionType.value;    
@@ -175,23 +176,29 @@ dbEngage.on('child_added', snap => {
         if(tempQuestionType != "freeResponse"){
             let allSelectResponses = document.getElementById("allSelectResponses");
             let optionsRects = document.getElementsByClassName("optionRectFills");
-            let ratioFill = 100/responded; 
             
             if(tempQuestionType == "singleSelect"){
+                respondedMultiple += 1;
                 optionValues[tempVal-1] += 1;
                 allSelectResponses.innerHTML += `
                     <p class="keyResponse"><strong>`+ tempKey +`: </strong>`+ tempVal +`</p>
                 `;
-                optionsRects[tempVal-1].style.height = (optionValues[tempVal-1] * ratioFill) + "%";
+                // optionsRects[tempVal-1].style.height = (optionValues[tempVal-1] * ratioFill) + "%";
             }else{
                 let chosenValues = tempVal.substring(0, tempVal.length-1).split(",")
+                respondedMultiple += chosenValues.length;
                 for(let i = 0; i < chosenValues.length; i++){
                     optionValues[chosenValues[i]-1] += 1;
-                    optionsRects[chosenValues[i]-1].style.height = (optionValues[chosenValues[i]-1] * ratioFill) + "%";
+                    // optionsRects[chosenValues[i]-1].style.height = (optionValues[chosenValues[i]-1] * ratioFill) + "%";
                 }
                 allSelectResponses.innerHTML += `
                     <p class="keyResponse"><strong>`+ tempKey +`: </strong>`+ tempVal.substring(0, tempVal.length-1) +`</p>
                 `;
+            }
+
+            let ratioFill = 100/respondedMultiple; 
+            for(let i = 0; i < optionsRects.length; i++){
+                optionsRects[i].style.top = (100-(optionValues[i] * ratioFill)) + "%";
             }
         }else{
             let allFreeResponses = document.getElementById("allFreeResponses");
@@ -212,7 +219,8 @@ endSession.onclick = function(){
 
     questionEditor.style.display = "block";
     responseEditor.style.display = "none";
-    
+    responded = 0;
+    respondedMultiple = 0;
     rtdb.ref('ChatRooms/' + roomId + "/engage/engageQuestion").remove();
     rtdb.ref('ChatRooms/' + roomId + "/responses").remove();
 }

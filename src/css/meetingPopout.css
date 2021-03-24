@@ -690,6 +690,8 @@ textarea::-webkit-scrollbar-thumb {
     width: 100%;
     z-index: 2;
     height: calc(93% - 25px);
+    /* background-color: white; */
+    overflow:hidden;
 }
 
 #optionsRects span{
@@ -701,4 +703,10 @@ textarea::-webkit-scrollbar-thumb {
     /* top left, top right, bottom right, bottom left */
     border-radius: 5px 5px 0px 0px;
     /* background-color: tomato; */
+}
+
+.optionRectFills{
+    position: relative;
+    height: 100%;
+    top: 100%;
 }
