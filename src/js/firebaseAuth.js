@@ -94,7 +94,7 @@ signupForm.addEventListener('submit', (e) => {
     const password = signupForm['signup-password'].value;
     const code = signupForm['signup-code'].value;
 
-    if(code == ""){
+    if(code == "000001"){
         //sign up the user, might take some time to complete, returns user credential
         const promise = auth.createUserWithEmailAndPassword(email, password).then(cred => {
             return db.collection('users').doc(cred.user.uid).set({

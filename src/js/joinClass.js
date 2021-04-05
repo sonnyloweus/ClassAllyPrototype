@@ -17,7 +17,7 @@ joinClass.onclick = function(){
         }else{
             rtdb.ref('ChatRooms/' + classZoomId).once("value", snapshot => {
                 if (snapshot.exists()){
-
+                    errorMessageJoin.innerHTML = "";
                     rtdb.ref('ChatRooms/' + classZoomId + "/participants").update({
                         [studentName]: {
                             email: studentEmail,
