@@ -90,10 +90,10 @@ accountInfoButton.onclick = function(){
     accountModal.style.display = "block";
 }
 
-helpButton.onclick = function(){
-    closePops();
-    helpModal.style.display = "block";
-}
+// helpButton.onclick = function(){
+//     closePops();
+//     helpModal.style.display = "block";
+// }
 
 function createAlert(message){
     alertText.innerText = message;
