@@ -62,6 +62,11 @@ let appTracker = setInterval(function(){
 }, 10000);
 
 const notifier = require('node-notifier');
+const Notification = require('node-mac-notifier');
+
+
+const notification = new Notification('Hello from node-mac-notifier', { body: 'It works!' });
+
 const path = require('path');
 
 let dbNudged = rtdb.ref('ChatRooms/' + roomId).child('nudged');
@@ -70,13 +75,16 @@ dbNudged.on('child_added', snap => {
     if(tempVal == email){
         // Object
 
-        console.log("hi");
-        notifier.notify({
-            title: 'Stay on Task',
-            message: "Please stay on task!",
-            icon: __dirname + '/assets/nobackgroundSmall.png',
-            appID : 'com.classally.app'
-        });
+        if(process.platform !== "darwin"){
+            notifier.notify({
+                title: 'ClassAlly',
+                message: "Please stay on task!",
+                icon: __dirname + '/assets/nobackgroundSmall.png',
+                appID : 'com.classally.app'
+            });
+        }else{
+            const notification = new Notification('ClassAlly', { body: 'Please stay on task!' });
+        }
 
         rtdb.ref('ChatRooms/' + roomId + "/nudged/" + snap.key).remove();
     }

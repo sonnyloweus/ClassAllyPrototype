@@ -11,7 +11,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "package": "npm run pack:osx && npm run pack:win",
-    "build": "electron-builder --publish always",
+    "build": "electron-builder",
     "lint": "echo \"No linting configured\""
   },
   "build": {
@@ -32,7 +32,8 @@
       "uninstallerIcon": "src/assets/appLogo.ico",
       "uninstallDisplayName": "ClassAlly",
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "license": "license_LANG_CODE.txt"
     },
     "mac": {
       "target": [

@@ -119,7 +119,7 @@ signupForm.addEventListener('submit', (e) => {
             // console.log(errorMessage);
             singUpError.innerHTML = "<br>";
             if(errorMessage == "The email address is badly formatted."){
-                errorMessage = "The email address is badly formatted"
+                errorMessage = "The email address is poorly formatted"
             }else if(errorMessage == "Password should be at least 6 characters"){
                 errorMessage = "Password should be at least 6 characters"
             }else if(errorMessage == "The email address is already in use by another account."){
