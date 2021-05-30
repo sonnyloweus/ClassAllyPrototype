@@ -64,9 +64,6 @@ let appTracker = setInterval(function(){
 const notifier = require('node-notifier');
 const Notification = require('node-mac-notifier');
 
-
-const notification = new Notification('Hello from node-mac-notifier', { body: 'It works!' });
-
 const path = require('path');
 
 let dbNudged = rtdb.ref('ChatRooms/' + roomId).child('nudged');
